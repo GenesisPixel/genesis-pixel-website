@@ -1,0 +1,42 @@
+---
+import type { Course } from '../data/courses';
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+
+const levelColors = {
+  basico: 'bg-[var(--dm-green)]/20 text-[var(--dm-green)]',
+  intermedio: 'bg-[var(--dm-yellow)]/20 text-[var(--dm-yellow)]',
+  avanzado: 'bg-[var(--dm-red)]/20 text-[var(--dm-red)]',
+};
+---
+
+<a
+  href={`/aprender/${course.category}/${course.id}`}
+  class="group block rounded-[var(--radius-base)] border border-white/5 bg-white/[0.02] p-6 transition-all hover:border-white/10 hover:bg-white/[0.04]"
+>
+  <div class="flex items-start justify-between">
+    <span class={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${levelColors[course.level]}`}>
+      {course.level}
+    </span>
+    <span class="text-sm text-[var(--dm-light-300)]">{course.duration}</span>
+  </div>
+
+  <h3 class="mt-4 text-lg font-semibold text-[var(--color-text)] transition-colors group-hover:text-white">
+    {course.title}
+  </h3>
+
+  <p class="mt-2 text-sm text-[var(--dm-light-300)]">
+    {course.description}
+  </p>
+
+  <div class="mt-4 flex items-center justify-between">
+    <span class="text-sm text-[var(--dm-light-300)]">{course.lessonsCount} lecciones</span>
+    <span class="text-sm text-[var(--color-text)] transition-transform group-hover:translate-x-1">
+      →
+    </span>
+  </div>
+</a>

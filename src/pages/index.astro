@@ -1,12 +1,96 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import CourseCard from '../components/CourseCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Footer from '../components/Footer.astro';
+import { courses } from '../data/courses';
+import { projects } from '../data/projects';
+
+const featuredCourses = courses.slice(0, 4);
+const recentProjects = projects.slice(0, 3);
 ---
 
-<Layout title="Genesis Pixel">
-  <main class="flex min-h-screen items-center justify-center">
-    <div class="text-center">
-      <h1 class="mb-4 text-6xl font-bold tracking-tight">Genesis Pixel</h1>
-      <p class="text-xl text-gray-400">Tu proyecto ha sido creado con Astro + Tailwind CSS</p>
-    </div>
+<Layout title="GenesisPixel - Aprende Animaciones Web y Desarrollo Creativo">
+  <Navbar />
+
+  <Hero
+    title="GenesisPixel"
+    description="Aprende animaciones web y desarrollo creativo paso a paso. Desde CSS básico hasta experiencias 3D profesionales."
+    primaryCTA={{ label: 'Comenzar a Aprender', href: '/aprender' }}
+    secondaryCTA={{ label: 'Explorar Ejemplos', href: '/ejemplos' }}
+  />
+
+  <main class="mx-auto max-w-7xl px-6 pb-24">
+    <section class="py-16">
+      <SectionHeader
+        title="Rutas de Aprendizaje"
+        description="Explora nuestras categorías y domina las animaciones web."
+        href="/aprender"
+      />
+      <div class="mt-8">
+        <CategoryGrid />
+      </div>
+    </section>
+
+    <section class="py-16">
+      <SectionHeader
+        title="Cursos Destacados"
+        description="Comienza con los cursos más populares."
+        href="/aprender"
+      />
+      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {featuredCourses.map((course) => (
+          <CourseCard course={course} />
+        ))}
+      </div>
+    </section>
+
+    <section class="py-16">
+      <SectionHeader
+        title="Proyectos Destacados"
+        description="Inspírate con proyectos completos de la comunidad."
+        href="/proyectos"
+      />
+      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {recentProjects.map((project) => (
+          <ProjectCard
+            title={project.title}
+            description={project.description}
+            category={project.category}
+            difficulty={project.difficulty}
+            tags={project.tags}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="overflow-hidden rounded-[var(--radius-base)] border border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent p-8 text-center sm:p-12">
+        <h2 class="font-acorn text-3xl font-bold text-[var(--color-text)]">¿Listo para empezar?</h2>
+        <p class="mx-auto mt-4 max-w-xl text-[var(--dm-light-300)]">
+          Únete a miles de desarrolladores que están aprendiendo animaciones web y desarrollo creativo.
+        </p>
+        <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="/aprender"
+            class="inline-flex items-center justify-center rounded-[var(--radius-base)] bg-[var(--color-text)] px-6 py-3 text-sm font-semibold text-[var(--dm-dark-500)] transition-all hover:opacity-90"
+          >
+            Comenzar Ahora
+          </a>
+          <a
+            href="/ejemplos"
+            class="inline-flex items-center justify-center rounded-[var(--radius-base)] border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-[var(--color-text)] transition-all hover:bg-white/10"
+          >
+            Ver Ejemplos
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <Footer />
 </Layout>

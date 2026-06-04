@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const resources = [
+  {
+    category: 'Herramientas',
+    items: [
+      { name: 'CodePen', description: 'Editor de código en línea para HTML, CSS y JavaScript.', url: 'https://codepen.io' },
+      { name: 'Figma', description: 'Herramienta de diseño colaborativo.', url: 'https://figma.com' },
+      { name: 'VS Code', description: 'Editor de código fuente.', url: 'https://code.visualstudio.com' },
+      { name: 'Chrome DevTools', description: 'Herramientas de desarrollo del navegador.', url: 'https://developer.chrome.com/docs/devtools/' },
+    ],
+  },
+  {
+    category: 'Documentación',
+    items: [
+      { name: 'MDN Web Docs', description: 'Documentación completa de tecnologías web.', url: 'https://developer.mozilla.org' },
+      { name: 'CSS Reference', description: 'Referencia completa de CSS.', url: 'https://cssreference.io' },
+      { name: 'Three.js Docs', description: 'Documentación oficial de Three.js.', url: 'https://threejs.org/docs/' },
+      { name: 'GSAP Docs', description: 'Documentación de GreenSock Animation Platform.', url: 'https://greensock.com/docs/' },
+    ],
+  },
+  {
+    category: 'Comunidad',
+    items: [
+      { name: 'Dev.to', description: 'Comunidad de desarrolladores.', url: 'https://dev.to' },
+      { name: 'CodePen Community', description: 'Explora creaciones de la comunidad.', url: 'https://codepen.io/discover' },
+      { name: 'GitHub', description: 'Plataforma de código abierto.', url: 'https://github.com' },
+      { name: 'Stack Overflow', description: 'Preguntas y respuestas de programación.', url: 'https://stackoverflow.com' },
+    ],
+  },
+];
+---
+
+<Layout title="Recursos - GenesisPixel">
+  <Navbar />
+
+  <main class="mx-auto max-w-7xl px-6 pb-24 pt-24">
+    <div class="mb-12">
+      <h1 class="font-acorn text-4xl font-bold text-[var(--color-text)] sm:text-5xl">Recursos</h1>
+      <p class="mt-4 text-lg text-[var(--dm-light-300)]">
+        Herramientas, documentación y recursos recomendados para tu aprendizaje.
+      </p>
+    </div>
+
+    <div class="space-y-12">
+      {resources.map((section) => (
+        <section>
+          <h2 class="mb-6 text-xl font-semibold text-[var(--color-text)]">{section.category}</h2>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {section.items.map((item) => (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block rounded-[var(--radius-base)] border border-white/5 bg-white/[0.02] p-5 transition-all hover:border-white/10 hover:bg-white/[0.04]"
+              >
+                <div class="flex items-start justify-between">
+                  <h3 class="text-sm font-medium text-[var(--color-text)] group-hover:text-white">{item.name}</h3>
+                  <svg class="h-4 w-4 text-[var(--dm-light-300)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </div>
+                <p class="mt-2 text-xs text-[var(--dm-light-300)]">{item.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

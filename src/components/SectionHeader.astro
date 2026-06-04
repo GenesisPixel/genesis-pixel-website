@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  href?: string;
+  linkText?: string;
+}
+
+const { title, description, href, linkText = 'Ver todo' } = Astro.props;
+---
+
+<div class="flex items-end justify-between">
+  <div>
+    <h2 class="font-acorn text-2xl font-bold text-[var(--color-text)] sm:text-3xl">{title}</h2>
+    {description && (
+      <p class="mt-2 text-[var(--dm-light-300)]">{description}</p>
+    )}
+  </div>
+
+  {href && (
+    <a
+      {href}
+      class="hidden items-center gap-1 text-sm font-medium text-[var(--color-text)] transition-colors hover:opacity-80 sm:flex"
+    >
+      {linkText}
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  )}
+</div>

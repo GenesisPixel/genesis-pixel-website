@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import CourseCard from '../components/CourseCard.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { courses } from '../data/courses';
+
+const coursesByCategory = courses.reduce((acc, course) => {
+  if (!acc[course.category]) {
+    acc[course.category] = [];
+  }
+  acc[course.category].push(course);
+  return acc;
+}, {} as Record<string, typeof courses>);
+
+const categoryNames: Record<string, string> = {
+  css: 'CSS Animations',
+  svg: 'SVG Animations',
+  canvas: 'Canvas API',
+  threejs: 'Three.js',
+  gsap: 'GSAP',
+  webgl: 'WebGL',
+};
+---
+
+<Layout title="Aprender - GenesisPixel">
+  <Navbar />
+
+  <main class="mx-auto max-w-7xl px-6 pb-24 pt-24">
+    <div class="mb-12">
+      <h1 class="font-acorn text-4xl font-bold text-[var(--color-text)] sm:text-5xl">Aprender</h1>
+      <p class="mt-4 text-lg text-[var(--dm-light-300)]">
+        Explora nuestras rutas de aprendizaje y domina las animaciones web.
+      </p>
+    </div>
+
+    <section class="mb-16">
+      <SectionHeader
+        title="Categorías"
+        description="Elige una categoría para comenzar."
+      />
+      <div class="mt-8">
+        <CategoryGrid />
+      </div>
+    </section>
+
+    {Object.entries(coursesByCategory).map(([category, categoryCourses]) => (
+      <section class="mb-16">
+        <SectionHeader
+          title={categoryNames[category]}
+          href={`/aprender/${category}`}
+        />
+        <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {categoryCourses.map((course) => (
+            <CourseCard course={course} />
+          ))}
+        </div>
+      </section>
+    ))}
+  </main>
+
+  <Footer />
+</Layout>
