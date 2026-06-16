@@ -81,6 +81,7 @@ export default {
       fontFamily: {
         gt: 'var(--font-gt)',
         acorn: 'var(--font-acorn)',
+        afronaut: 'var(--font-afronaut)',
       },
     },
   },

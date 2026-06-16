@@ -10,73 +10,435 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[var(--dm-dark-500)]/80 backdrop-blur-xl">
-  <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-    <a href="/" class="flex items-center gap-2">
-      <span class="font-acorn text-xl font-bold text-[var(--color-text)]">GenesisPixel</span>
-    </a>
+<style>
+  .nav-island {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    border-radius: 9999px;
+    background: rgba(28, 28, 30, 0.72);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 10px 12px;
+  }
 
-    <div class="hidden items-center gap-8 md:flex">
+  .nav-island.scrolled {
+    top: 10px;
+    padding: 7px 10px;
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-brand {
+    font-family: var(--font-afronaut);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 6px 12px;
+    transition: opacity 0.3s ease;
+  }
+
+  .nav-brand:hover {
+    opacity: 0.8;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    position: relative;
+  }
+
+  .nav-links a {
+    position: relative;
+    padding: 6px 14px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--dm-light-300);
+    text-decoration: none;
+    border-radius: 9999px;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  .nav-links a:hover {
+    color: var(--color-text);
+  }
+
+  .nav-links a.active {
+    color: var(--color-text);
+  }
+
+  .nav-indicator {
+    position: absolute;
+    height: calc(100% - 4px);
+    top: 2px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+  }
+
+  .nav-indicator.visible {
+    opacity: 1;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .search-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--dm-light-200);
+    font-size: 0.8125rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+  }
+
+  .search-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: scale(1.03);
+  }
+
+  .search-btn:active {
+    transform: scale(0.97);
+  }
+
+  .search-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .search-btn kbd {
+    font-family: inherit;
+    font-size: 0.6875rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    line-height: 1.4;
+  }
+
+  .mobile-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--dm-light-200);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+  }
+
+  .mobile-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-toggle:active {
+    transform: scale(0.9);
+  }
+
+  .mobile-toggle svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-toggle.open svg {
+    transform: rotate(90deg);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    position: fixed;
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px) scale(0.96);
+    z-index: 99;
+    width: calc(100% - 32px);
+    max-width: 360px;
+    border-radius: 24px;
+    background: rgba(28, 28, 30, 0.92);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.5),
+      0 8px 24px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .mobile-menu-inner {
+    padding: 8px;
+  }
+
+  .mobile-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--dm-light-300);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .mobile-menu a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text);
+  }
+
+  .mobile-menu a.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-text);
+  }
+
+  .mobile-menu a.active::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-text);
+    flex-shrink: 0;
+    box-shadow: 0 0 8px var(--color-text);
+  }
+
+  .mobile-menu a:not(.active)::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .search-btn span,
+    .search-btn kbd {
+      display: none;
+    }
+    .search-btn {
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      justify-content: center;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+    .nav-divider {
+      display: none;
+    }
+    .nav-island {
+      width: auto;
+      max-width: calc(100% - 32px);
+    }
+  }
+
+  /* Entry animation */
+  @keyframes island-enter {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px) scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+  }
+
+  .nav-island {
+    animation: island-enter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Glow effect on active */
+  .nav-links a.active {
+    text-shadow: 0 0 12px rgba(160, 243, 109, 0.3);
+  }
+</style>
+
+<header class="nav-island" id="nav-island">
+  <nav class="nav-inner">
+    <a href="/" class="nav-brand">GenesisPixel</a>
+
+    <div class="nav-divider"></div>
+
+    <div class="nav-links" id="nav-links">
+      <div class="nav-indicator" id="nav-indicator"></div>
       {navItems.map((item) => (
         <a
           href={item.href}
-          class={`text-sm font-medium transition-colors hover:text-[var(--color-text)] ${
-            currentPath === item.href
-              ? 'text-[var(--color-text)]'
-              : 'text-[var(--dm-light-200)]'
-          }`}
+          class={currentPath === item.href ? 'active' : ''}
+          data-nav-item
         >
           {item.label}
         </a>
       ))}
     </div>
 
-    <div class="flex items-center gap-4">
-      <button
-        id="search-toggle"
-        class="flex h-9 items-center gap-2 rounded-[var(--radius-base)] border border-white/10 bg-white/5 px-3 text-sm text-[var(--dm-light-200)] transition-colors hover:bg-white/10"
-      >
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="nav-actions">
+      <button class="search-btn" id="search-toggle">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
-        <span class="hidden sm:inline">Buscar</span>
-        <kbd class="hidden rounded border border-white/10 bg-white/5 px-1.5 text-xs sm:inline">⌘K</kbd>
+        <span>Buscar</span>
+        <kbd>⌘K</kbd>
       </button>
 
-      <button
-        id="mobile-menu-toggle"
-        class="flex h-9 items-center justify-center rounded-[var(--radius-base)] border border-white/10 bg-white/5 text-[var(--dm-light-200)] transition-colors hover:bg-white/10 md:hidden"
-      >
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button class="mobile-toggle" id="mobile-menu-toggle">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" id="hamburger-icon">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
   </nav>
-
-  <div id="mobile-menu" class="hidden border-t border-white/5 bg-[var(--dm-dark-500)] md:hidden">
-    <div class="space-y-1 px-6 py-4">
-      {navItems.map((item) => (
-        <a
-          href={item.href}
-          class={`block rounded-[var(--radius-base)] px-3 py-2 text-sm font-medium transition-colors ${
-            currentPath === item.href
-              ? 'bg-white/5 text-[var(--color-text)]'
-              : 'text-[var(--dm-light-200)] hover:bg-white/5 hover:text-[var(--color-text)]'
-          }`}
-        >
-          {item.label}
-        </a>
-      ))}
-    </div>
-  </div>
 </header>
 
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-inner">
+    {navItems.map((item) => (
+      <a
+        href={item.href}
+        class={currentPath === item.href ? 'active' : ''}
+      >
+        {item.label}
+      </a>
+    ))}
+  </div>
+</div>
+
 <script>
+  const island = document.getElementById('nav-island');
+  const navLinks = document.getElementById('nav-links');
+  const indicator = document.getElementById('nav-indicator');
   const menuToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
 
+  let lastScroll = 0;
+
+  function updateIndicator() {
+    const activeLink = navLinks?.querySelector('a.active') as HTMLElement;
+    if (!activeLink || !indicator || !navLinks) return;
+
+    const linksRect = navLinks.getBoundingClientRect();
+    const activeRect = activeLink.getBoundingClientRect();
+
+    indicator.style.left = `${activeRect.left - linksRect.left}px`;
+    indicator.style.width = `${activeRect.width}px`;
+    indicator.classList.add('visible');
+  }
+
+  function handleHover(e: Event) {
+    const target = e.target as HTMLElement;
+    if (target.tagName !== 'A' || !indicator || !navLinks) return;
+
+    const linksRect = navLinks.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    indicator.style.left = `${targetRect.left - linksRect.left}px`;
+    indicator.style.width = `${targetRect.width}px`;
+    indicator.classList.add('visible');
+  }
+
+  function handleHoverEnd() {
+    updateIndicator();
+  }
+
+  navLinks?.addEventListener('mouseover', handleHover);
+  navLinks?.addEventListener('mouseout', handleHoverEnd);
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+
+    if (scrollY > 30) {
+      island?.classList.add('scrolled');
+    } else {
+      island?.classList.remove('scrolled');
+    }
+
+    lastScroll = scrollY;
+  }, { passive: true });
+
+  let mobileOpen = false;
   menuToggle?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
+    mobileOpen = !mobileOpen;
+    mobileMenu?.classList.toggle('open', mobileOpen);
+    menuToggle?.classList.toggle('open', mobileOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (mobileOpen && !mobileMenu?.contains(e.target as Node) && !menuToggle?.contains(e.target as Node)) {
+      mobileOpen = false;
+      mobileMenu?.classList.remove('open');
+      menuToggle?.classList.remove('open');
+    }
+  });
+
+  window.addEventListener('load', () => {
+    setTimeout(updateIndicator, 100);
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(updateIndicator, 50);
   });
 </script>
