@@ -3,16 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import GradientBlur from '../components/GradientBlur.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
-import SectionHeader from '../components/SectionHeader.astro';
-import CategoryGrid from '../components/CategoryGrid.astro';
-import CourseCard from '../components/CourseCard.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import BentoCards from '../components/BentoCards.astro';
 import Footer from '../components/Footer.astro';
-import { courses } from '../data/courses';
-import { projects } from '../data/projects';
-
-const featuredCourses = courses.slice(0, 4);
-const recentProjects = projects.slice(0, 3);
 ---
 
 <Layout title="GenesisPixel - Aprende Animaciones Web y Desarrollo Creativo">
@@ -26,49 +18,8 @@ const recentProjects = projects.slice(0, 3);
     secondaryCTA={{ label: 'Explorar Ejemplos', href: '/ejemplos' }}
   />
 
-  <main class="mx-auto max-w-[1000px] px-6 pb-24">
-    <section class="py-16">
-      <SectionHeader
-        title="Rutas de Aprendizaje"
-        description="Explora nuestras categorías y domina las animaciones web."
-        href="/aprender"
-      />
-      <div class="mt-8">
-        <CategoryGrid />
-      </div>
-    </section>
-
-    <section class="py-16">
-      <SectionHeader
-        title="Cursos Destacados"
-        description="Comienza con los cursos más populares."
-        href="/aprender"
-      />
-      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {featuredCourses.map((course) => (
-          <CourseCard course={course} />
-        ))}
-      </div>
-    </section>
-
-    <section class="py-16">
-      <SectionHeader
-        title="Proyectos Destacados"
-        description="Inspírate con proyectos completos de la comunidad."
-        href="/proyectos"
-      />
-      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {recentProjects.map((project) => (
-          <ProjectCard
-            title={project.title}
-            description={project.description}
-            category={project.category}
-            difficulty={project.difficulty}
-            tags={project.tags}
-          />
-        ))}
-      </div>
-    </section>
+  <main class="w-full pb-24">
+    <BentoCards />
   </main>
 
   <Footer />
