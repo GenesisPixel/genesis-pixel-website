@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import GradientBlur from '../components/GradientBlur.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
@@ -15,6 +16,7 @@ const recentProjects = projects.slice(0, 3);
 ---
 
 <Layout title="GenesisPixel - Aprende Animaciones Web y Desarrollo Creativo">
+  <GradientBlur />
   <Navbar />
 
   <Hero
@@ -24,7 +26,7 @@ const recentProjects = projects.slice(0, 3);
     secondaryCTA={{ label: 'Explorar Ejemplos', href: '/ejemplos' }}
   />
 
-  <main class="mx-auto max-w-7xl px-6 pb-24">
+  <main class="mx-auto max-w-[1000px] px-6 pb-24">
     <section class="py-16">
       <SectionHeader
         title="Rutas de Aprendizaje"
