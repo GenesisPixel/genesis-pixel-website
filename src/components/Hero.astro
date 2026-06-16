@@ -80,7 +80,7 @@ const titleChars = title.split('').map((char, i) =>
       {primaryCTA && (
         <a
           href={primaryCTA.href}
-          class="inline-flex items-center justify-center rounded-[var(--radius-base)] bg-[var(--color-text)] px-6 py-3 text-sm font-semibold text-[var(--dm-dark-500)] transition-all hover:opacity-90"
+          class="inline-flex items-center justify-center rounded-[30px] bg-[var(--color-text)] px-6 py-3 text-sm font-normal text-[var(--dm-dark-500)] transition-all hover:opacity-90"
         >
           {primaryCTA.label}
           <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +92,7 @@ const titleChars = title.split('').map((char, i) =>
       {secondaryCTA && (
         <a
           href={secondaryCTA.href}
-          class="inline-flex items-center justify-center rounded-[var(--radius-base)] border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-[var(--color-text)] transition-all hover:bg-white/10"
+          class="inline-flex items-center justify-center rounded-[30px] border border-white/10 bg-white/5 px-6 py-3 text-sm font-normal text-[var(--color-text)] transition-all hover:bg-white/10"
         >
           {secondaryCTA.label}
         </a>
@@ -101,7 +101,7 @@ const titleChars = title.split('').map((char, i) =>
       {tertiaryCTA && (
         <a
           href={tertiaryCTA.href}
-          class="inline-flex items-center justify-center rounded-[var(--radius-base)] border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-[var(--color-text)] transition-all hover:bg-white/10"
+          class="inline-flex items-center justify-center rounded-[30px] border border-white/10 bg-white/5 px-6 py-3 text-sm font-normal text-[var(--color-text)] transition-all hover:bg-white/10"
         >
           {tertiaryCTA.label}
           <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,7 +176,7 @@ const titleChars = title.split('').map((char, i) =>
         filter: 'blur(0px)',
         duration: 0.9,
         ease: 'power3.out',
-        delay: 0.2
+        delay: 1.5
       });
     }
 
@@ -188,7 +188,7 @@ const titleChars = title.split('').map((char, i) =>
         filter: 'blur(0px)',
         duration: 0.9,
         ease: 'power3.out',
-        delay: 0.35
+        delay: 1.7
       });
     }
   });
