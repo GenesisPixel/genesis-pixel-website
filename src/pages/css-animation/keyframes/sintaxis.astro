@@ -1,0 +1,143 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+
+const syntaxExample = `/* Sintaxis básica */
+@keyframes animationName {
+  from {
+    /* estilos iniciales */
+  }
+  to {
+    /* estilos finales */
+  }
+}
+
+/* Usando porcentajes */
+@keyframes animationName {
+  0% {
+    /* inicio */
+  }
+  50% {
+    /* medio */
+  }
+  100% {
+    /* fin */
+  }
+}`;
+
+const selectorExample = `.element {
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+/* Shorthand */
+.element {
+  animation: fadeIn 0.5s ease-out 0s 1 normal forwards running;
+}`;
+---
+
+<CourseLayout
+  title="Sintaxis - Keyframes - CSS Animation"
+  currentLesson="/css-animation/keyframes/sintaxis"
+  prevLesson={{ title: '¿Qué son los Keyframes?', href: '/css-animation/keyframes/que-son' }}
+  nextLesson={{ title: 'Propiedades de Animación', href: '/css-animation/keyframes/propiedades' }}
+>
+  <div class="mb-8">
+    <div class="inline-flex items-center gap-2 text-sm text-[var(--dm-light-300)]">
+      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--color-text)]/10 text-xs font-semibold text-[var(--color-text)]">01</span>
+      Capítulo 1 · Lección 2
+    </div>
+    <h1 class="mt-4 font-afronaut text-4xl font-light text-[var(--color-text)]">Sintaxis</h1>
+    <div class="mt-4 flex flex-wrap gap-3 text-sm text-[var(--dm-light-300)]">
+      <span class="flex items-center gap-1">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        8 min de lectura
+      </span>
+      <span class="rounded-full bg-[var(--dm-green)]/20 px-3 py-1 text-xs font-medium text-[var(--dm-green)]">Principiante</span>
+    </div>
+  </div>
+
+  <article class="prose prose-invert max-w-none">
+    <h2>Selector @keyframes</h2>
+    <p>
+      El selector @keyframes es la regla CSS que define una animación. Su sintaxis es similar a la de otros selectores CSS, pero con una estructura interna única. Dentro de las llaves, definimos los keyframes que componen nuestra animación.
+    </p>
+    <p>
+      El nombre que le damos a la animación debe ser único dentro del documento. Puedes usar letras, números, guiones y guiones bajos, pero no puedes comenzar con un número ni usar espacios. Es una buena práctica usar nombres descriptivos que indiquen qué hace la animación.
+    </p>
+
+    <h2>Porcentajes y Palabras Clave</h2>
+    <p>
+      Los keyframes se definen usando porcentajes que van del 0% al 100%. El 0% representa el inicio de la animación y el 100% representa el final. Puedes usar cualquier porcentaje intermedio para definir estados adicionales.
+    </p>
+    <p>
+      Las palabras clave <code>from</code> y <code>to</code> son atajos para <code>0%</code> y <code>100%</code> respectivamente. Son útiles cuando solo tienes dos estados, pero para animaciones más complejas, los porcentajes te dan más control.
+    </p>
+  </article>
+
+  <div class="my-8 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">💡</span>
+      Consejo Profesional
+    </h3>
+    <p class="text-sm text-[var(--dm-light-200)]">
+      Organiza tus keyframes en orden cronológico. Aunque CSS los procesará correctamente en cualquier orden, mantener el orden cronológico hace tu código más legible y fácil de mantener.
+    </p>
+  </div>
+
+  <h2 class="mt-8 mb-4 font-afronaut text-2xl font-light text-[var(--color-text)]">Ejemplos de Sintaxis</h2>
+  
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Sintaxis Básica</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{syntaxExample}</code></pre>
+  </div>
+
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Propiedades de Animación</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{selectorExample}</code></pre>
+  </div>
+
+  <div class="my-8 rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">⚠️</span>
+      Errores Comunes
+    </h3>
+    <ul class="space-y-2 text-sm text-[var(--dm-light-200)]">
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>Olvidar el guion en animation-name:</strong> La propiedad se escribe con guion, no en camelCase.</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>No cerrar las llaves:</strong> Asegúrate de que cada keyframe esté correctamente cerrado.</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>Mezclar porcentajes y palabras clave:</strong> No uses from/to junto con porcentajes en el mismo keyframe.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="my-8 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">🧪</span>
+      Practica lo Aprendido
+    </h3>
+    <p class="mb-4 text-sm text-[var(--dm-light-200)]">
+      Crea una animación que cambie el color de fondo de un elemento a través de 4 colores diferentes. Usa porcentajes para definir cada cambio.
+    </p>
+    <ol class="list-inside list-decimal space-y-2 text-sm text-[var(--dm-light-200)]">
+      <li>Define un @keyframes con nombre "colorCycle"</li>
+      <li>Usa 0%, 25%, 50%, 75% y 100% para 4 colores</li>
+      <li>Aplica la animación a un elemento div</li>
+      <li>Experimenta con diferentes duraciones</li>
+    </ol>
+  </div>
+</CourseLayout>

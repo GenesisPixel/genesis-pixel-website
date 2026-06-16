@@ -1,0 +1,309 @@
+---
+import Navbar from './Navbar.astro';
+import Footer from './Footer.astro';
+import Container from './Container.astro';
+
+interface Props {
+  title: string;
+  currentLesson?: string;
+  prevLesson?: { title: string; href: string };
+  nextLesson?: { title: string; href: string };
+}
+
+const { title, currentLesson, prevLesson, nextLesson } = Astro.props;
+
+const chapters = [
+  {
+    number: '01',
+    title: 'Keyframes',
+    href: '/css-animation/keyframes',
+    lessons: [
+      { title: 'Introducción', href: '/css-animation/keyframes' },
+      { title: '¿Qué son los Keyframes?', href: '/css-animation/keyframes/que-son' },
+      { title: 'Sintaxis', href: '/css-animation/keyframes/sintaxis' },
+      { title: 'Propiedades de Animación', href: '/css-animation/keyframes/propiedades' },
+      { title: 'Timing Functions', href: '/css-animation/keyframes/timing-functions' },
+      { title: 'Animaciones Avanzadas', href: '/css-animation/keyframes/avanzadas' },
+      { title: 'Casos Prácticos', href: '/css-animation/keyframes/casos-practicos' },
+      { title: 'Buenas Prácticas', href: '/css-animation/keyframes/buenas-practicas' },
+      { title: 'Ejercicios', href: '/css-animation/keyframes/ejercicios' },
+      { title: 'Proyecto Final', href: '/css-animation/keyframes/proyecto-final' },
+    ],
+  },
+  {
+    number: '02',
+    title: 'Transforms',
+    href: '/css-animation/transforms',
+    lessons: [
+      { title: 'Introducción', href: '/css-animation/transforms' },
+      { title: 'Translate', href: '/css-animation/transforms/translate' },
+      { title: 'Scale', href: '/css-animation/transforms/scale' },
+      { title: 'Rotate', href: '/css-animation/transforms/rotate' },
+      { title: 'Skew', href: '/css-animation/transforms/skew' },
+      { title: 'Transform Origin', href: '/css-animation/transforms/transform-origin' },
+      { title: 'Transformaciones 3D', href: '/css-animation/transforms/3d' },
+      { title: 'Casos Prácticos', href: '/css-animation/transforms/casos-practicos' },
+      { title: 'Ejercicios', href: '/css-animation/transforms/ejercicios' },
+      { title: 'Proyecto Final', href: '/css-animation/transforms/proyecto-final' },
+    ],
+  },
+  {
+    number: '03',
+    title: 'Transitions',
+    href: '/css-animation/transitions',
+    lessons: [
+      { title: 'Introducción', href: '/css-animation/transitions' },
+      { title: 'Sintaxis', href: '/css-animation/transitions/sintaxis' },
+      { title: 'Timing Functions', href: '/css-animation/transitions/timing-functions' },
+      { title: 'Hover Effects', href: '/css-animation/transitions/hover-effects' },
+      { title: 'Transiciones Avanzadas', href: '/css-animation/transitions/avanzadas' },
+      { title: 'Casos Prácticos', href: '/css-animation/transitions/casos-practicos' },
+      { title: 'Optimización', href: '/css-animation/transitions/optimizacion' },
+      { title: 'Ejercicios', href: '/css-animation/transitions/ejercicios' },
+      { title: 'Proyecto Final', href: '/css-animation/transitions/proyecto-final' },
+    ],
+  },
+];
+---
+
+<style>
+  .course-layout {
+    display: flex;
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-right: 16px;
+  }
+
+  .sidebar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .chapter-group {
+    margin-bottom: 24px;
+  }
+
+  .chapter-title {
+    font-family: var(--font-afronaut);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--dm-light-200);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .chapter-title:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .chapter-title.active {
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .chapter-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .chapter-title.active .chapter-number {
+    background: var(--color-text);
+    color: var(--dm-dark-500);
+  }
+
+  .lesson-list {
+    margin-left: 36px;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    padding-left: 12px;
+  }
+
+  .lesson-link {
+    display: block;
+    padding: 6px 12px;
+    font-size: 0.8125rem;
+    color: var(--dm-light-300);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    margin-bottom: 2px;
+  }
+
+  .lesson-link:hover {
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .lesson-link.active {
+    color: var(--color-text);
+    background: rgba(160, 243, 109, 0.1);
+    font-weight: 500;
+  }
+
+  .main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 32px 0;
+  }
+
+  .lesson-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    flex: 1;
+    max-width: 300px;
+  }
+
+  .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-btn.prev {
+    align-items: flex-start;
+  }
+
+  .nav-btn.next {
+    align-items: flex-end;
+    margin-left: auto;
+  }
+
+  .nav-btn-label {
+    font-size: 0.75rem;
+    color: var(--dm-light-300);
+  }
+
+  .nav-btn-title {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 1024px) {
+    .course-layout {
+      flex-direction: column;
+    }
+
+    .sidebar {
+      width: 100%;
+      position: static;
+      height: auto;
+      max-height: none;
+      padding-right: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+  }
+</style>
+
+<Layout title={title}>
+  <Navbar />
+
+  <main class="pt-24 pb-24">
+    <div class="course-layout">
+      <aside class="sidebar">
+        <div class="mb-6">
+          <a href="/css-animation" class="font-afronaut text-lg font-light text-[var(--color-text)] hover:opacity-80 transition-opacity">
+            CSS Animations
+          </a>
+        </div>
+
+        {chapters.map((chapter) => (
+          <div class="chapter-group">
+            <a
+              href={chapter.href}
+              class:list={['chapter-title', { active: currentLesson?.startsWith(chapter.href) }]}
+            >
+              <span class="chapter-number">{chapter.number}</span>
+              {chapter.title}
+            </a>
+            <div class="lesson-list">
+              {chapter.lessons.map((lesson) => (
+                <a
+                  href={lesson.href}
+                  class:list={['lesson-link', { active: currentLesson === lesson.href }]}
+                >
+                  {lesson.title}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </aside>
+
+      <article class="main-content">
+        <slot />
+
+        {(prevLesson || nextLesson) && (
+          <nav class="lesson-nav">
+            {prevLesson ? (
+              <a href={prevLesson.href} class="nav-btn prev">
+                <span class="nav-btn-label">← Anterior</span>
+                <span class="nav-btn-title">{prevLesson.title}</span>
+              </a>
+            ) : <div />}
+            {nextLesson ? (
+              <a href={nextLesson.href} class="nav-btn next">
+                <span class="nav-btn-label">Siguiente →</span>
+                <span class="nav-btn-title">{nextLesson.title}</span>
+              </a>
+            ) : <div />}
+          </nav>
+        )}
+      </article>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

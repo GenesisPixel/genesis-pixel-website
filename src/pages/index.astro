@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import BentoCards from '../components/BentoCards.astro';
 import Footer from '../components/Footer.astro';
+import Container from '../components/Container.astro';
 ---
 
 <Layout title="GenesisPixel - Aprende Animaciones Web y Desarrollo Creativo">
@@ -19,8 +20,10 @@ import Footer from '../components/Footer.astro';
     tertiaryCTA={{ label: 'CSS Animation', href: '/css-animation' }}
   />
 
-  <main class="w-full pb-24">
-    <BentoCards />
+  <main class="pb-24">
+    <Container>
+      <BentoCards />
+    </Container>
   </main>
 
   <Footer />

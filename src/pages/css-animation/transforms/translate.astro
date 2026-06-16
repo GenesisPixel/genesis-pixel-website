@@ -1,0 +1,223 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+
+const translateExample = `/* Movimiento horizontal */
+.element {
+  transform: translateX(100px);
+}
+
+/* Movimiento vertical */
+.element {
+  transform: translateY(-50px);
+}
+
+/* Movimiento en ambos ejes */
+.element {
+  transform: translate(100px, -50px);
+}
+
+/* Porcentajes */
+.element {
+  transform: translateX(50%);
+}`;
+
+const animationExample = `@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-element {
+  animation: slideIn 0.6s ease-out forwards;
+}`;
+
+const htmlCode = `<div class="slider">
+  <div class="slider-item">Elemento 1</div>
+  <div class="slider-item">Elemento 2</div>
+  <div class="slider-item">Elemento 3</div>
+</div>`;
+
+const cssCode = `.slider-item {
+  transform: translateX(-100%);
+  opacity: 0;
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+.slider-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.slider-item:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}`;
+---
+
+<CourseLayout
+  title="Translate - Transforms - CSS Animation"
+  currentLesson="/css-animation/transforms/translate"
+  prevLesson={{ title: 'Introducción', href: '/css-animation/transforms' }}
+  nextLesson={{ title: 'Scale', href: '/css-animation/transforms/scale' }}
+>
+  <div class="mb-8">
+    <div class="inline-flex items-center gap-2 text-sm text-[var(--dm-light-300)]">
+      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--color-text)]/10 text-xs font-semibold text-[var(--color-text)]">02</span>
+      Capítulo 2 · Lección 1
+    </div>
+    <h1 class="mt-4 font-afronaut text-4xl font-light text-[var(--color-text)]">Translate</h1>
+    <div class="mt-4 flex flex-wrap gap-3 text-sm text-[var(--dm-light-300)]">
+      <span class="flex items-center gap-1">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        10 min de lectura
+      </span>
+      <span class="rounded-full bg-[var(--dm-green)]/20 px-3 py-1 text-xs font-medium text-[var(--dm-green)]">Principiante</span>
+    </div>
+  </div>
+
+  <article class="prose prose-invert max-w-none">
+    <h2>¿Qué es Translate?</h2>
+    <p>
+      La función <code>translate()</code> es una de las transformaciones CSS más utilizadas. Permite mover un elemento desde su posición original sin afectar el flujo del documento. A diferencia de cambiar las propiedades <code>top</code>, <code>left</code>, <code>right</code> o <code>bottom</code>, translate no afecta el layout y es significativamente más performante.
+    </p>
+    <p>
+      Translate funciona en el espacio 2D, permitiéndote mover elementos horizontalmente con <code>translateX()</code>, verticalmente con <code>translateY()</code>, o en ambos ejes simultáneamente con <code>translate()</code>. También acepta porcentajes, lo que lo hace especialmente útil para centrar elementos o crear layouts responsive.
+    </p>
+
+    <h2>Valores y Unidades</h2>
+    <p>
+      Puedes usar diferentes unidades con translate: píxeles (<code>px</code>), ems (<code>em</code>), rems (<code>rem</code>), porcentajes (<code>%</code>), y unidades viewport (<code>vw</code>, <code>vh</code>). Los porcentajes se calculan sobre el tamaño del propio elemento, no del contenedor, lo que lo hace ideal para centrar elementos.
+    </p>
+    <p>
+      También puedes usar valores negativos para mover el elemento en la dirección opuesta. Por ejemplo, <code>translateX(-50%)</code> mueve el elemento a la izquierda la mitad de su propio ancho.
+    </p>
+
+    <h2>Translate en Animaciones</h2>
+    <p>
+      Cuando usas translate en animaciones, es una de las transformaciones más performantes porque puede ser acelerada por hardware (GPU). Esto significa que el navegador puede optimizar su renderizado y evitar reflujo del layout, resultando en animaciones más suaves, especialmente en dispositivos móviles.
+    </p>
+  </article>
+
+  <div class="my-8 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">💡</span>
+      Consejo Profesional
+    </h3>
+    <p class="text-sm text-[var(--dm-light-200)]">
+      Usa <code>translate()</code> en lugar de <code>top/left/right/bottom</code> para animaciones. Las transformaciones son aceleradas por hardware y ofrecen mejor rendimiento que las propiedades de posicionamiento.
+    </p>
+  </div>
+
+  <h2 class="mt-8 mb-4 font-afronaut text-2xl font-light text-[var(--color-text)]">Ejemplos Prácticos</h2>
+  
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Sintaxis de Translate</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{translateExample}</code></pre>
+  </div>
+
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Animación con Translate</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{animationExample}</code></pre>
+  </div>
+
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Vista Previa</h3>
+    <div class="flex flex-col gap-4 rounded-lg bg-[var(--dm-dark-500)] p-8">
+      <div class="animate-slideIn rounded-lg bg-[var(--color-text)] px-6 py-3 text-[var(--dm-dark-500)] text-sm font-medium">
+        Elemento Deslizante 1
+      </div>
+      <div class="animate-slideIn2 rounded-lg bg-[var(--color-text)] px-6 py-3 text-[var(--dm-dark-500)] text-sm font-medium">
+        Elemento Deslizante 2
+      </div>
+      <div class="animate-slideIn3 rounded-lg bg-[var(--color-text)] px-6 py-3 text-[var(--dm-dark-500)] text-sm font-medium">
+        Elemento Deslizante 3
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">HTML</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{htmlCode}</code></pre>
+  </div>
+
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">CSS</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{cssCode}</code></pre>
+  </div>
+
+  <div class="my-8 rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">⚠️</span>
+      Errores Comunes
+    </h3>
+    <ul class="space-y-2 text-sm text-[var(--dm-light-200)]">
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>Olvidar la unidad:</strong> Siempre especifica una unidad (px, %, em, etc.). Los valores sin unidad pueden causar comportamientos inesperados.</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>Confundir % en translate con % en top/left:</strong> En translate, el porcentaje se calcula sobre el tamaño del elemento, no del contenedor.</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>No usar GPU acceleration:</strong> Para mejores performances, combina translate con will-change o transform: translateZ(0).</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="my-8 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">🧪</span>
+      Practica lo Aprendido
+    </h3>
+    <p class="mb-4 text-sm text-[var(--dm-light-200)]">
+      Crea un carrusel de elementos que se deslicen desde la derecha. Cada elemento debe entrar con un ligero retraso escalonado.
+    </p>
+    <ol class="list-inside list-decimal space-y-2 text-sm text-[var(--dm-light-200)]">
+      <li>Crea 5 elementos div con diferentes textos</li>
+      <li>Define un @keyframes que use translateX para moverlos</li>
+      <li>Aplica animation-delay escalonado a cada elemento</li>
+      <li>Experimenta con diferentes valores de translate</li>
+    </ol>
+  </div>
+</CourseLayout>
+
+<style>
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slideIn {
+    animation: slideIn 0.6s ease-out forwards;
+  }
+
+  .animate-slideIn2 {
+    animation: slideIn 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-slideIn3 {
+    animation: slideIn 0.6s ease-out 0.4s forwards;
+    opacity: 0;
+  }
+</style>

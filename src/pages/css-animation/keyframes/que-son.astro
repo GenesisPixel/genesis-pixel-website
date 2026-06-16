@@ -1,0 +1,200 @@
+---
+import CourseLayout from '../../layouts/CourseLayout.astro';
+
+const codeExample = `@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.element {
+  animation: fadeIn 0.5s ease-out forwards;
+}`;
+
+const htmlCode = `<div class="card">
+  <h2>Título de la Tarjeta</h2>
+  <p>Contenido de ejemplo que se animará.</p>
+</div>`;
+
+const cssCode = `.card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}`;
+---
+
+<CourseLayout
+  title="¿Qué son los Keyframes? - CSS Animation"
+  currentLesson="/css-animation/keyframes/que-son"
+  prevLesson={{ title: 'Introducción', href: '/css-animation/keyframes' }}
+  nextLesson={{ title: 'Sintaxis', href: '/css-animation/keyframes/sintaxis' }}
+>
+  <div class="mb-8">
+    <div class="inline-flex items-center gap-2 text-sm text-[var(--dm-light-300)]">
+      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--color-text)]/10 text-xs font-semibold text-[var(--color-text)]">01</span>
+      Capítulo 1 · Lección 1
+    </div>
+    <h1 class="mt-4 font-afronaut text-4xl font-light text-[var(--color-text)]">¿Qué son los Keyframes?</h1>
+    <div class="mt-4 flex flex-wrap gap-3 text-sm text-[var(--dm-light-300)]">
+      <span class="flex items-center gap-1">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        5 min de lectura
+      </span>
+      <span class="rounded-full bg-[var(--dm-green)]/20 px-3 py-1 text-xs font-medium text-[var(--dm-green)]">Principiante</span>
+    </div>
+  </div>
+
+  <article class="prose prose-invert max-w-none">
+    <h2>Introducción</h2>
+    <p>
+      Los keyframes son el corazón de las animaciones CSS. Al igual que un animador define fotogramas clave en una película, los keyframes CSS definen los estados específicos por los que debe pasar un elemento durante su animación. Esta herramienta fundamental te permite crear movimientos fluidos, transiciones elegantes y efectos visuales que dan vida a tus interfaces web.
+    </p>
+    <p>
+      Antes de los keyframes, las animaciones web dependían exclusivamente de JavaScript, lo que las hacía más complejas de implementar y menos performantes. Con la llegada de CSS Animations, los keyframes se convirtieron en el estándar para crear animaciones declarativas, eficientes y fibles de mantener.
+    </p>
+
+    <h2>Conceptos Fundamentales</h2>
+    <p>
+      Un keyframe define un punto específico en el tiempo de una animación. Puedes pensar en ellos como las páginas de un libro de animación: cada página muestra cómo se ve el elemento en un momento determinado. El navegador se encarga de interpolar todos los estados intermedios, creando un movimiento suave y natural.
+    </p>
+    <p>
+      Cada animación CSS requiere al menos dos keyframes: uno que define el estado inicial (from o 0%) y otro que define el estado final (to o 100%). Puedes agregar tantos keyframes intermedios como necesites para crear animaciones más complejas y detalladas.
+    </p>
+
+    <h2>Terminología Clave</h2>
+    <p>
+      Para trabajar efectivamente con keyframes, es importante familiarizarse con la terminología específica. Un <strong>keyframe</strong> es un objeto que contiene un conjunto de estilos CSS que se aplicarán en un momento específico de la animación. El <strong>selector @keyframes</strong> es la regla CSS que contiene todos los keyframes de una animación.
+    </p>
+    <p>
+      El <strong>nombre de la animación</strong> es un identificador único que utilizas para referenciar la animación en las propiedades del elemento. Las <strong>porcentajes</strong> (0%, 25%, 50%, 75%, 100%) definen en qué punto de la duración total se aplican los estilos de cada keyframe. Las palabras clave <strong>from</strong> y <strong>to</strong> son atajos para 0% y 100% respectivamente.
+    </p>
+  </article>
+
+  <div class="my-8 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">💡</span>
+      Consejo Profesional
+    </h3>
+    <p class="text-sm text-[var(--dm-light-200)]">
+      Siempre define explícitamente los keyframes 0% y 100% aunque no cambies ningún estilo. Esto hace tu código más claro y evita comportamientos inesperados en diferentes navegadores.
+    </p>
+  </div>
+
+  <h2 class="mt-8 mb-4 font-afronaut text-2xl font-light text-[var(--color-text)]">Ejemplo Práctico</h2>
+  
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Código de Ejemplo</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{codeExample}</code></pre>
+  </div>
+
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Vista Previa</h3>
+    <div class="flex items-center justify-center rounded-lg bg-[var(--dm-dark-500)] p-8">
+      <div class="animate-fadeIn rounded-lg bg-[var(--color-text)] px-6 py-4 text-[var(--dm-dark-500)]">
+        Elemento Animado
+      </div>
+    </div>
+    <p class="mt-4 text-sm text-[var(--dm-light-300)]">
+      El elemento aparece suavemente deslizándose desde abajo hacia arriba.
+    </p>
+  </div>
+
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">HTML</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{htmlCode}</code></pre>
+  </div>
+
+  <div class="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">CSS</h3>
+    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{cssCode}</code></pre>
+  </div>
+
+  <div class="my-8 rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">⚠️</span>
+      Errores Comunes
+    </h3>
+    <ul class="space-y-2 text-sm text-[var(--dm-light-200)]">
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>Omitir el nombre de la animación:</strong> Siempre define un nombre único para cada @keyframes.</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>No incluir todos los estados:</strong> Asegúrate de definir tanto el estado inicial como el final.</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-yellow-500">•</span>
+        <span><strong>Usar valores absolutos sin fallback:</strong> Siempre incluye un fallback para navegadores antiguos.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="my-8 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 flex items-center gap-2 text-[var(--color-text)]">
+      <span class="text-xl">🧪</span>
+      Practica lo Aprendido
+    </h3>
+    <p class="mb-4 text-sm text-[var(--dm-light-200)]">
+      Crea una animación que haga que un cuadrado se mueva de izquierda a derecha y vuelva al punto de origen. Usa al menos 3 keyframes intermedios.
+    </p>
+    <ol class="list-inside list-decimal space-y-2 text-sm text-[var(--dm-light-200)]">
+      <li>Crea un elemento div con dimensiones de 100x100px</li>
+      <li>Define un @keyframes que mueva el elemento</li>
+      <li>Aplica la animación con duración de 2 segundos</li>
+      <li>Experimenta con diferentes valores de iteración</li>
+    </ol>
+  </div>
+
+  <div class="my-8 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+    <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Playground</h3>
+    <p class="mb-4 text-sm text-[var(--dm-light-300)]">
+      Modifica el código para ver diferentes resultados:
+    </p>
+    <div class="grid gap-4 md:grid-cols-2">
+      <div>
+        <label class="mb-2 block text-xs text-[var(--dm-light-300)]">HTML</label>
+        <textarea class="w-full rounded-lg bg-[var(--dm-dark-500)] p-3 text-sm text-[var(--dm-light-200)] font-mono" rows="4">{htmlCode}</textarea>
+      </div>
+      <div>
+        <label class="mb-2 block text-xs text-[var(--dm-light-300)]">CSS</label>
+        <textarea class="w-full rounded-lg bg-[var(--dm-dark-500)] p-3 text-sm text-[var(--dm-light-200)] font-mono" rows="4">{cssCode}</textarea>
+      </div>
+    </div>
+  </div>
+</CourseLayout>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+</style>
