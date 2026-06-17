@@ -6,8 +6,6 @@ import ResultPreview from '../../../components/ResultPreview.astro';
 import ConsejoProfesional from '../../../components/ConsejoProfesional.astro';
 import ErroresComunesV3 from '../../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../../components/PracticeCards.astro';
-import Playground from '../../../components/Playground.astro';
-
 const htmlCode = `<div class="card">
   <h2>Título de la Tarjeta</h2>
   <p>Contenido de ejemplo que se animará.</p>
@@ -27,28 +25,6 @@ const cssCode = `.card {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}`;
-
-const playgroundHtml = `<div class="box"></div>`;
-const playgroundCss = `.box {
-  width: 100px;
-  height: 100px;
-  background-color: #bb86fc;
-  border-radius: 12px;
-  animation: bounceRotate 2s infinite ease-in-out;
-  margin: 40px auto;
-}
-
-@keyframes bounceRotate {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-    border-radius: 12px;
-  }
-  50% {
-    transform: translateY(-60px) rotate(180deg);
-    background-color: #03dac6;
-    border-radius: 50%;
   }
 }`;
 
@@ -153,8 +129,6 @@ const practiceSteps = [
       steps={practiceSteps}
     />
   </div>
-
-  <Playground htmlCode={playgroundHtml} cssCode={playgroundCss} />
 </CourseLayout>
 
 <style>
