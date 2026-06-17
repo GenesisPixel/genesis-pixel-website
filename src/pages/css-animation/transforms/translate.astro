@@ -1,5 +1,11 @@
 ---
 import CourseLayout from '../../../layouts/CourseLayout.astro';
+import ChapterHeader from '../../../components/ChapterHeader.astro';
+import CodeBlock from '../../../components/CodeBlock.astro';
+import TabbedCodeBlock from '../../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../../components/ConsejoProfesional.astro';
+import ErroresComunes from '../../../components/ErroresComunes.astro';
 import PracticeCards from '../../../components/PracticeCards.astro';
 
 const translateExample = `/* Movimiento horizontal */
@@ -79,22 +85,12 @@ const practiceSteps = [
   prevLesson={{ title: 'Introducción', href: '/css-animation/transforms' }}
   nextLesson={{ title: 'Scale', href: '/css-animation/transforms/scale' }}
 >
-  <div class="mb-8">
-    <div class="inline-flex items-center gap-2 text-sm text-[var(--dm-light-300)]">
-      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--color-text)]/10 text-xs font-semibold text-[var(--color-text)]">02</span>
-      Capítulo 2 · Lección 1
-    </div>
-    <h1 class="mt-4 font-afronaut text-4xl font-light text-[var(--color-text)] sm:text-5xl">Translate</h1>
-    <div class="mt-4 flex flex-wrap gap-3 text-sm text-[var(--dm-light-300)]">
-      <span class="flex items-center gap-1">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        10 min de lectura
-      </span>
-      <span class="rounded-full bg-[var(--dm-green)]/20 px-3 py-1 text-xs font-medium text-[var(--dm-green)]">Principiante</span>
-    </div>
-  </div>
+  <ChapterHeader
+    chapterNumber="02"
+    chapterLabel="Capítulo 2 · Lección 1"
+    title="Translate"
+    readingTime={10}
+  />
 
   <article class="prose prose-invert max-w-none">
     <h3>¿Qué es Translate?</h3>
@@ -120,56 +116,20 @@ const practiceSteps = [
   </article>
 
   <h2 class="mt-8 mb-4 font-afronaut text-2xl font-light text-[var(--color-text)]">Ejemplos Prácticos</h2>
-  
-  <div class="mb-6">
-    <div class="flex items-center justify-between">
-      <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Sintaxis de Translate</h3>
-      <button class="copy-btn mb-4 flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1 text-xs font-light text-soft-white hover:bg-white/20 transition-colors" data-code={translateExample}>
-        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg>
-        Copiar
-      </button>
-    </div>
-    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{translateExample}</code></pre>
-  </div>
 
-  <div class="mb-6">
-    <div class="flex items-center justify-between">
-      <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Animación con Translate</h3>
-      <button class="copy-btn mb-4 flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1 text-xs font-light text-soft-white hover:bg-white/20 transition-colors" data-code={animationExample}>
-        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg>
-        Copiar
-      </button>
-    </div>
-    <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{animationExample}</code></pre>
-  </div>
+  <CodeBlock title="Sintaxis de Translate" code={translateExample} />
+  <CodeBlock title="Animación con Translate" code={animationExample} />
 
   <div class="mb-6 flex flex-col gap-6 lg:flex-row">
-    <div class="flex-1">
-      <div class="mb-4 flex items-center gap-2">
-        <button class="code-tab active rounded-md px-3 py-1.5 text-xs font-light text-soft-white transition-colors" data-tab="html">HTML</button>
-        <button class="code-tab rounded-md px-3 py-1.5 text-xs font-light text-soft-white transition-colors" data-tab="css">CSS</button>
-        <div class="flex-1"></div>
-        <button class="copy-btn flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1 text-xs font-light text-soft-white hover:bg-white/20 transition-colors">
-          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-          Copiar
-        </button>
-      </div>
-      <div class="code-content" data-tab="html">
-        <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{htmlCode}</code></pre>
-      </div>
-      <div class="code-content hidden" data-tab="css">
-        <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{cssCode}</code></pre>
-      </div>
-    </div>
-    <div class="flex-1">
-      <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Resultado</h3>
-      <div class="flex flex-col gap-4 rounded-lg bg-[var(--dm-dark-500)] p-8">
+    <TabbedCodeBlock
+      group="example"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Los elementos se deslizan desde la izquierda con un retraso escalonado.">
+      <div class="flex flex-col gap-4">
         <div class="animate-slideIn rounded-lg bg-[var(--color-text)] px-6 py-3 text-[var(--dm-dark-500)] text-sm font-medium">
           Elemento Deslizante 1
         </div>
@@ -180,41 +140,17 @@ const practiceSteps = [
           Elemento Deslizante 3
         </div>
       </div>
-      <p class="mt-4 text-sm text-[var(--dm-light-300)]">
-        Los elementos se deslizan desde la izquierda con un retraso escalonado.
-      </p>
-    </div>
+    </ResultPreview>
   </div>
 
   <div class="my-8 flex flex-col gap-6">
-    <div class="border-l-[3px] border-[var(--color-text)] bg-[var(--dm-green-bg)] p-6">
-      <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">
-        Consejo Profesional
-      </h3>
-      <p class="text-sm text-soft-white">
-        Usa <code>translate()</code> en lugar de <code>top/left/right/bottom</code> para animaciones. Las transformaciones son aceleradas por hardware y ofrecen mejor rendimiento que las propiedades de posicionamiento.
-      </p>
-    </div>
+    <ConsejoProfesional tip='Usa <code>translate()</code> en lugar de <code>top/left/right/bottom</code> para animaciones. Las transformaciones son aceleradas por hardware y ofrecen mejor rendimiento que las propiedades de posicionamiento.' />
 
-    <div class="p-6">
-      <h3 class="mb-4 font-medium text-[var(--color-text)]">
-        Errores Comunes
-      </h3>
-      <ul class="space-y-2 text-sm text-soft-white">
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>Olvidar la unidad:</strong> Siempre especifica una unidad (px, %, em, etc.). Los valores sin unidad pueden causar comportamientos inesperados.</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>Confundir % en translate con % en top/left:</strong> En translate, el porcentaje se calcula sobre el tamaño del elemento, no del contenedor.</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>No usar GPU acceleration:</strong> Para mejores performances, combina translate con will-change o transform: translateZ(0).</span>
-        </li>
-      </ul>
-    </div>
+    <ErroresComunes errors={[
+      { label: 'Olvidar la unidad', description: 'Siempre especifica una unidad (px, %, em, etc.). Los valores sin unidad pueden causar comportamientos inesperados.' },
+      { label: 'Confundir % en translate con % en top/left', description: 'En translate, el porcentaje se calcula sobre el tamaño del elemento, no del contenedor.' },
+      { label: 'No usar GPU acceleration', description: 'Para mejores performances, combina translate con will-change o transform: translateZ(0).' },
+    ]} />
 
     <PracticeCards
       title="Practica lo Aprendido"
@@ -256,40 +192,6 @@ const practiceSteps = [
 </style>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    document.querySelectorAll('.copy-btn').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        let codeToCopy = btn.getAttribute('data-code');
-        
-        if (!codeToCopy) {
-          const container = btn.closest('.flex-1');
-          const activeTab = container?.querySelector('.code-content:not(.hidden) code');
-          if (activeTab) {
-            codeToCopy = activeTab.textContent || '';
-          }
-        }
-
-        if (codeToCopy) {
-          await navigator.clipboard.writeText(codeToCopy);
-          const originalText = btn.innerHTML;
-          btn.innerHTML = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> Copiado!';
-          btn.classList.add('bg-[var(--dm-green)]');
-          setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.classList.remove('bg-[var(--dm-green)]');
-          }, 2000);
-        }
-      });
-    });
-
-    document.querySelectorAll('.code-tab').forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const container = tab.closest('.flex-1');
-        container?.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
-        container?.querySelectorAll('.code-content').forEach(c => c.classList.add('hidden'));
-        tab.classList.add('active');
-        container?.querySelector(`.code-content[data-tab="${tab.getAttribute('data-tab')}"]`)?.classList.remove('hidden');
-      });
-    });
-  });
+  import { initCodeInteractions } from '../../../scripts/code-interactions.js';
+  document.addEventListener('astro:page-load', () => initCodeInteractions());
 </script>

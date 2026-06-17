@@ -1,5 +1,10 @@
 ---
 import CourseLayout from '../../../layouts/CourseLayout.astro';
+import ChapterHeader from '../../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../../components/ConsejoProfesional.astro';
+import ErroresComunes from '../../../components/ErroresComunes.astro';
 import PracticeCards from '../../../components/PracticeCards.astro';
 
 const syntaxExample = `/* Sintaxis completa */
@@ -78,22 +83,12 @@ const practiceSteps = [
   prevLesson={{ title: 'Introducción', href: '/css-animation/transitions' }}
   nextLesson={{ title: 'Timing Functions', href: '/css-animation/transitions/timing-functions' }}
 >
-  <div class="mb-8">
-    <div class="inline-flex items-center gap-2 text-sm text-[var(--dm-light-300)]">
-      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--color-text)]/10 text-xs font-semibold text-[var(--color-text)]">03</span>
-      Capítulo 3 · Lección 1
-    </div>
-    <h1 class="mt-4 font-afronaut text-4xl font-light text-[var(--color-text)] sm:text-5xl">Sintaxis</h1>
-    <div class="mt-4 flex flex-wrap gap-3 text-sm text-[var(--dm-light-300)]">
-      <span class="flex items-center gap-1">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        8 min de lectura
-      </span>
-      <span class="rounded-full bg-[var(--dm-green)]/20 px-3 py-1 text-xs font-medium text-[var(--dm-green)]">Principiante</span>
-    </div>
-  </div>
+  <ChapterHeader
+    chapterNumber="03"
+    chapterLabel="Capítulo 3 · Lección 1"
+    title="Sintaxis"
+    readingTime={8}
+  />
 
   <article class="prose prose-invert max-w-none">
     <h3>¿Qué son las Transiciones?</h3>
@@ -119,93 +114,40 @@ const practiceSteps = [
   </article>
 
   <h2 class="mt-8 mb-4 font-afronaut text-2xl font-light text-[var(--color-text)]">Ejemplos de Sintaxis</h2>
-  
-  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
-    <div class="flex-1">
-      <div class="mb-4 flex items-center gap-2">
-        <button class="code-tab active rounded-md px-3 py-1.5 text-xs font-light text-soft-white transition-colors" data-tab="syntax">Sintaxis Completa</button>
-        <button class="code-tab rounded-md px-3 py-1.5 text-xs font-light text-soft-white transition-colors" data-tab="props">Propiedades Específicas</button>
-        <div class="flex-1"></div>
-        <button class="copy-btn flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1 text-xs font-light text-soft-white hover:bg-white/20 transition-colors">
-          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-          Copiar
-        </button>
-      </div>
-      <div class="code-content" data-tab="syntax">
-        <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{syntaxExample}</code></pre>
-      </div>
-      <div class="code-content hidden" data-tab="props">
-        <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{propertyExample}</code></pre>
-      </div>
-    </div>
-  </div>
+
+  <TabbedCodeBlock
+    group="syntax"
+    tabs={[
+      { id: 'syntax', label: 'Sintaxis Completa', code: syntaxExample },
+      { id: 'props', label: 'Propiedades Específicas', code: propertyExample },
+    ]}
+  />
 
   <h2 class="mt-8 mb-4 font-afronaut text-2xl font-light text-[var(--color-text)]">Ejemplo Práctico</h2>
 
   <div class="mb-6 flex flex-col gap-6 lg:flex-row">
-    <div class="flex-1">
-      <div class="mb-4 flex items-center gap-2">
-        <button class="code-tab active rounded-md px-3 py-1.5 text-xs font-light text-soft-white transition-colors" data-tab="prac-html">HTML</button>
-        <button class="code-tab rounded-md px-3 py-1.5 text-xs font-light text-soft-white transition-colors" data-tab="prac-css">CSS</button>
-        <div class="flex-1"></div>
-        <button class="copy-btn flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1 text-xs font-light text-soft-white hover:bg-white/20 transition-colors">
-          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-          Copiar
-        </button>
-      </div>
-      <div class="code-content" data-tab="prac-html">
-        <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{htmlCode}</code></pre>
-      </div>
-      <div class="code-content hidden" data-tab="prac-css">
-        <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{cssCode}</code></pre>
-      </div>
-    </div>
-    <div class="flex-1">
-      <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Resultado</h3>
-      <div class="flex items-center justify-center rounded-lg bg-[var(--dm-dark-500)] p-12">
-        <button class="btn-transition">
-          Pasa el mouse
-        </button>
-      </div>
-      <p class="mt-4 text-sm text-[var(--dm-light-300)]">
-        El botón cambia de color, se eleva ligeramente y proyecta una sombra suave al pasar el mouse por encima.
-      </p>
-    </div>
+    <TabbedCodeBlock
+      group="practice"
+      tabs={[
+        { id: 'prac-html', label: 'HTML', code: htmlCode },
+        { id: 'prac-css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="El botón cambia de color, se eleva ligeramente y proyecta una sombra suave al pasar el mouse por encima.">
+      <button class="btn-transition">
+        Pasa el mouse
+      </button>
+    </ResultPreview>
   </div>
 
   <div class="my-8 flex flex-col gap-6">
-    <div class="border-l-[3px] border-[var(--color-text)] bg-[var(--dm-green-bg)] p-6">
-      <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">
-        Consejo Profesional
-      </h3>
-      <p class="text-sm text-soft-white">
-        Evita usar <code>transition: all</code> en producción. Especifica las propiedades que realmente necesitas animar para mejor rendimiento y control más preciso.
-      </p>
-    </div>
+    <ConsejoProfesional tip='Evita usar <code>transition: all</code> en producción. Especifica las propiedades que realmente necesitas animar para mejor rendimiento y control más preciso.' />
 
-    <div class="p-6">
-      <h3 class="mb-4 font-medium text-[var(--color-text)]">
-        Errores Comunes
-      </h3>
-      <ul class="space-y-2 text-sm text-soft-white">
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>No especificar duración:</strong> Sin duration, la transición no será visible porque tendrá una duración de 0s.</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>Mezclar shorthand con propiedades individuales:</strong> Las propiedades individuales pueden sobreescribir el shorthand de forma inesperada.</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>Animar propiedades que no son performantes:</strong> Evita animar width, height, top, left, margin, y padding directamente.</span>
-        </li>
-      </ul>
-    </div>
+    <ErroresComunes errors={[
+      { label: 'No especificar duración', description: 'Sin duration, la transición no será visible porque tendrá una duración de 0s.' },
+      { label: 'Mezclar shorthand con propiedades individuales', description: 'Las propiedades individuales pueden sobreescribir el shorthand de forma inesperada.' },
+      { label: 'Animar propiedades que no son performantes', description: 'Evita animar width, height, top, left, margin, y padding directamente.' },
+    ]} />
 
     <PracticeCards
       title="Practica lo Aprendido"
@@ -240,40 +182,6 @@ const practiceSteps = [
 </style>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    document.querySelectorAll('.copy-btn').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        let codeToCopy = btn.getAttribute('data-code');
-        
-        if (!codeToCopy) {
-          const container = btn.closest('.flex-1');
-          const activeTab = container?.querySelector('.code-content:not(.hidden) code');
-          if (activeTab) {
-            codeToCopy = activeTab.textContent || '';
-          }
-        }
-
-        if (codeToCopy) {
-          await navigator.clipboard.writeText(codeToCopy);
-          const originalText = btn.innerHTML;
-          btn.innerHTML = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> Copiado!';
-          btn.classList.add('bg-[var(--dm-green)]');
-          setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.classList.remove('bg-[var(--dm-green)]');
-          }, 2000);
-        }
-      });
-    });
-
-    document.querySelectorAll('.code-tab').forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const container = tab.closest('.flex-1');
-        container?.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
-        container?.querySelectorAll('.code-content').forEach(c => c.classList.add('hidden'));
-        tab.classList.add('active');
-        container?.querySelector(`.code-content[data-tab="${tab.getAttribute('data-tab')}"]`)?.classList.remove('hidden');
-      });
-    });
-  });
+  import { initCodeInteractions } from '../../../scripts/code-interactions.js';
+  document.addEventListener('astro:page-load', () => initCodeInteractions());
 </script>

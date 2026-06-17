@@ -1,0 +1,19 @@
+---
+interface Props {
+  description?: string;
+}
+
+const { description } = Astro.props;
+---
+
+<div class="flex-1">
+  <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Resultado</h3>
+  <div class="flex items-center justify-center rounded-lg bg-[var(--dm-dark-500)] p-8">
+    <slot />
+  </div>
+  {description && (
+    <p class="mt-4 text-sm text-[var(--dm-light-300)]">
+      {description}
+    </p>
+  )}
+</div>

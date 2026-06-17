@@ -1,21 +1,11 @@
 ---
 import CourseLayout from '../../../layouts/CourseLayout.astro';
+import ChapterHeader from '../../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../../components/ConsejoProfesional.astro';
+import ErroresComunes from '../../../components/ErroresComunes.astro';
 import PracticeCards from '../../../components/PracticeCards.astro';
-
-const codeExample = `@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.element {
-  animation: fadeIn 0.5s ease-out forwards;
-}`;
 
 const htmlCode = `<div class="card">
   <h2>Título de la Tarjeta</h2>
@@ -54,22 +44,12 @@ const practiceSteps = [
   prevLesson={{ title: 'Introducción', href: '/css-animation/keyframes' }}
   nextLesson={{ title: 'Sintaxis', href: '/css-animation/keyframes/sintaxis' }}
 >
-  <div class="mb-8">
-    <div class="inline-flex items-center gap-2 text-sm text-[var(--dm-light-300)]">
-      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--color-text)]/10 text-xs font-semibold text-[var(--color-text)]">01</span>
-      Capítulo 1 · Lección 1
-    </div>
-    <h1 class="mt-4 font-afronaut text-4xl font-light text-[var(--color-text)] sm:text-5xl">¿Qué son los Keyframes?</h1>
-    <div class="mt-4 flex flex-wrap gap-3 text-sm text-[var(--dm-light-300)]">
-      <span class="flex items-center gap-1">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        5 min de lectura
-      </span>
-      <span class="rounded-full bg-[var(--dm-green)]/20 px-3 py-1 text-xs font-medium text-[var(--dm-green)]">Principiante</span>
-    </div>
-  </div>
+  <ChapterHeader
+    chapterNumber="01"
+    chapterLabel="Capítulo 1 · Lección 1"
+    title="¿Qué son los Keyframes?"
+    readingTime={5}
+  />
 
   <article class="prose prose-invert max-w-none">
     <h3>Introducción</h3>
@@ -77,7 +57,7 @@ const practiceSteps = [
       Los keyframes son el corazón de las animaciones CSS. Al igual que un animador define fotogramas clave en una película, los keyframes CSS definen los estados específicos por los que debe pasar un elemento durante su animación. Esta herramienta fundamental te permite crear movimientos fluidos, transiciones elegantes y efectos visuales que dan vida a tus interfaces web.
     </p>
     <p>
-      Antes de los keyframes, las animaciones web dependían exclusivamente de JavaScript, lo que las hacía más complejas de implementar y menos performantes. Con la llegada de CSS Animations, los keyframes se convirtieron en el estándar para crear animaciones declarativas, eficientes y fibles de mantener.
+      Antes de los keyframes, las animaciones web dependían exclusivamente de JavaScript, lo que las hacía más complejas de implementar y menos performantes. Con la llegada de CSS Animations, los keyframes se convirtieron en el estándar para crear animaciones declarativas, eficientes y fiables de mantener.
     </p>
 
     <h3>Conceptos Fundamentales</h3>
@@ -98,69 +78,30 @@ const practiceSteps = [
   </article>
 
   <h2 class="mt-8 mb-4 font-afronaut text-2xl font-light text-[var(--color-text)]">Ejemplo Práctico</h2>
-  
+
   <div class="mb-6 flex flex-col gap-6 lg:flex-row">
-    <div class="flex-1">
-      <div class="mb-4 flex items-center gap-2">
-        <button class="code-tab active rounded-md px-3 py-1.5 text-xs font-light text-soft-white transition-colors" data-tab="html">HTML</button>
-        <button class="code-tab rounded-md px-3 py-1.5 text-xs font-light text-soft-white transition-colors" data-tab="css">CSS</button>
-        <div class="flex-1"></div>
-        <button class="copy-btn flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1 text-xs font-light text-soft-white hover:bg-white/20 transition-colors">
-          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-          Copiar
-        </button>
+    <TabbedCodeBlock
+      group="example"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="El elemento aparece suavemente deslizándose desde abajo hacia arriba.">
+      <div class="animate-fadeIn rounded-lg bg-[var(--color-text)] px-6 py-4 text-[var(--dm-dark-500)]">
+        Elemento Animado
       </div>
-      <div class="code-content" data-tab="html">
-        <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{htmlCode}</code></pre>
-      </div>
-      <div class="code-content hidden" data-tab="css">
-        <pre class="overflow-x-auto rounded-lg bg-[var(--dm-dark-500)] p-4 text-sm text-[var(--dm-light-200)]"><code>{cssCode}</code></pre>
-      </div>
-    </div>
-    <div class="flex-1">
-      <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Resultado</h3>
-      <div class="flex items-center justify-center rounded-lg bg-[var(--dm-dark-500)] p-8">
-        <div class="animate-fadeIn rounded-lg bg-[var(--color-text)] px-6 py-4 text-[var(--dm-dark-500)]">
-          Elemento Animado
-        </div>
-      </div>
-      <p class="mt-4 text-sm text-[var(--dm-light-300)]">
-        El elemento aparece suavemente deslizándose desde abajo hacia arriba.
-      </p>
-    </div>
+    </ResultPreview>
   </div>
 
   <div class="my-8 flex flex-col gap-6">
-    <div class="border-l-[3px] border-[var(--color-text)] bg-[var(--dm-green-bg)] p-6">
-      <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">
-        Consejo Profesional
-      </h3>
-      <p class="text-sm text-soft-white">
-        Siempre define explícitamente los keyframes 0% y 100% aunque no cambies ningún estilo. Esto hace tu código más claro y evita comportamientos inesperados en diferentes navegadores.
-      </p>
-    </div>
+    <ConsejoProfesional tip="Siempre define explícitamente los keyframes 0% y 100% aunque no cambies ningún estilo. Esto hace tu código más claro y evita comportamientos inesperados en diferentes navegadores." />
 
-    <div class="p-6">
-      <h3 class="mb-4 font-medium text-[var(--color-text)]">
-        Errores Comunes
-      </h3>
-      <ul class="space-y-2 text-sm text-soft-white">
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>Omitir el nombre de la animación:</strong> Siempre define un nombre único para cada @keyframes.</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>No incluir todos los estados:</strong> Asegúrate de definir tanto el estado inicial como el final.</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1 text-yellow-500">•</span>
-          <span><strong>Usar valores absolutos sin fallback:</strong> Siempre incluye un fallback para navegadores antiguos.</span>
-        </li>
-      </ul>
-    </div>
+    <ErroresComunes errors={[
+      { label: 'Omitir el nombre de la animación', description: 'Siempre define un nombre único para cada @keyframes.' },
+      { label: 'No incluir todos los estados', description: 'Asegúrate de definir tanto el estado inicial como el final.' },
+      { label: 'Usar valores absolutos sin fallback', description: 'Siempre incluye un fallback para navegadores antiguos.' },
+    ]} />
 
     <PracticeCards
       title="Practica lo Aprendido"
@@ -202,41 +143,13 @@ const practiceSteps = [
   .animate-fadeIn {
     animation: fadeIn 0.5s ease-out forwards;
   }
-</style>
 
-<script>
-  document.addEventListener('astro:page-load', () => {
-    document.querySelectorAll('.copy-btn').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        const container = btn.closest('.flex-1');
-        const activeTab = container?.querySelector('.code-content:not(.hidden) code');
-        if (activeTab) {
-          await navigator.clipboard.writeText(activeTab.textContent || '');
-          const originalText = btn.innerHTML;
-          btn.innerHTML = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> Copiado!';
-          btn.classList.add('bg-[var(--dm-green)]');
-          setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.classList.remove('bg-[var(--dm-green)]');
-          }, 2000);
-        }
-      });
-    });
-
-    document.querySelectorAll('.code-tab').forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const container = tab.closest('.flex-1');
-        container?.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
-        container?.querySelectorAll('.code-content').forEach(c => c.classList.add('hidden'));
-        tab.classList.add('active');
-        container?.querySelector(`.code-content[data-tab="${tab.getAttribute('data-tab')}"]`)?.classList.remove('hidden');
-      });
-    });
-  });
-</script>
-
-<style>
   .code-tab.active {
     background: rgba(255, 255, 255, 0.1);
   }
 </style>
+
+<script>
+  import { initCodeInteractions } from '../../../scripts/code-interactions.js';
+  document.addEventListener('astro:page-load', () => initCodeInteractions());
+</script>
