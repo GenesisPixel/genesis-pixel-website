@@ -1,59 +1,49 @@
 ---
+import BentoCard from './BentoCard.astro';
 ---
 
 <section class="mx-auto w-full max-w-[1200px] px-6 py-12">
   <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
     
     <!-- Card 1: AI -->
-    <a href="#" class="card-ai col-span-1 md:col-span-4 relative flex flex-col justify-between overflow-hidden rounded-[40px] pt-10 px-8 pb-0">
-      <!-- Text -->
-      <div class="relative z-10 flex flex-col items-end text-right mb-8">
-        <span class="text-[10px] font-bold tracking-[0.2em] text-[#5c3e73] uppercase mb-1">Ayuda a los scouts</span>
-        <h2 class="text-4xl font-bold text-[#5c3e73] tracking-tight font-[family:var(--font-google-sans)]">AI</h2>
-      </div>
-      
-      <!-- Mockup UI -->
-       <picture class="relative w-[120%] h-[300px] translate-x-[15px] translate-y-[15px]">
-         <img src="/img/card.png" alt="AI Mockup" class="w-[100%] h-[100%]  rounded-t-[18px] mt-auto object-cover object-top object-left" />
+    <BentoCard 
+      href="#"
+      class="card-ai col-span-1 md:col-span-4 px-8"
+      subtitle="Ayuda a los scouts"
+      title="AI"
+      textColor="text-[#5c3e73]"
+      imageAlt="AI Mockup"
+    />
 
-       </picture>
-    </a>
-
-    <!-- Card 2: Articulos -->
-    <a href="#" class="card-articulos col-span-1 md:col-span-8 relative flex flex-col justify-between overflow-hidden rounded-[40px] pt-10 px-10 pb-0">
-      <!-- Text -->
-      <div class="relative z-10 flex flex-col items-end text-right mb-8">
-        <span class="text-[10px] font-bold tracking-[0.2em] text-[#3a6355] uppercase mb-1">Ayuda a los scouts</span>
-        <h2 class="text-4xl font-bold text-[#3a6355] tracking-tight font-[family:var(--font-google-sans)]">Artículos</h2>
-      </div>
-      
-      <!-- Mockup UI -->
-      <img src="/img/card.png" alt="Artículos Mockup" class="relative w-[150%] h-[300px] translate-x-[30px] translate-y-[30px] rounded-t-[16px] shadow-2xl mt-auto object-cover object-top" />
-    </a>
+    <!-- Card 2: Artículos -->
+    <BentoCard 
+      href="#"
+      class="card-articulos col-span-1 md:col-span-8 px-10"
+      subtitle="Ayuda a los scouts"
+      title="Artículos"
+      textColor="text-[#3a6355]"
+      imageAlt="Artículos Mockup"
+    />
 
     <!-- Card 3: Figma Plugins -->
-    <a href="#" class="card-plugins col-span-1 md:col-span-8 relative flex flex-col justify-between overflow-hidden rounded-[40px] pt-10 px-10 pb-0">
-      <!-- Text -->
-      <div class="relative z-10 flex flex-col items-end text-right mb-8">
-        <span class="text-[10px] font-bold tracking-[0.2em] text-[#5e4b3c] uppercase mb-1">Figma</span>
-        <h2 class="text-4xl font-bold text-[#5e4b3c] tracking-tight font-[family:var(--font-google-sans)]">Plugins</h2>
-      </div>
-      
-      <!-- Mockup UI -->
-      <img src="/img/card.png" alt="Plugins Mockup" class="relative w-[150%] h-[300px] translate-x-[30px] translate-y-[30px] rounded-t-[16px] shadow-2xl mt-auto object-cover object-top" />
-    </a>
+    <BentoCard 
+      href="#"
+      class="card-plugins col-span-1 md:col-span-8 px-10"
+      subtitle="Figma"
+      title="Plugins"
+      textColor="text-[#5e4b3c]"
+      imageAlt="Plugins Mockup"
+    />
 
     <!-- Card 4: Help Scout Mobile -->
-    <a href="#" class="card-mobile col-span-1 md:col-span-4 relative flex flex-col justify-between overflow-hidden rounded-[40px] pt-10 px-8 pb-0">
-      <!-- Text -->
-      <div class="relative z-10 flex flex-col items-end text-right mb-8">
-        <span class="text-[10px] font-bold tracking-[0.2em] text-[#3e5366] uppercase mb-1">Help Scout</span>
-        <h2 class="text-4xl font-bold text-[#3e5366] tracking-tight font-[family:var(--font-google-sans)]">Mobile</h2>
-      </div>
-      
-      <!-- Mockup UI -->
-      <img src="/img/card.png" alt="Mobile Mockup" class="relative w-[150%] h-[300px] translate-x-[30px] translate-y-[30px] rounded-t-[16px] shadow-2xl mt-auto object-cover object-top" />
-    </a>
+    <BentoCard 
+      href="#"
+      class="card-mobile col-span-1 md:col-span-4 px-8"
+      subtitle="Help Scout"
+      title="Mobile"
+      textColor="text-[#3e5366]"
+      imageAlt="Mobile Mockup"
+    />
 
   </div>
 </section>

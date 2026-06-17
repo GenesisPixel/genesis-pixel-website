@@ -1,0 +1,34 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+  textColor: string;
+  subtitle: string;
+  title: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+const {
+  href = '#',
+  class: className = '',
+  textColor,
+  subtitle,
+  title,
+  imageSrc = '/img/card.png',
+  imageAlt = 'Card Mockup'
+} = Astro.props;
+---
+
+<a href={href} class:list={['relative flex flex-col justify-between overflow-hidden rounded-[40px] pt-10 pb-0', className]}>
+  <!-- Text -->
+  <div class="relative z-10 flex flex-col items-end text-right mb-8">
+    <span class:list={['text-[10px] font-bold tracking-[0.2em] uppercase mb-1', textColor]}>{subtitle}</span>
+    <h2 class:list={['text-4xl font-bold tracking-tight font-[family:var(--font-google-sans)]', textColor]}>{title}</h2>
+  </div>
+  
+  <!-- Mockup UI -->
+  <picture class="relative w-[120%] h-[300px] translate-x-[15px] translate-y-[15px]">
+    <img src={imageSrc} alt={imageAlt} class="w-[100%] h-[100%] rounded-t-[18px] mt-auto object-cover object-top object-left" />
+  </picture>
+</a>
