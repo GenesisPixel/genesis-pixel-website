@@ -4,8 +4,6 @@ import ChapterHeader from '../../../components/ChapterHeader.astro';
 import TabbedCodeBlock from '../../../components/TabbedCodeBlock.astro';
 import ResultPreview from '../../../components/ResultPreview.astro';
 import ConsejoProfesional from '../../../components/ConsejoProfesional.astro';
-import ErroresComunes from '../../../components/ErroresComunes.astro';
-import ErroresComunesV2 from '../../../components/ErroresComunesV2.astro';
 import ErroresComunesV3 from '../../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../../components/PracticeCards.astro';
 import Playground from '../../../components/Playground.astro';
@@ -100,18 +98,7 @@ const practiceSteps = [
   <div class="my-8 flex flex-col gap-6">
     <ConsejoProfesional tip="Siempre define explícitamente los keyframes 0% y 100% aunque no cambies ningún estilo. Esto hace tu código más claro y evita comportamientos inesperados en diferentes navegadores." />
 
-    <ErroresComunes errors={[
-      { label: 'Omitir el nombre de la animación', description: 'Siempre define un nombre único para cada @keyframes.' },
-      { label: 'No incluir todos los estados', description: 'Asegúrate de definir tanto el estado inicial como el final.' },
-      { label: 'Usar valores absolutos sin fallback', description: 'Siempre incluye un fallback para navegadores antiguos.' },
-    ]} />
 
-    <ErroresComunesV2 errors={[
-      { label: 'Omitir el nombre de la animación', description: 'Siempre define un nombre único para cada @keyframes.' },
-      { label: 'No incluir todos los estados', description: 'Asegúrate de definir tanto el estado inicial como el final.' },
-      { label: 'Usar valores absolutos sin fallback', description: 'Siempre incluye un fallback para navegadores antiguos.' },
-      { label: 'Olvidar animation-fill-mode', description: 'Sin forwards, el elemento vuelve a su estado original al terminar la animación.' },
-    ]} />
 
     <ErroresComunesV3 errors={[
       { label: 'Omitir el nombre de la animación', description: 'Siempre define un nombre único para cada @keyframes.' },
