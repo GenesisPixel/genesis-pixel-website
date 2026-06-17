@@ -104,6 +104,10 @@ const practiceSteps = [
       { label: 'No cerrar las llaves', description: 'Asegúrate de que cada keyframe esté correctamente cerrado.' },
       { label: 'Mezclar porcentajes y palabras clave', description: 'No uses from/to junto con porcentajes en el mismo keyframe.' },
       { label: 'Nombres de animación duplicados', description: 'Si dos @keyframes tienen el mismo nombre, el último sobreescribe al primero sin advertencia.' },
+      { label: 'No usar prefijos (-webkit-)', description: 'Para máxima compatibilidad con navegadores antiguos, algunas animaciones aún requieren prefijos.' },
+      { label: 'Definir propiedades no animables', description: 'Propiedades como font-family o background-image no se pueden interpolar suavemente.' },
+      { label: 'Sintaxis de @keyframes incorrecta', description: 'Escribir @keyframe sin la "s" final es un error de tipografía muy común.' },
+      { label: 'Valores fuera de rango', description: 'Definir un keyframe en 110% o -10% será completamente ignorado por el navegador.' },
     ]} />
 
     <PracticeCards

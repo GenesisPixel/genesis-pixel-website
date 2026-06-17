@@ -151,6 +151,10 @@ const practiceSteps = [
       { label: 'Confundir % en translate con % en top/left', description: 'En translate, el porcentaje se calcula sobre el tamaño del elemento, no del contenedor.' },
       { label: 'No usar GPU acceleration', description: 'Para mejores performances, combina translate con will-change o transform: translateZ(0).' },
       { label: 'Usar top/left en lugar de translate', description: 'Animar top/left causa reflow del layout y es mucho menos performante que usar translate.' },
+      { label: 'Olvidar el orden de las transformaciones', description: 'El orden importa: translate() rotate() no es lo mismo que rotate() translate().' },
+      { label: 'Desbordamiento (Overflow)', description: 'Mover un elemento fuera de la pantalla puede crear barras de desplazamiento horizontales no deseadas.' },
+      { label: 'Problemas con elementos inline', description: 'La propiedad transform solo funciona en elementos block o inline-block, no en elementos puramente inline como un <span>.' },
+      { label: 'Valores fraccionarios borrosos', description: 'Usar porcentajes o valores fraccionarios puede hacer que el texto se vea borroso. Usa valores enteros o translateZ(0).' },
     ]} />
 
     <PracticeCards

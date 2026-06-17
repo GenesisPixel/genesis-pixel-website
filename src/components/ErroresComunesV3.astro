@@ -7,11 +7,11 @@ const { errors } = Astro.props;
 ---
 
 <div class="py-6">
-  <p class="mb-6 font-afronaut text-2xl text-[var(--color-text)]" style="font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; opacity: 1 !important;">
+  <h3 class="mb-4 font-medium text-[var(--color-text)]">
     Errores Comunes
-  </p>
-  <div class="flex flex-col gap-5">
-    {errors.slice(0, 4).map((error, index) => (
+  </h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+    {errors.slice(0, 8).map((error, index) => (
       <div class="flex gap-4">
         <span class="mt-0.5 shrink-0 font-afronaut text-[13px] text-[var(--color-text)] opacity-40" style="opacity: 0.4 !important;">
           {String(index + 1).padStart(2, '0')}

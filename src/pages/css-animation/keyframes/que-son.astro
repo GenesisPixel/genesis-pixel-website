@@ -105,6 +105,10 @@ const practiceSteps = [
       { label: 'No incluir todos los estados', description: 'Asegúrate de definir tanto el estado inicial como el final.' },
       { label: 'Usar valores absolutos sin fallback', description: 'Siempre incluye un fallback para navegadores antiguos.' },
       { label: 'Olvidar animation-fill-mode', description: 'Sin forwards, el elemento vuelve a su estado original al terminar la animación.' },
+      { label: 'Crear animaciones demasiado rápidas', description: 'Las animaciones de menos de 0.1s casi no se notan y pueden parecer simples parpadeos.' },
+      { label: 'Abusar de animaciones infinitas', description: 'Las animaciones que nunca se detienen pueden distraer al usuario y consumir mucha CPU/Batería.' },
+      { label: 'Animar simultáneamente todo', description: 'Mover demasiados elementos al mismo tiempo sobrecarga el hilo principal del navegador.' },
+      { label: 'Ignorar a los usuarios (A11y)', description: 'Si un usuario prefiere no ver animaciones, deberías respetar esa preferencia con media queries.' },
     ]} />
 
     <PracticeCards

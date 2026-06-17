@@ -148,6 +148,10 @@ const practiceSteps = [
       { label: 'Mezclar shorthand con propiedades individuales', description: 'Las propiedades individuales pueden sobreescribir el shorthand de forma inesperada.' },
       { label: 'Animar propiedades que no son performantes', description: 'Evita animar width, height, top, left, margin, y padding directamente.' },
       { label: 'Olvidar el delay en shorthand', description: 'En el shorthand, el primer tiempo es duration y el segundo es delay. Confundirlos rompe la animación.' },
+      { label: 'Olvidar definir el estado inicial', description: 'La transición necesita un punto de partida explícito para calcular los frames intermedios.' },
+      { label: 'Usar display: none', description: 'Las transiciones no funcionan cuando cambias la propiedad display. Usa opacity y visibility en su lugar.' },
+      { label: 'Errores en funciones de tiempo', description: 'Escribir mal valores como cubic-bezier puede hacer que la transición vuelva al valor por defecto.' },
+      { label: 'Ignorar accesibilidad', description: 'Ignorar prefers-reduced-motion puede causar problemas a usuarios sensibles a las animaciones.' },
     ]} />
 
     <PracticeCards
