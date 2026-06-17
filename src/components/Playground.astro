@@ -1,0 +1,25 @@
+---
+interface Props {
+  htmlCode: string;
+  cssCode: string;
+}
+
+const { htmlCode, cssCode } = Astro.props;
+---
+
+<div class="my-8 rounded-xl border border-white/5 bg-white/[0.02] p-6">
+  <h3 class="mb-4 text-sm font-medium text-[var(--color-text)]">Playground</h3>
+  <p class="mb-4 text-sm text-[var(--dm-light-300)]">
+    Modifica el código para ver diferentes resultados:
+  </p>
+  <div class="grid gap-4 md:grid-cols-2">
+    <div>
+      <label class="mb-2 block text-xs text-[var(--dm-light-300)]">HTML</label>
+      <textarea class="w-full rounded-lg bg-[var(--dm-dark-500)] p-3 text-sm text-[var(--dm-light-200)] font-mono" rows="4">{htmlCode}</textarea>
+    </div>
+    <div>
+      <label class="mb-2 block text-xs text-[var(--dm-light-300)]">CSS</label>
+      <textarea class="w-full rounded-lg bg-[var(--dm-dark-500)] p-3 text-sm text-[var(--dm-light-200)] font-mono" rows="4">{cssCode}</textarea>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 ---
 import CourseLayout from '../../layouts/CourseLayout.astro';
+import SectionIntro from '../../components/SectionIntro.astro';
 
 const lessons = [
   { title: 'Translate', href: '/css-animation/transforms/translate' },
@@ -20,46 +21,12 @@ const lessons = [
   prevLesson={{ title: 'Proyecto Final Keyframes', href: '/css-animation/keyframes/proyecto-final' }}
   nextLesson={{ title: 'Translate', href: '/css-animation/transforms/translate' }}
 >
-  <div class="mb-8">
-    <div class="inline-flex items-center gap-2 text-sm text-[var(--dm-light-300)]">
-      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-[var(--color-text)]/10 text-xs font-semibold text-[var(--color-text)]">02</span>
-      Capítulo 2
-    </div>
-    <h1 class="mt-4 font-afronaut text-4xl font-light text-[var(--color-text)] sm:text-5xl">Transforms</h1>
-    <p class="mt-4 text-lg text-[var(--dm-light-200)]">
-      Domina las transformaciones 2D y 3D para animar elementos de forma fluida y performante.
-    </p>
-  </div>
-
-  <div class="mb-8 flex flex-wrap gap-4 text-sm text-[var(--dm-light-300)]">
-    <span class="flex items-center gap-1">
-      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      10 lecciones
-    </span>
-    <span class="flex items-center gap-1">
-      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-      4 horas estimadas
-    </span>
-  </div>
-
-  <div class="space-y-3">
-    {lessons.map((lesson, index) => (
-      <a
-        href={lesson.href}
-        class="group flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-white/10 hover:bg-white/[0.04]"
-      >
-        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-xs font-medium text-[var(--dm-light-300)] group-hover:bg-[var(--color-text)]/10 group-hover:text-[var(--color-text)]">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <span class="flex-1 text-[var(--color-text)] group-hover:text-white">{lesson.title}</span>
-        <svg class="h-4 w-4 text-[var(--dm-light-300)] transition-transform group-hover:translate-x-1 group-hover:text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </a>
-    ))}
-  </div>
+  <SectionIntro
+    chapterNumber="02"
+    title="Transforms"
+    description="Domina las transformaciones 2D y 3D para animar elementos de forma fluida y performante."
+    lessonCount={10}
+    hours="4"
+    lessons={lessons}
+  />
 </CourseLayout>

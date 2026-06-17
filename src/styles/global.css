@@ -369,6 +369,14 @@ html {
   isolation: auto;
 }
 
+.code-tab {
+  background: transparent;
+}
+
+.code-tab.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   mix-blend-mode: normal;
