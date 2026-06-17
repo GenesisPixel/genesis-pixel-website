@@ -7,9 +7,10 @@ interface Props {
   title: string;
   readingTime: number;
   difficulty?: string;
+  author?: string;
 }
 
-const { chapterNumber, chapterLabel, title, readingTime, difficulty = 'Principiante' } = Astro.props;
+const { chapterNumber, chapterLabel, title, readingTime, difficulty = 'CSS Animation', author = 'Genesis Pixel' } = Astro.props;
 ---
 
 <div class="mb-8 flex flex-col items-center text-center">
@@ -18,13 +19,21 @@ const { chapterNumber, chapterLabel, title, readingTime, difficulty = 'Principia
     {chapterLabel}
   </div>
   <SectionTitle title={title} />
-  <div class="mt-4 flex flex-wrap items-center justify-center gap-3 text-sm text-[var(--dm-light-300)]">
-    <span class="flex items-center gap-1">
-      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      {readingTime} min de lectura
-    </span>
-    <span class="rounded-full bg-[var(--dm-green)]/20 px-3 py-1 text-xs font-medium text-[var(--dm-green)]">{difficulty}</span>
+  <div class="mt-6 flex flex-wrap justify-center gap-6">
+    <div class="flex flex-col">
+      <h5 class="text-xs font-medium text-[var(--color-text)]">Tiempo de lectura</h5>
+      <p class="mt-1 text-sm font-light text-white">{readingTime} min</p>
+    </div>
+    <div class="flex flex-col">
+      <h5 class="text-xs font-medium text-[var(--color-text)]">Escrito por</h5>
+      <div class="mt-1 flex items-center gap-2">
+        <a href="#" class="h-[30px] w-[30px] rounded-full bg-[var(--dm-blue)]"></a>
+        <span class="text-sm font-light text-white">{author}</span>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <h5 class="text-xs font-medium text-[var(--color-text)]">Tema</h5>
+      <p class="mt-1 text-sm font-light text-white">{difficulty}</p>
+    </div>
   </div>
 </div>
