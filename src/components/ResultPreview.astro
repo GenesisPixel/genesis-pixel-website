@@ -20,12 +20,11 @@ const { description } = Astro.props;
           <span class="font-bold">></span>
           <span class="animate-blink font-bold">_</span>
         </span>
-        <span class="text-white/40">DevTools — Render</span>
       </div>
     </div>
     
     <!-- Result Content -->
-    <div class="flex items-center justify-center p-8 min-h-[250px] max-h-[400px] overflow-y-auto">
+    <div class="flex items-center justify-center p-8 max-h-[400px] overflow-y-auto" style="min-height: 260px;">
       <slot />
     </div>
   </div>

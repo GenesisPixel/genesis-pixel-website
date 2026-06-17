@@ -21,7 +21,6 @@ const { title, code } = Astro.props;
           <span class="font-bold">></span>
           <span class="animate-blink font-bold">_</span>
         </span>
-        <span class="text-white/40">{title || 'DevTools — Console'}</span>
       </div>
     </div>
     <button class="copy-btn flex items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1 text-xs font-light text-soft-white transition-colors hover:bg-white/10" data-code={code}>
@@ -33,7 +32,7 @@ const { title, code } = Astro.props;
   </div>
   
   <!-- Code Content with fixed height & scroll -->
-  <div class="max-h-[400px] min-h-[250px] overflow-y-auto flex flex-col">
-    <pre class="m-0 flex-grow overflow-x-auto p-4 text-sm text-[var(--dm-light-200)] bg-transparent"><code>{code}</code></pre>
+  <div class="max-h-[400px] overflow-y-auto flex flex-col" style="min-height: 260px;">
+    <pre class="m-0 flex-1 overflow-x-auto p-4 text-sm text-[var(--dm-light-200)] bg-transparent"><code>{code}</code></pre>
   </div>
 </div>
