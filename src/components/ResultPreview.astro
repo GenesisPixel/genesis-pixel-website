@@ -8,29 +8,62 @@ const { description } = Astro.props;
 
 <div class="overflow-hidden rounded-none shadow-lg" style="background-color: hsla(158, 23%, 10%, 1); flex: 1; min-width: 0;">
   <!-- Console Header -->
-  <div class="flex items-center gap-4 border-b px-4 py-3" style="border-color: rgba(255,255,255,0.06); background-color: hsla(158, 23%, 8%, 1);">
-    <div class="flex gap-1.5">
-      <div class="h-2.5 w-2.5 rounded-full bg-[var(--dm-red)]"></div>
-      <div class="h-2.5 w-2.5 rounded-full bg-[var(--dm-yellow)]"></div>
-      <div class="h-2.5 w-2.5 rounded-full bg-[var(--dm-green)]"></div>
+  <div class="flex items-center border-b" style="border-color: rgba(255,255,255,0.06); background-color: hsla(158, 23%, 8%, 1);">
+    <div class="flex items-center gap-3 px-4 py-2.5 flex-1 min-w-0">
+      <div class="flex gap-1.5 shrink-0">
+        <div class="h-2.5 w-2.5 rounded-full bg-[var(--dm-red)]"></div>
+        <div class="h-2.5 w-2.5 rounded-full bg-[var(--dm-yellow)]"></div>
+        <div class="h-2.5 w-2.5 rounded-full bg-[var(--dm-green)]"></div>
+      </div>
+      <div class="flex items-center gap-1 font-mono text-[11px] shrink-0">
+        <span class="text-[var(--dm-green)] font-bold">></span>
+        <span class="animate-blink text-[var(--dm-green)] font-bold">_</span>
+      </div>
     </div>
-    <div class="flex items-center gap-1 font-mono text-[11px]">
-      <span class="text-[var(--dm-green)] font-bold">></span>
-      <span class="animate-blink text-[var(--dm-green)] font-bold">_</span>
+
+    <!-- Right: refresh -->
+    <div class="flex items-center shrink-0 border-l" style="border-color: rgba(255,255,255,0.06);">
+      <button class="refresh-btn flex items-center gap-1.5 px-3 py-2.5 text-xs font-light text-soft-white transition-colors hover:bg-white/5">
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        Refrescar
+      </button>
     </div>
   </div>
   
   <!-- Result Content -->
   <div class="flex flex-col overflow-y-auto" style="height: 400px;">
-    <div class="flex flex-1 items-center justify-center p-8">
+    <div class="flex flex-1 items-center justify-center p-8 preview-content">
       <slot />
     </div>
     {description && (
       <div class="border-t px-6 py-4" style="border-color: rgba(255,255,255,0.06);">
-        <p class="text-xs text-[var(--dm-light-300)] leading-relaxed" style="opacity: 0.7 !important;">
+        <p class="text-xs text-[var(--dm-light-300)] leading-relaxed italic" style="opacity: 0.7 !important;">
           {description}
         </p>
       </div>
     )}
   </div>
 </div>
+
+<script>
+  function initRefreshButtons() {
+    document.querySelectorAll('.refresh-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const container = btn.closest('.overflow-hidden')?.querySelector('.preview-content');
+        if (!container) return;
+
+        container.querySelectorAll('[class*="animate-"]').forEach((el) => {
+          const classes = [...el.classList].filter((c) => c.startsWith('animate-'));
+          classes.forEach((c) => el.classList.remove(c));
+          void (el as HTMLElement).offsetWidth;
+          classes.forEach((c) => el.classList.add(c));
+        });
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initRefreshButtons);
+  initRefreshButtons();
+</script>
