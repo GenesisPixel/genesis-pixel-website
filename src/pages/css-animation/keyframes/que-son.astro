@@ -30,6 +30,28 @@ const cssCode = `.card {
   }
 }`;
 
+const playgroundHtml = `<div class="box"></div>`;
+const playgroundCss = `.box {
+  width: 100px;
+  height: 100px;
+  background-color: #bb86fc;
+  border-radius: 12px;
+  animation: bounceRotate 2s infinite ease-in-out;
+  margin: 40px auto;
+}
+
+@keyframes bounceRotate {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    border-radius: 12px;
+  }
+  50% {
+    transform: translateY(-60px) rotate(180deg);
+    background-color: #03dac6;
+    border-radius: 50%;
+  }
+}`;
+
 const practiceSteps = [
   { number: 1, text: 'Crea un elemento div con dimensiones de 100x100px', color: 'dm-purple', rotate: '10deg' },
   { number: 2, text: 'Define un @keyframes que mueva el elemento', color: 'dm-green', rotate: '2deg' },
@@ -69,16 +91,34 @@ const practiceSteps = [
       Cada animación CSS requiere al menos dos keyframes: uno que define el estado inicial (from o 0%) y otro que define el estado final (to o 100%). Puedes agregar tantos keyframes intermedios como necesites para crear animaciones más complejas y detalladas.
     </p>
 
+    <div class="my-8 not-prose">
+      <ConsejoProfesional tip="Siempre define explícitamente los keyframes 0% y 100% aunque no cambies ningún estilo. Esto hace tu código más claro y evita comportamientos inesperados en diferentes navegadores." />
+    </div>
+
     <h3>Terminología Clave</h3>
-    <p>
-      Para trabajar efectivamente con keyframes, es importante familiarizarse con la terminología específica. Un <strong>keyframe</strong> es un objeto que contiene un conjunto de estilos CSS que se aplicarán en un momento específico de la animación. El <strong>selector @keyframes</strong> es la regla CSS que contiene todos los keyframes de una animación.
-    </p>
-    <p>
-      El <strong>nombre de la animación</strong> es un identificador único que utilizas para referenciar la animación en las propiedades del elemento. Las <strong>porcentajes</strong> (0%, 25%, 50%, 75%, 100%) definen en qué punto de la duración total se aplican los estilos de cada keyframe. Las palabras clave <strong>from</strong> y <strong>to</strong> son atajos para 0% y 100% respectivamente.
-    </p>
+    <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
+      <li class="flex gap-3">
+        <span class="text-[var(--dm-green)]">✦</span>
+        <span class="text-white"><strong class="text-white">@keyframes:</strong> Es la regla CSS principal que funciona como contenedor para todos los fotogramas de una animación.</span>
+      </li>
+      <li class="flex gap-3">
+        <span class="text-[var(--dm-green)]">✦</span>
+        <span class="text-white"><strong class="text-white">Nombre de la animación:</strong> Un identificador único (como <code>fadeIn</code> o <code>slideUp</code>) usado para vincular los keyframes con un elemento HTML.</span>
+      </li>
+      <li class="flex gap-3">
+        <span class="text-[var(--dm-green)]">✦</span>
+        <span class="text-white"><strong class="text-white">Porcentajes (0% - 100%):</strong> Definen en qué punto de la línea temporal de la duración se aplican los estilos de cada frame.</span>
+      </li>
+      <li class="flex gap-3">
+        <span class="text-[var(--dm-green)]">✦</span>
+        <span class="text-white"><strong class="text-white">from / to:</strong> Son atajos exactos y equivalentes matemáticos a 0% y 100% respectivamente.</span>
+      </li>
+    </ul>
   </article>
 
-  <h2 class="mt-8 mb-4 font-afronaut text-2xl font-light text-[var(--color-text)]">Ejemplo Práctico</h2>
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Ejemplo Práctico
+  </h3>
 
   <div class="mb-6 flex flex-col gap-6 lg:flex-row">
     <TabbedCodeBlock
@@ -96,10 +136,6 @@ const practiceSteps = [
   </div>
 
   <div class="my-8 flex flex-col gap-6">
-    <ConsejoProfesional tip="Siempre define explícitamente los keyframes 0% y 100% aunque no cambies ningún estilo. Esto hace tu código más claro y evita comportamientos inesperados en diferentes navegadores." />
-
-
-
     <ErroresComunesV3 errors={[
       { label: 'Omitir el nombre de la animación', description: 'Siempre define un nombre único para cada @keyframes.' },
       { label: 'No incluir todos los estados', description: 'Asegúrate de definir tanto el estado inicial como el final.' },
@@ -118,7 +154,7 @@ const practiceSteps = [
     />
   </div>
 
-  <Playground htmlCode={htmlCode} cssCode={cssCode} />
+  <Playground htmlCode={playgroundHtml} cssCode={playgroundCss} />
 </CourseLayout>
 
 <style>
