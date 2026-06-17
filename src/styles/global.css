@@ -14,6 +14,12 @@ h6 {
   font-weight: 300;
 }
 
+p, a {
+  font-size: 1rem;
+  font-weight: 200;
+  opacity: 0.8;
+}
+
 h1 {
   font-size: 6.6rem;
   line-height: 0.85;
@@ -239,6 +245,7 @@ p {
   --dm-yellow-dark: #29241A;
   --dm-green: #56C288;
   --dm-green-dark: #172920;
+  --dm-green-bg: rgba(86, 194, 136, 0.1);
   --dm-red: #FC5D7D;
   --dm-red-dark: #332024;
   --dm-purple: #9FA6FF;
