@@ -143,12 +143,28 @@ const selectorExample = `.element {
       <p class="mb-4 text-sm text-soft-white">
         Crea una animación que cambie el color de fondo de un elemento a través de 4 colores diferentes. Usa porcentajes para definir cada cambio.
       </p>
-      <ol class="list-inside list-decimal space-y-2 text-sm text-soft-white">
-        <li>Define un @keyframes con nombre "colorCycle"</li>
-        <li>Usa 0%, 25%, 50%, 75% y 100% para 4 colores</li>
-        <li>Aplica la animación a un elemento div</li>
-        <li>Experimenta con diferentes duraciones</li>
-      </ol>
+      <div class="flex gap-3">
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-yellow-dark); transform: rotate(10deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-yellow);">1</span>
+          Define un @keyframes con nombre "colorCycle"
+        </div>
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-purple-dark); transform: rotate(2deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-purple);">2</span>
+          Usa 0%, 25%, 50%, 75% y 100% para 4 colores
+        </div>
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-blue-dark); transform: rotate(-5deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-blue);">3</span>
+          Aplica la animación a un elemento div
+        </div>
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-green-dark); transform: rotate(2deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-green);">4</span>
+          Experimenta con diferentes duraciones
+        </div>
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-indigo-dark); transform: rotate(-5deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-indigo);">5</span>
+          Ajusta las easing functions para efectos suaves
+        </div>
+      </div>
     </div>
   </div>
 </CourseLayout>

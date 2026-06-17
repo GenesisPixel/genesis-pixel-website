@@ -160,12 +160,28 @@ const cssCode = `.card {
       <p class="mb-4 text-sm text-soft-white">
         Crea una animación que haga que un cuadrado se mueva de izquierda a derecha y vuelva al punto de origen. Usa al menos 3 keyframes intermedios.
       </p>
-      <ol class="list-inside list-decimal space-y-2 text-sm text-soft-white">
-        <li>Crea un elemento div con dimensiones de 100x100px</li>
-        <li>Define un @keyframes que mueva el elemento</li>
-        <li>Aplica la animación con duración de 2 segundos</li>
-        <li>Experimenta con diferentes valores de iteración</li>
-      </ol>
+      <div class="flex gap-3">
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-yellow-dark); transform: rotate(10deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-yellow);">1</span>
+          Crea un elemento div con dimensiones de 100x100px
+        </div>
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-purple-dark); transform: rotate(2deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-purple);">2</span>
+          Define un @keyframes que mueva el elemento
+        </div>
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-blue-dark); transform: rotate(-5deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-blue);">3</span>
+          Aplica la animación con duración de 2 segundos
+        </div>
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-green-dark); transform: rotate(2deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-green);">4</span>
+          Experimenta con diferentes valores de iteración
+        </div>
+        <div class="flex-1 p-3 text-center text-xs text-soft-white h-[120px] flex flex-col items-center justify-center" style="background: var(--dm-indigo-dark); transform: rotate(-5deg);">
+          <span class="mb-1 block text-lg font-medium" style="color: var(--dm-indigo);">5</span>
+          Ajusta la dirección con animation-direction
+        </div>
+      </div>
     </div>
   </div>
 
