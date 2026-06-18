@@ -1,25 +1,224 @@
 ---
 import TransformLayout from '../../layouts/TransformLayout.astro';
 import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
 
+const htmlCode = `<div class="escena-tarjeta">
+  <div class="tarjeta-flip">
+    <div class="cara-frontal">
+      <h4>Genesis Pixel</h4>
+      <p>Pasa el ratón para ver el reverso</p>
+    </div>
+    <div class="cara-trasera">
+      <h4>¡Hola!</h4>
+      <p>Así funcionan las tarjetas flip</p>
+    </div>
+  </div>
+</div>`;
+
+const cssCode = `/* 1. El escenario con perspectiva */
+.escena-tarjeta {
+  width: 220px;
+  height: 140px;
+  perspective: 900px;
+}
+
+/* 2. El elemento que contiene ambas caras */
+.tarjeta-flip {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 3. Al hover del padre, rotamos el contenedor */
+.escena-tarjeta:hover .tarjeta-flip {
+  transform: rotateY(180deg);
+}
+
+/* 4. Ambas caras en posición absoluta */
+.cara-frontal,
+.cara-trasera {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 20px;
+  color: white;
+  font-family: system-ui, sans-serif;
+  
+  /* Ocultar la cara cuando está de espaldas */
+  backface-visibility: hidden;
+}
+
+.cara-frontal {
+  background: linear-gradient(135deg, #a855f7, #3b82f6);
+}
+
+/* La cara trasera empieza ya girada 180deg */
+.cara-trasera {
+  background: linear-gradient(135deg, #ec4899, #f97316);
+  transform: rotateY(180deg);
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Crea el escenario padre con perspective: 900px', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Añade el contenedor con transform-style: preserve-3d y transition', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Crea dos hijos (cara frontal y trasera) con backface-visibility: hidden', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'La cara trasera necesita transform: rotateY(180deg) desde el inicio', color: 'dm-blue', rotate: '-1deg' },
+];
 ---
 
 <TransformLayout
   title="RotateX y RotateY - Genesis Pixel"
   currentLesson="/transform/rotate-xy"
-  prevLesson={{ title: 'Lección Anterior', href: '/transform/transform-3d' }}
-  nextLesson={{ title: 'Lección Siguiente', href: '/transform/translate-z' }}
+  prevLesson={{ title: 'Transform 3D', href: '/transform/transform-3d' }}
+  nextLesson={{ title: 'TranslateZ y Scale3D', href: '/transform/translate-z' }}
 >
   <ChapterHeader
     chapterNumber="02"
     chapterLabel="Capítulo 2 · Lección 12"
     title="RotateX y RotateY"
-    readingTime={5}
+    readingTime={8}
     difficulty="CSS Transform"
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Próximamente...</h3>
-    <p>Estamos redactando esta lección con historias reales y ejemplos visuales de calidad premium.</p>
+    <h3>La tarjeta que se voltea: un clásico moderno</h3>
+    <p>
+      Si alguna vez has jugado con las tarjetas de presentación de los contactos en una aplicación premium, o has visto un panel de estadísticas donde una tarjeta se voltea para mostrar más información, estás ante el efecto más reconocible del 3D en CSS: el <strong>card flip</strong>.
+    </p>
+    <p>
+      Y detrás de ese efecto sofisticado solo hay dos funciones de transform: <code>rotateX()</code> y <code>rotateY()</code>.
+    </p>
+
+    <h3>Girando sobre los ejes</h3>
+    <p>
+      En la lección anterior aprendiste sobre el espacio 3D. Ahora imagina que tienes una hoja de papel en tus manos:
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li>
+        <strong>rotateX():</strong> Es como doblar la hoja por la línea horizontal del centro. La parte de arriba se aleja de ti, la de abajo viene hacia ti (o al revés). Es el eje horizontal.
+        Un valor positivo (ej. <code>rotateX(45deg)</code>) inclina la parte superior hacia atrás.
+      </li>
+      <li>
+        <strong>rotateY():</strong> Es como doblar la hoja por la línea vertical del centro. El lado derecho se aleja de ti, el izquierdo viene hacia ti. Es el eje vertical.
+        Un valor de <code>rotateY(180deg)</code> voltea completamente el elemento, mostrando su reverso.
+      </li>
+    </ul>
+
+    <h3>La anatomía de una tarjeta flip</h3>
+    <p>
+      El efecto flip usa cuatro ingredientes esenciales:
+    </p>
+    <ol class="space-y-2 list-decimal pl-6 mb-6">
+      <li>Un <strong>contenedor escenario</strong> con <code>perspective</code>.</li>
+      <li>Un <strong>contenedor interno</strong> con <code>transform-style: preserve-3d</code> y <code>transition: transform</code>.</li>
+      <li>Dos hijos en <code>position: absolute</code> con <code>backface-visibility: hidden</code>.</li>
+      <li>La cara trasera empieza <strong>ya rotada 180deg</strong> para estar de espaldas desde el inicio.</li>
+    </ol>
+    <p>
+      Al hacer hover, solo rotamos el contenedor interno 180deg. Las dos caras viajan juntas y la magia de <code>backface-visibility: hidden</code> hace que solo sea visible la que mira hacia ti.
+    </p>
+
+    <h3>rotateX para efectos de entrada</h3>
+    <p>
+      Más allá del flip, <code>rotateX()</code> se usa frecuentemente para animaciones de entrada donde los elementos caen desde el cielo: parten de <code>rotateX(-90deg)</code> y <code>opacity: 0</code> (apuntando hacia el cielo) y se animan hacia <code>rotateX(0deg)</code> y <code>opacity: 1</code> (mirando directamente al usuario). Con una perspectiva bien calibrada, el efecto es espectacular.
+    </p>
   </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Para el efecto flip, SIEMPRE aplica backface-visibility: hidden a AMBAS caras (frontal y trasera). Si no lo haces en la cara frontal, cuando la tarjeta se voltee completamente, verás el reverso correcto pero también el frente aparecerá de fondo como una sombra, arruinando el efecto." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Tarjeta Flip Interactiva
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="rotate-xy-demo"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Pasa el ratón sobre la tarjeta para verla voltear en 3D. Dos caras, backface-visibility: hidden y rotateY(180deg) en la trasera son los tres secretos del efecto.">
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="escena-flip">
+          <div class="tarjeta-flip-demo">
+            <div class="cara-f-demo">
+              <p class="m-0 text-sm font-semibold">Genesis Pixel</p>
+              <p class="m-0 mt-1 text-xs opacity-70">Pasa el ratón ↗</p>
+            </div>
+            <div class="cara-b-demo">
+              <p class="m-0 text-sm font-semibold">¡Hola!</p>
+              <p class="m-0 mt-1 text-xs opacity-70">Soy el reverso ✨</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'backface-visibility solo en la cara trasera', description: 'Aplicar backface-visibility: hidden solo a la cara trasera deja visible el "fantasma" de la cara frontal cuando la tarjeta está completamente volteada. Debes aplicarlo a ambas caras.' },
+      { label: 'Olvidar rotateY(180deg) en la cara trasera', description: 'La cara trasera debe empezar ya girada 180deg en su estado inicial. Si no, ambas caras estarán apiladas mirando hacia adelante y el flip se verá raro.' },
+    ]} />
+
+    <PracticeCards
+      title="Tu tarjeta de visita digital"
+      description="Crea una tarjeta de presentación personal que muestre tu nombre al frente. Al voltearla, muestra tu stack tecnológico o un mensaje de contacto."
+      steps={practiceSteps}
+    />
+  </div>
 </TransformLayout>
+
+<style>
+  .escena-flip {
+    width: 200px;
+    height: 130px;
+    perspective: 900px;
+    cursor: pointer;
+  }
+
+  .tarjeta-flip-demo {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .escena-flip:hover .tarjeta-flip-demo {
+    transform: rotateY(180deg);
+  }
+
+  .cara-f-demo,
+  .cara-b-demo {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    padding: 20px;
+    color: white;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backface-visibility: hidden;
+  }
+
+  .cara-f-demo {
+    background: linear-gradient(135deg, #a855f7, #3b82f6);
+  }
+
+  .cara-b-demo {
+    background: linear-gradient(135deg, #ec4899, #f97316);
+    transform: rotateY(180deg);
+  }
+</style>

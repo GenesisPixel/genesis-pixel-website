@@ -1,25 +1,212 @@
 ---
 import TransformLayout from '../../layouts/TransformLayout.astro';
 import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
 
+const htmlCode = `<div class="escena-3d">
+  <div class="cubo">
+    <div class="cara cara-frente">Frente</div>
+    <div class="cara cara-atras">Atrás</div>
+    <div class="cara cara-derecha">Dcha</div>
+    <div class="cara cara-izquierda">Izq</div>
+  </div>
+</div>`;
+
+const cssCode = `/* El contexto 3D: el escenario donde ocurre todo */
+.escena-3d {
+  width: 120px;
+  height: 120px;
+  perspective: 600px;
+  perspective-origin: 50% 50%;
+}
+
+/* El elemento que contiene las caras */
+.cubo {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  
+  /* Animación de rotación continua en 3D */
+  animation: rotar-cubo 8s linear infinite;
+}
+
+/* Cara frontal */
+.cara-frente {
+  transform: translateZ(60px);
+}
+
+/* Cara trasera */
+.cara-atras {
+  transform: rotateY(180deg) translateZ(60px);
+}
+
+/* Caras laterales */
+.cara-derecha {
+  transform: rotateY(90deg) translateZ(60px);
+}
+
+.cara-izquierda {
+  transform: rotateY(-90deg) translateZ(60px);
+}
+
+@keyframes rotar-cubo {
+  from { transform: rotateX(-10deg) rotateY(0deg); }
+  to { transform: rotateX(-10deg) rotateY(360deg); }
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Crea un contenedor con perspective: 800px', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Dentro, añade un div con transform-style: preserve-3d', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Aplica rotateY(45deg) al div interno para ver el efecto 3D', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Cambia el valor de perspective (400px vs 2000px) y observa la diferencia', color: 'dm-blue', rotate: '-1deg' },
+];
 ---
 
 <TransformLayout
   title="Transform 3D - Genesis Pixel"
   currentLesson="/transform/transform-3d"
-  prevLesson={{ title: 'Lección Anterior', href: '/transform/multiples-transformaciones' }}
-  nextLesson={{ title: 'Lección Siguiente', href: '/transform/rotate-xy' }}
+  prevLesson={{ title: 'Múltiples Transformaciones', href: '/transform/multiples-transformaciones' }}
+  nextLesson={{ title: 'RotateX y RotateY', href: '/transform/rotate-xy' }}
 >
   <ChapterHeader
     chapterNumber="02"
     chapterLabel="Capítulo 2 · Lección 11"
     title="Transform 3D"
-    readingTime={5}
+    readingTime={8}
     difficulty="CSS Transform"
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Próximamente...</h3>
-    <p>Estamos redactando esta lección con historias reales y ejemplos visuales de calidad premium.</p>
+    <h3>Rompiendo la cuarta pared del navegador</h3>
+    <p>
+      Durante décadas, la web vivió en dos dimensiones. Las páginas eran documentos planos, como hojas de papel digital. Podías hacer cosas en la pantalla: moverlas izquierda y derecha (eje X), arriba y abajo (eje Y). Pero siempre en ese plano bidimensional, sin profundidad real.
+    </p>
+    <p>
+      Luego llegó <strong>CSS 3D Transform</strong> y cambió las reglas del juego. De repente, los navegadores podían simular un espacio tridimensional, con un nuevo eje imaginario que "entra" y "sale" de tu pantalla: el <strong>eje Z</strong>.
+    </p>
+    <p>
+      Y con eso, aparecieron las tarjetas que se voltean, los carruseles que rotan en el espacio, los efectos de paralaje con profundidad real, y las interfaces que hacen que el usuario sienta que está tocando algo físico.
+    </p>
+
+    <h3>Los dos pilares del 3D en CSS</h3>
+    <p>
+      Para que el 3D funcione en CSS, necesitas entender dos propiedades fundamentales que trabajan juntas:
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li>
+        <strong>perspective:</strong> Se aplica al <em>contenedor padre</em>. Define la distancia imaginaria desde la que el "ojo del espectador" observa la escena. Un valor pequeño (400px) crea una perspectiva muy exagerada y dramática. Un valor grande (2000px) crea una perspectiva muy sutil, casi plana.
+      </li>
+      <li>
+        <strong>transform-style: preserve-3d:</strong> Se aplica al <em>elemento que tiene hijos que se transforman en 3D</em>. Sin esta propiedad, los hijos siempre se "aplanarán" sobre el plano 2D, perdiendo toda sensación de profundidad.
+      </li>
+    </ul>
+
+    <h3>El eje Z: profundidad</h3>
+    <p>
+      Imagina que tu pantalla es una ventana. El eje X va de izquierda a derecha. El eje Y va de arriba a abajo. El eje Z es una lanza imaginaria que apunta directamente hacia tus ojos, perpendicular a la pantalla.
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><code>translateZ(100px):</code> Mueve el elemento hacia ti (se ve más grande, más cerca).</li>
+      <li><code>translateZ(-100px):</code> Aleja el elemento de ti (se ve más pequeño, más lejos).</li>
+    </ul>
+
+    <h3>La diferencia entre 2D y 3D</h3>
+    <p>
+      Un elemento 2D plano solo puede moverse en X e Y. Si lo rotas, parece que "escala" o se aplana. Un elemento en un contexto 3D correcto (con <code>perspective</code> y <code>preserve-3d</code>) realmente ocupa el espacio. Cuando lo rotas, puedes ver sus lados, su espesor, su profundidad. Esa es la diferencia entre la ilusión y la realidad tridimensional.
+    </p>
   </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="perspective se aplica en el PADRE, no en el elemento que se transforma. Un error muy común es poner perspective y transform en el mismo elemento. Tampoco olvides transform-style: preserve-3d en el contenedor de las caras del cubo, o todas las transformaciones de los hijos se aplanarán sobre el plano de la pantalla." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Un cubo rotando en CSS puro
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="3d-demo"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Un cubo 3D rotando construido únicamente con CSS. Cada cara posicionada con translateZ y rotaciones. Todo el espacio 3D está creado con perspective y preserve-3d.">
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="escena-demo">
+          <div class="cubo-demo">
+            <div class="cara-demo cara-f">Frente</div>
+            <div class="cara-demo cara-b">Atrás</div>
+            <div class="cara-demo cara-r">Dcha</div>
+            <div class="cara-demo cara-l">Izq</div>
+            <div class="cara-demo cara-t">Top</div>
+            <div class="cara-demo cara-bo">Bot</div>
+          </div>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Poner perspective en el elemento que se transforma', description: 'La perspectiva debe estar en el padre para que afecte a los hijos. Si la pones en el mismo elemento que rota, obtendrás un efecto diferente al esperado.' },
+      { label: 'Olvidar transform-style: preserve-3d', description: 'Sin preserve-3d en el contenedor padre, todos los elementos hijos se aplanan sobre el plano 2D y los efectos de rotación 3D desaparecen completamente.' },
+      { label: 'Usar backface-visibility sin necesidad', description: 'backface-visibility: hidden oculta la cara trasera de un elemento al rotarlo. Solo añádelo cuando realmente necesites que el reverso sea invisible (como en tarjetas flip). En un cubo, no lo quieres.' },
+    ]} />
+
+    <PracticeCards
+      title="Tu primer espacio 3D"
+      description="Crea una escena con perspective: 800px y dentro un div con transform-style: preserve-3d. Anima su rotateY de 0 a 360deg en un keyframe infinito y observa el espacio 3D cobrando vida."
+      steps={practiceSteps}
+    />
+  </div>
 </TransformLayout>
+
+<style>
+  .escena-demo {
+    width: 100px;
+    height: 100px;
+    perspective: 500px;
+  }
+
+  .cubo-demo {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spin-cube 8s linear infinite;
+  }
+
+  .cara-demo {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    color: white;
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    background: rgba(168, 85, 247, 0.1);
+    backdrop-filter: blur(4px);
+  }
+
+  .cara-f  { transform: translateZ(50px); }
+  .cara-b  { transform: rotateY(180deg) translateZ(50px); }
+  .cara-r  { transform: rotateY(90deg) translateZ(50px); }
+  .cara-l  { transform: rotateY(-90deg) translateZ(50px); }
+  .cara-t  { transform: rotateX(90deg) translateZ(50px); }
+  .cara-bo { transform: rotateX(-90deg) translateZ(50px); }
+
+  @keyframes spin-cube {
+    from { transform: rotateX(-15deg) rotateY(0deg); }
+    to   { transform: rotateX(-15deg) rotateY(360deg); }
+  }
+</style>
