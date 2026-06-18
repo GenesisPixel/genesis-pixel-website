@@ -92,35 +92,37 @@ const practiceSteps = [
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Animaciones complejas con múltiples estados</h3>
+    <h3>Cuando dos estados no son suficientes</h3>
     <p>
-      Para lograr que una animación se sienta orgánica y profesional, rara vez bastará con definir solo el inicio y el final. Mediante el uso de múltiples estados (o checkpoints intermedios), podemos controlar perfectamente el comportamiento del elemento en puntos específicos del tiempo, como rebotes, fluctuaciones y aceleraciones localizadas.
+      Piensa en cómo cae una pelota al suelo. No simplemente aparece abajo: acelera mientras baja, impacta la superficie, se aplasta brevemente, vuelve a subir un poco, y finalmente se detiene. Eso no es dos estados. Eso es una historia con al menos cuatro o cinco momentos distintos.
+    </p>
+    <p>
+      La mayoría de los efectos visuales que se sienten reales y satisfactorios tienen algo en común: narran una historia a través de múltiples checkpoints. Con solo <code>from</code> y <code>to</code>, puedes hacer que algo aparezca o desaparezca. Pero con múltiples keyframes, puedes hacer que el usuario <em>sienta</em> algo.
     </p>
 
-    <h3>Efecto de rebote (Bounce)</h3>
+    <h3>El efecto rebote: física simulada en CSS</h3>
     <p>
-      El rebote clásico se basa en la gravedad: el objeto acelera hacia abajo, colisiona con una superficie (sufriendo una pequeña deformación física), rebota perdiendo energía hacia arriba, y vuelve a caer.
+      El rebote clásico respeta las leyes de la física: el objeto acelera hacia abajo por la gravedad, impacta la superficie con energía cinética —y esa energía lo deforma brevemente antes de rebotarlo hacia arriba, perdiendo energía con cada ciclo.
     </p>
     <p>
-      En CSS, esto se logra alternando propiedades de escala y traslación vertical con diferentes funciones de aceleración:
+      En CSS, traducimos eso a tres acciones simultáneas en los keyframes:
     </p>
     <ul class="space-y-2 list-disc pl-6 mb-6">
-      <li><strong>Estiramiento (Stretch):</strong> Al subir o bajar, el elemento se estira verticalmente debido a la velocidad.</li>
-      <li><strong>Aplastamiento (Squash):</strong> Al impactar contra el suelo, el elemento se comprime verticalmente y se expande a los lados.</li>
+      <li><strong>Traslación vertical (translateY):</strong> Sube y baja simulando la trayectoria real.</li>
+      <li><strong>Escala en Y (scaleY):</strong> Al impactar el suelo, el objeto se aplana. Al subir de nuevo, se estira brevemente —imitando el efecto <em>squash and stretch</em> de la animación clásica.</li>
+      <li><strong>Timing-functions por tramo:</strong> <code>ease-in</code> al caer (acelera), <code>ease-out</code> al subir (desacelera). Esto es lo que separa un rebote convincente de uno robótico.</li>
     </ul>
 
-    <h3>Efecto de ondas (Waves)</h3>
+    <h3>Efectos de ondas y loaders</h3>
     <p>
-      Los efectos de onda u oscilaciones constantes se logran combinando traslaciones u opacidades desfasadas. Por ejemplo, al animar 3 puntos suspensivos cargando en una interfaz (loading indicators), definimos una única animación de onda vertical y aplicamos un retraso (delay) incremental en cada elemento.
+      Los tres puntos suspensivos que pulsamos mientras esperamos que cargue una aplicación son un ejemplo perfecto de múltiples keyframes + delays escalonados. Defines una sola animación de pulso vertical, y la aplicas a tres elementos con delays de 0s, 0.2s y 0.4s. El resultado: una ola visual que parece viva y coordinada.
     </p>
 
-    <h3>Casos reales de interfaces premium</h3>
-    <p>
-      Los múltiples keyframes se emplean frecuentemente en:
-    </p>
+    <h3>Usos reales en interfaces premium</h3>
     <ul class="space-y-2 list-disc pl-6 mb-6">
-      <li><strong>Modales con rebote elástico:</strong> Una animación de entrada rápida que se pasa ligeramente del tamaño final y se asienta de manera suave.</li>
-      <li><strong>Notificaciones (Shake/Vibración):</strong> Múltiples keyframes en tramos cortos (ej. 10%, 20%, 30%...) que mueven el elemento a izquierda y derecha rápidamente para llamar la atención del usuario ante un error.</li>
+      <li><strong>Modales con entrada elástica:</strong> El modal entra rápido, se pasa ligeramente de su tamaño final (scale 1.05), y luego retrocede suavemente a su estado normal (scale 1). Eso requiere al menos tres keyframes: entrada, overshoot, y asentamiento.</li>
+      <li><strong>Shake de error:</strong> Un campo de formulario incorrecto vibra lateralmente con 6–8 keyframes en tramos muy cortos (10%, 20%, 30%...) alternando entre -8px y +8px. Es la traducción CSS de "eso no está bien".</li>
+      <li><strong>Indicadores de atención:</strong> Un badge o botón importante puede usar un "heartbeat" — un doble pulso de escala que imita un latido real con timing preciso.</li>
     </ul>
   </article>
 

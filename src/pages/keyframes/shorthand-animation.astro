@@ -67,43 +67,42 @@ const multipleShorthandCode = `.button-fancy {
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué es el Shorthand (Taquigrafía) en CSS?</h3>
+    <h3>Escribir menos para decir más</h3>
     <p>
-      El **Shorthand** es una propiedad especial en CSS que te permite resumir múltiples propiedades individuales relacionadas en una sola línea de código. Esto reduce el tamaño de tus archivos CSS, limpia el formato visual y agiliza el flujo de desarrollo.
+      Hasta ahora, hemos visto ocho propiedades distintas para controlar una animación. Si tuvieras que escribir las ocho cada vez que animas un elemento, tu código CSS se inflaría rápidamente y su mantenimiento sería un dolor de cabeza. El shorthand <code>animation</code> es tu atajo profesional: te permite condensar toda esa configuración en una sola línea elegante.
+    </p>
+    <p>
+      Esto no es solo una cuestión de estética. Cuando lees código de otros desarrolladores, el shorthand te permite entender la intención completa del movimiento de un solo vistazo, como leer una oración completa en lugar de deletrear letras sueltas.
     </p>
 
-    <h3>Estructura y orden recomendado</h3>
+    <h3>La única regla estricta: los tiempos</h3>
     <p>
-      Aunque el navegador es muy inteligente organizando los valores del shorthand, hay una regla estricta: **el primer valor de tiempo que encuentre se asignará a <code>animation-duration</code>, y el segundo se asignará a <code>animation-delay</code>**.
+      El navegador es sorprendentemente inteligente interpretando el shorthand. Puedes poner <code>linear</code> antes o después de <code>infinite</code>, y lo entenderá igual. Pero tiene una limitación vital: <strong>no puede distinguir entre duración y delay si solo ve números</strong>.
     </p>
     <p>
-      El orden profesional estándar recomendado es el siguiente:
+      Por convención y obligación matemática, <strong>el primer valor de tiempo que el navegador encuentra siempre es la duración (duration). El segundo valor de tiempo siempre será el retraso (delay)</strong>.
+    </p>
+
+    <h3>La estructura mental profesional</h3>
+    <p>
+      Aunque el orden (excepto los tiempos) es flexible, los profesionales usan una estructura mental predecible. Piensa en responder estas preguntas: <em>¿Qué? ¿Cuánto dura? ¿Cómo acelera? ¿Espera? ¿Cuántas veces? ¿Cómo va y viene? ¿Qué pasa al final?</em>
     </p>
     <div class="bg-white/5 border border-white/10 rounded-xl p-4 font-mono text-xs text-center text-white mb-6">
-      animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode] [play-state];
+      animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode];
     </div>
 
-    <h3>Lectura y ejemplo profesional</h3>
+    <h3>Lectura y traducción de código real</h3>
     <p>
-      Considera esta declaración:
+      Lee la siguiente línea de código profesional en voz alta:
     </p>
     <pre><code>animation: slideGlow 2s ease-in-out 0.5s infinite alternate both;</code></pre>
     <p>
-      Aquí, desglosamos:
+      La traducción mental automática del navegador es: "Ejecuta <code>slideGlow</code> en 2 segundos, con aceleración suave en los extremos, esperando medio segundo antes de empezar. Repítelo infinitamente, yendo y viniendo, y mantén los estilos antes de empezar y después de terminar".
     </p>
-    <ul class="space-y-2 list-disc pl-6 mb-6">
-      <li><strong>slideGlow:</strong> Nombre de la animación.</li>
-      <li><strong>2s:</strong> Duración (2 segundos).</li>
-      <li><strong>ease-in-out:</strong> Timing function (Aceleración y desaceleración).</li>
-      <li><strong>0.5s:</strong> Delay (Espera de 0.5 segundos).</li>
-      <li><strong>infinite:</strong> Iteraciones (Repetirse indefinidamente).</li>
-      <li><strong>alternate:</strong> Dirección (Va y viene).</li>
-      <li><strong>both:</strong> Fill mode (Retiene estilos antes y después).</li>
-    </ul>
 
-    <h3>Definir múltiples animaciones taquigráficas</h3>
+    <h3>Combinando múltiples secuencias</h3>
     <p>
-      Si quieres aplicar varias animaciones independientes a un elemento, puedes separarlas completamente con comas, cada una con su propia configuración shorthand completa:
+      El verdadero poder del shorthand brilla cuando aplicas múltiples animaciones al mismo elemento separándolas por comas. Es la forma más limpia de componer movimientos complejos a partir de animaciones simples y reutilizables:
     </p>
     <pre><code>{multipleShorthandCode}</code></pre>
   </article>

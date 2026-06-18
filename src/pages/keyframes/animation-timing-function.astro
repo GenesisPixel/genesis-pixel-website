@@ -112,50 +112,49 @@ const practiceSteps = [
     chapterNumber="01"
     chapterLabel="Capítulo 1 · Lección 8"
     title="Animation Timing Function"
-    readingTime={7}
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué es el Easing?</h3>
+    <h3>Por qué el movimiento lineal se siente falso</h3>
     <p>
-      La propiedad <code>animation-timing-function</code> define la curva de aceleración de la animación. Determina cómo se distribuye la velocidad del movimiento a lo largo de la duración establecida. Sin ella, los movimientos se sentirían rígidos y artificiales (como robots), mientras que con ella podemos imitar la inercia, la gravedad y la física del mundo real.
+      Cuando aprendes a manejar una bicicleta, no arrancas a velocidad máxima desde el primer pedaleo ni tampoco paras en seco. Aceleras gradualmente y desacelerás antes de detenerte. Ese es el movimiento natural que el cerebro humano espera. Cuando algo se mueve a velocidad constante en pantalla, algo en nosotros lo detecta como artificial, robótico.
+    </p>
+    <p>
+      La propiedad <code>animation-timing-function</code> resuelve exactamente eso. Define la curva de aceleración de la animación a lo largo de su duración: cuándo va rápido, cuándo desacelera, cuándo arranca despacio. Es lo que convierte un movimiento mecánico en uno que se siente vivo.
     </p>
 
-    <h3>Curvas de aceleración estándar</h3>
-    <p>
-      CSS nos proporciona varios valores predefinidos listos para usar:
-    </p>
+    <h3>Las cinco curvas estándar de CSS</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>linear:</strong> Velocidad constante de principio a fin. Excelente para rotaciones continuas o loaders.</span>
+        <span><strong>linear:</strong> Velocidad perfectamente constante de principio a fin. Útil para rotaciones continuas, fondos en movimiento o cualquier cosa donde quieras que el usuario no perciba inicio ni final del ciclo.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>ease:</strong> (Valor por defecto) Comienza despacio, acelera en el medio, y termina muy despacio. Produce transiciones bastante naturales.</span>
+        <span><strong>ease:</strong> (Valor por defecto) Arranca despacio, acelera en el centro y termina despacio. Produce transiciones bastante naturales para la mayoría de casos genéricos.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>ease-in:</strong> Comienza muy despacio y acelera progresivamente hasta el final. Se asemeja a un objeto cayendo por gravedad.</span>
+        <span><strong>ease-in:</strong> Comienza muy despacio y acelera progresivamente. Imita un objeto que toma impulso, como una pelota que empieza a rodar cústera abajo.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>ease-out:</strong> Comienza a máxima velocidad y desacelera suavemente hacia el final. Ideal para elementos interactivos que entran en la pantalla.</span>
+        <span><strong>ease-out:</strong> Empieza a velocidad máxima y desacelera suavemente. Perfecto para elementos que entran a la pantalla —se sienten responsivos e inmediatos.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>ease-in-out:</strong> Transición simétrica: inicio lento, aceleración intermedia y final lento. Útil para movimientos cíclicos recurrentes de vaivén.</span>
+        <span><strong>ease-in-out:</strong> Simétrico: inicio lento, centro rápido, final lento. Ideal para movimientos de vaivén o carruseles que van y vienen.</span>
       </li>
     </ul>
 
-    <h3>Casos de uso en interfaces de usuario</h3>
+    <h3>La regla que marca la diferencia en UI</h3>
     <p>
-      Para lograr que una aplicación web se sienta premium, debes elegir el easing adecuado según la acción:
+      Hay una decisión de diseño que los mejores equipos de producto aplican consistentemente:
     </p>
     <ul class="space-y-2 list-disc pl-6 mb-6">
-      <li><strong>Entrada de elementos (ej. Menús deslizantes, Modales):</strong> Usa <code>ease-out</code>. La entrada rápida da una sensación de inmediatez y respuesta veloz al clic del usuario.</li>
-      <li><strong>Salida de elementos:</strong> Usa <code>ease-in</code>. El elemento parece tomar impulso al salir, desapareciendo rápidamente de la pantalla sin retrasar la navegación.</li>
-      <li><strong>Elementos decorativos en bucle:</strong> Usa <code>ease-in-out</code> o <code>linear</code>.</li>
+      <li><strong>Cuando algo entra a pantalla</strong> (modal, menú, toast): usa <code>ease-out</code>. La entrada rápida le da al usuario la sensación de que la UI responde instantáneamente a su acción.</li>
+      <li><strong>Cuando algo sale de pantalla</strong> (cierre de modal, dismissal): usa <code>ease-in</code>. El elemento parece tomar impulso al irse, desapareciendo sin entorpecer la navegación.</li>
+      <li><strong>Para loops decorativos</strong> (fondos, orbs flotantes): usa <code>ease-in-out</code> o <code>linear</code>.</li>
     </ul>
   </article>
 

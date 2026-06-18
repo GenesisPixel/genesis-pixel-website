@@ -84,10 +84,25 @@ const practiceSteps = [
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué significa animable?</h3>
+    <h3>No todas las propiedades se animan igual</h3>
     <p>
-      Una propiedad CSS es **animable** si el navegador puede interpolar de manera continua y fluida sus valores desde un punto inicial a uno final. Por lo general, esto incluye valores numéricos (como dimensiones en <code>px</code>, <code>em</code>, <code>rem</code>, <code>%</code>), colores (formatos <code>rgb</code>, <code>hsl</code>, <code>hex</code>) y valores geométricos.
+      Hay dos maneras de mover un elemento de izquierda a derecha: cambiar su propiedad <code>left</code> de 0 a 200px, o usar <code>transform: translateX(200px)</code>. A simple vista, el resultado parece idéntico. Pero debajo del capó, ocurre algo radicalmente diferente, y esa diferencia determina si tu animación corre suave a 60fps o tartamudea en el teléfono de un usuario.
     </p>
+    <p>
+      Entender qué propiedades animar —y cuáles evitar— es uno de los conocimientos más valiosos de este capítulo. No es teoría académica: es la diferencia entre una interfaz fluida y una que frustra al usuario en el momento más crítico.
+    </p>
+
+    <h3>El pipeline que el navegador ejecuta en cada cambio</h3>
+    <p>
+      Cuando una propiedad CSS cambia, el navegador pasa por hasta tres etapas para reflejar ese cambio en pantalla. Cada etapa tiene un costo diferente:
+    </p>
+    <ol class="space-y-3 list-decimal pl-6 mb-6">
+      <li><strong>Layout (Reflow):</strong> Recalcula el tamaño y posición de todos los elementos de la página. Animar <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code> o <code>margin</code> lo dispara. El más costoso.</li>
+      <li><strong>Paint:</strong> Redibuja los píxeles de los elementos afectados. Animar <code>color</code>, <code>background-color</code> o <code>box-shadow</code> activa esta etapa. Moderado.</li>
+      <li><strong>Composite:</strong> Solo combina capas ya pintadas. Únicamente <code>transform</code> y <code>opacity</code> llegan aquí sin activar etapas anteriores. Ultrarrápido — la GPU lo maneja directamente.</li>
+    </ol>
+
+    <h3>Las propiedades que siempre debes preferir</h3>
 
     <h3>Propiedades animables populares</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">

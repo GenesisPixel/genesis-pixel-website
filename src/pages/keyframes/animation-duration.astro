@@ -107,46 +107,52 @@ const practiceSteps = [
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué es animation-duration?</h3>
+    <h3>El tiempo que separa una animación fluida de una que parece un error</h3>
     <p>
-      La propiedad <code>animation-duration</code> define el tiempo total que tarda una animación en completar un ciclo (desde el 0% hasta el 100%). Es una propiedad indispensable: si no se especifica, su valor por defecto es <code>0s</code>, lo que significa que la animación no se ejecutará.
+      Una animación demasiado rápida apenas se percibe. Una demasiado lenta hace que la interfaz se sienta lerda y el usuario comience a dudar si hizo clic o no. Encontrar el tiempo correcto no es una decisión aleatoria —es una decisión de diseño que impacta directamente cómo el usuario percibe la velocidad y respuesta de tu aplicación.
+    </p>
+    <p>
+      <code>animation-duration</code> es la propiedad que defines la duración total de un ciclo completo de la animación: desde el primer fotograma (0%) hasta el último (100%). Su valor por defecto es <code>0s</code>, lo que significa que si olvidas declararlo, la animación existe en tu código pero nunca ocurre en pantalla. Sin unidad de tiempo, no hay movimiento.
     </p>
 
-    <h3>Segundos vs. Milisegundos</h3>
+    <h3>Segundos vs Milisegundos: ¿cuándo usar cada uno?</h3>
     <p>
-      Puedes definir el tiempo de dos formas:
+      CSS acepta los tiempos en dos formatos:
     </p>
     <ul class="space-y-2 list-disc pl-6 mb-6">
-      <li><strong>Segundos (s):</strong> Usados comúnmente para tiempos largos (ej. <code>1s</code>, <code>2.5s</code>, <code>4s</code>).</li>
-      <li><strong>Milisegundos (ms):</strong> Ideales para micro-interacciones muy rápidas (ej. <code>200ms</code>, <code>350ms</code>, <code>500ms</code>). Recuerda que <code>1s = 1000ms</code>.</li>
+      <li><strong>Segundos (s):</strong> <code>1s</code>, <code>2.5s</code>, <code>0.3s</code>. El más intuitivo para duraciones largas.</li>
+      <li><strong>Milisegundos (ms):</strong> <code>300ms</code>, <code>500ms</code>, <code>1200ms</code>. Útiles cuando trabajas con valores pequeños y quieres evitar decimales. Recuerda: <code>1s = 1000ms</code>.</li>
     </ul>
-
-    <h3>Duraciones recomendadas y UX</h3>
     <p>
-      En el diseño de interfaces de usuario (UI), el tiempo es la clave de la percepción de fluidez:
+      Ambos son equivalentes. <code>0.3s</code> y <code>300ms</code> producen exactamente el mismo resultado. Usa el que haga tu código más legible en cada contexto.
+    </p>
+
+    <h3>La guía de tiempos del mundo real</h3>
+    <p>
+      Los diseñadores de interfaces llevan años refinando estos rangos. No son arbitrarios: responden a cómo el cerebro humano procesa y anticipa el movimiento:
     </p>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>100ms - 200ms (Inmediato):</strong> Perfecto para botones, hovers, y pequeños interruptores. El usuario percibe la acción al instante.</span>
+        <span><strong>100ms–200ms (Instante):</strong> El umbral en el que el usuario percibe una respuesta como inmediata. Perfecto para botones, toggles y micro-interacciones. Más rápido se convierte en parpadeo; más lento, en retraso.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>200ms - 350ms (Fluido):</strong> Estándar de oro para transiciones de menús desplegables (drawers), modales, y cambios de página.</span>
+        <span><strong>200ms–350ms (Fluido):</strong> El estándar de oro para menús desplegables, modales y transiciones de estado. Se siente rápido pero el ojo tiene tiempo de registrar el movimiento.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>350ms - 500ms (Pausado):</strong> Utilizado para componentes grandes que deben llamar la atención o recorrer una gran distancia en pantalla.</span>
+        <span><strong>350ms–600ms (Pausado):</strong> Para elementos que recorren una distancia grande en pantalla, como drawers laterales o paneles completos. El cerebro necesita ese tiempo para seguir el movimiento.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>> 1000ms (Cinemático):</strong> Úsalo exclusivamente para ilustraciones animadas de fondo, loaders, efectos decorativos o narrativas visuales. En la interfaz diaria se sentirá lento o "pesado".</span>
+        <span><strong>+1000ms (Cinemático):</strong> Solo para ilustraciones, fondos animados, loaders o elementos narrativos. En la UI interactiva del día a día, se sentirá pesado e impaciente.</span>
       </li>
     </ul>
 
-    <h3>Percepción visual</h3>
+    <h3>La percepción visual y por qué importa</h3>
     <p>
-      El cerebro humano procesa el movimiento a gran velocidad. Si una animación es demasiado lenta, rompe el flujo de interacción y frustra al usuario. Si es excesivamente rápida (menos de 80ms), el ojo no llega a registrar el movimiento y se percibe como un parpadeo o error visual.
+      El ojo humano está diseñado para detectar movimiento, pero procesarlo requiere tiempo. Las animaciones por debajo de 80ms apenas se registran consciente­mente —el usuario las percibe como un "parpadeo" o un cambio abrupto, no como un movimiento. Las que superan los 700ms en acciones cotidianas generan impaciencia: el usuario ya no está disfrutando el movimiento, está esperando que termine.
     </p>
   </article>
 

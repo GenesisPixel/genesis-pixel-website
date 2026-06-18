@@ -78,38 +78,41 @@ const multiplesCode = `.hero-image {
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué es animation-name y cómo funciona?</h3>
+    <h3>El nombre es el hilo invisible que conecta todo</h3>
     <p>
-      La propiedad <code>animation-name</code> es el puente de comunicación entre tus estilos y tus reglas de animación. Indica al navegador qué bloque específico de <code>@keyframes</code> debe aplicarse a un elemento HTML. Sin esta propiedad, la animación no sabrá qué fotogramas ejecutar, permaneciendo completamente estática.
+      Imagina que escribes una canción y la guardas en un estudio de grabación bajo un nombre. Más tarde, cuando quieres que suene en un local, llamas al estudio y dices ese nombre. El estudio la busca y la reproduce. Si el nombre que recuerdas no coincide exactamente con el nombre que usaste al guardarla, el estudio no sabe de qué hablas.
+    </p>
+    <p>
+      Eso es exactamente lo que ocurre con <code>animation-name</code>. Tú defines un bloque <code>@keyframes</code> con un nombre, y luego usas ese nombre en la propiedad <code>animation-name</code> del selector CSS. El navegador busca ese nombre y conecta los fotogramas al elemento. Si hay cualquier diferencia —un carácter extra, una mayúscula distinta— la animación simplemente no ocurre, sin ningún mensaje de error.
     </p>
 
-    <h3>Vinculación con @keyframes</h3>
+    <h3>Cómo funciona la vinculación</h3>
     <p>
-      La vinculación se realiza mediante una correspondencia exacta de nombres (incluyendo mayúsculas y minúsculas).
+      La vinculación entre keyframes y elemento es estrictamente por coincidencia de nombre. Y aquí hay algo que atrapa a mucha gente: la propiedad es <strong>case-sensitive</strong>. <code>fadeIn</code> y <code>fadein</code> son nombres completamente distintos para el navegador.
     </p>
     <pre><code>{vinculacionCode}</code></pre>
 
-    <h3>Nombres descriptivos y convenciones</h3>
+    <h3>Convenciones de nomenclatura que usan los profesionales</h3>
     <p>
-      A la hora de estructurar proyectos grandes, la claridad es crucial. Dos convenciones populares son:
+      No existe un estándar oficial, pero hay dos convenciones que dominan el mundo real:
     </p>
     <ul class="space-y-2 list-disc pl-6 mb-6">
-      <li><strong>kebab-case:</strong> Todo en minúsculas separado por guiones (ej. <code>fade-in-down</code>, <code>rotate-spinner</code>). Es el estándar preferido por muchos desarrolladores CSS.</li>
-      <li><strong>camelCase:</strong> Sin espacios, alternando mayúsculas (ej. <code>fadeInDown</code>, <code>rotateSpinner</code>).</li>
+      <li><strong>kebab-case:</strong> Todo en minúsculas, palabras separadas por guiones: <code>fade-in-down</code>, <code>rotate-spinner</code>, <code>slide-from-right</code>. Es el preferido para CSS puro por su legibilidad.</li>
+      <li><strong>camelCase:</strong> Primera palabra en minúscula, resto capitalizadas: <code>fadeInDown</code>, <code>rotateSpinner</code>. Muy común cuando el CSS lo genera o consume JavaScript.</li>
     </ul>
-
-    <h3>Nombres y valores reservados</h3>
     <p>
-      Evita utilizar palabras del sistema CSS o identificadores globales:
+      El consejo más valioso: elige la convención que te resulte más natural y apégate a ella en todo el proyecto. La inconsistencia es enemiga del mantenimiento.
     </p>
+
+    <h3>Los nombres que jamás debes usar</h3>
     <ul class="space-y-2 list-disc pl-6 mb-6">
-      <li><code>none</code>: Valor por defecto que desactiva cualquier animación vinculada.</li>
-      <li><code>initial</code>, <code>inherit</code>, <code>unset</code>, <code>default</code>: Palabras clave universales de CSS.</li>
+      <li><code>none</code>: Le dice al navegador que no hay ninguna animación aplicada. Usar este nombre en tu <code>@keyframes</code> causará conflictos imposibles de depurar.</li>
+      <li><code>initial</code>, <code>inherit</code>, <code>unset</code>, <code>default</code>: Son palabras clave globales de CSS. El navegador las interpretará como instrucciones, no como nombres.</li>
     </ul>
 
-    <h3>Vinculación múltiple</h3>
+    <h3>Aplicar más de una animación al mismo elemento</h3>
     <p>
-      Puedes aplicar más de una animación a un elemento separando los nombres por comas. El navegador ejecutará todas las animaciones simultáneamente o según sus delays definidos:
+      Una de las capacidades más poderosas de CSS es que puedes ejecutar múltiples animaciones simultáneamente en el mismo elemento, simplemente separando los nombres por comas. Cada animación mantiene sus propias propiedades de duración, delay y easing:
     </p>
     <pre><code>{multiplesCode}</code></pre>
   </article>

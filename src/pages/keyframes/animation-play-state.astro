@@ -88,32 +88,38 @@ const hoverPauseCode = `.marquee-container:hover .marquee-track {
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué es animation-play-state?</h3>
+    <h3>El botón de pausa de tu animación</h3>
     <p>
-      La propiedad <code>animation-play-state</code> te permite pausar y reanudar el flujo de una animación CSS en cualquier momento de su ciclo de vida.
+      Imagina que estás viendo un video y alguien te habla. Pulsas pausa, respondes, y cuando vuelves a pulsar play, el video no empieza desde el principio; continúa exactamente donde lo dejaste. Eso es exactamente lo que hace <code>animation-play-state</code>.
+    </p>
+    <p>
+      A diferencia de quitarle el nombre de la animación a un elemento (lo cual resetearía la animación de vuelta a 0 de inmediato), alterar el <code>play-state</code> congela los valores de todos los estilos interpolados en ese milisegundo exacto de la línea de tiempo. 
     </p>
 
-    <h3>Los dos estados principales</h3>
+    <h3>Los dos únicos estados</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>running:</strong> (Valor por defecto) La animación se ejecuta normalmente.</span>
+        <span><strong>running:</strong> (Por defecto) La animación avanza por su línea de tiempo normalmente.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>paused:</strong> La animación se congela inmediatamente en el fotograma e instante exacto de tiempo en el que se encontraba. Al volver a <code>running</code>, se reanuda desde ese mismo punto sin volver a empezar de cero.</span>
+        <span><strong>paused:</strong> La animación se congela. El reloj se detiene y el elemento mantiene exactamente los estilos interpolados que tenía en ese instante.</span>
       </li>
     </ul>
 
-    <h3>Control de animaciones con Hover (:hover)</h3>
+    <h3>El caso de uso más importante: accesibilidad y UX</h3>
     <p>
-      Una aplicación directa en CSS sin usar JavaScript es pausar animaciones en respuesta al puntero del ratón del usuario. Por ejemplo, en un carrusel continuo de imágenes o logos (marquee), es excelente práctica de UX pausar el scroll cuando el usuario posiciona su puntero encima (usando <code>:hover</code>) para que pueda leer o hacer clic con tranquilidad:
+      Hay una regla fundamental en accesibilidad web y diseño premium: <strong>nunca asumas que a todos los usuarios les gusta el movimiento constante</strong>. Para personas con desórdenes vestibulares o problemas de atención, una marquesina de logos moviéndose infinitamente hace que leer el resto de la página sea sumamente difícil.
+    </p>
+    <p>
+      El patrón de diseño más elegante para solucionar esto es pausar las animaciones cuando el usuario posiciona el cursor sobre ellas (<code>:hover</code>). Esto le devuelve el control al usuario de forma intuitiva sin necesidad de escribir una sola línea de JavaScript:
     </p>
     <pre><code>{hoverPauseCode}</code></pre>
 
-    <h3>Controles interactivos avanzados</h3>
+    <h3>Pausas interactivas con JavaScript</h3>
     <p>
-      Mediante JavaScript, podemos alterar dinámicamente el valor de esta propiedad añadiendo o quitando una clase (como <code>.paused</code>). Esto abre un abanico de posibilidades, como botones de reproducción multimedia interactivos, loaders controlables o animaciones pausadas de acuerdo con la visibilidad del scroll de la página.
+      Cuando el control de la pausa no depende del puntero sino de la lógica de negocio (por ejemplo, pausar una animación de fondo al abrir el menú principal), usar JavaScript para alternar una clase utilitaria es la forma profesional de hacerlo.
     </p>
   </article>
 

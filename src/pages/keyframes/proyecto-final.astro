@@ -153,35 +153,29 @@ const practiceSteps = [
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Integración y Orquestación</h3>
+    <h3>El arte de la orquestación</h3>
     <p>
-      ¡Felicidades! Has recorrido todo el Capítulo 1 sobre Keyframes. En este proyecto final, consolidaremos todos los conceptos aprendidos (líneas de tiempo, propiedades animables, delays negativos, fill-modes, timing-functions y sintaxis shorthand) creando un panel de control interactivo con tres elementos clave.
+      ¡Felicidades! Has llegado al final del Capítulo 1. Hasta ahora hemos estudiado las propiedades de forma aislada, como piezas sueltas de un motor. Pero en un proyecto real, la magia no ocurre por usar una propiedad compleja; ocurre cuando logras que múltiples elementos simples se muevan juntos en perfecta sincronía. A esto lo llamamos <strong>orquestación</strong>.
     </p>
 
-    <h3>1. El Loader de doble órbita</h3>
+    <h3>1. El Loader: movimiento continuo y lineal</h3>
     <p>
-      El loader utiliza una rotación infinita en 2D (<code>transform: rotate</code>) combinando dos bordes coloreados independientes en su gradiente circular. Al ser un loop infinito lineal, es extremadamente ligero para la GPU.
+      Nuestro loader utiliza una rotación infinita. ¿Recuerdas la lección sobre <code>animation-timing-function</code>? Aquí es donde <code>linear</code> brilla. Si usáramos <code>ease</code>, el loader se detendría un instante en cada vuelta, rompiendo la ilusión de flujo constante. Es un loop puro procesado directamente por la GPU gracias a <code>transform: rotate</code>.
     </p>
 
-    <h3>2. La Tarjeta flotante (Floating Glow Card)</h3>
+    <h3>2. La Tarjeta flotante: el secreto de lo orgánico</h3>
     <p>
-      Aplica una animación continua de flotación vertical (vaivén) usando <code>alternate</code> en su dirección para que el movimiento sea fluido. Además, incluye micro-interacciones de hover que modifican su escalado e iluminan sus bordes suavemente.
+      La tarjeta respira. Ese movimiento de vaivén suave no está hecho a mano calculando decenas de porcentajes; es el resultado de combinar <code>animation-direction: alternate</code> con un timing function como <code>ease-in-out</code>. La tarjeta sube suavemente, pierde inercia, y vuelve a bajar sin saltos bruscos. Es física simulada en dos líneas de código.
     </p>
 
-    <h3>3. El Botón con pulso expansivo</h3>
+    <h3>3. El Botón: llamar la atención sin molestar</h3>
     <p>
-      Utiliza un efecto de sombra expansiva en bucle (<code>box-shadow</code>) que simula ondas de energía irradiando del botón. Esto llama la atención del usuario sin interrumpir su lectura o interrumpir el layout de la página.
+      El pulso expansivo del botón es un patrón clásico de UI para indicar "haz clic aquí". Se logra animando el <code>box-shadow</code> de forma infinita. Nota cómo no vibra ni cambia de tamaño abruptamente: usa una duración larga (2s+) para que sea una invitación gentil, no una alarma de emergencia.
     </p>
 
-    <h3>Optimización y buenas prácticas para producción</h3>
-    <ul class="space-y-2 list-disc pl-6 mb-6">
-      <li><strong>Composición por GPU:</strong> Asegúrate de que las animaciones repetitivas y fluidas (como la flotación de la tarjeta y el giro del loader) solo hagan uso de <code>transform</code> u <code>opacity</code>.</li>
-      <li><strong>will-change:</strong> Si notas parpadeos visuales al iniciar una animación en pantallas móviles, puedes indicarle al navegador que prepare el renderizado usando la propiedad <code>will-change: transform, opacity;</code>.</li>
-    </ul>
-
-    <h3>Desafío de Graduación</h3>
+    <h3>El verdadero secreto: el ritmo (Staggering)</h3>
     <p>
-      Como reto final antes de pasar al Capítulo 2, modifica el código para añadir un haz de luz resplandeciente (shimmer) que recorra diagonalmente la tarjeta de izquierda a derecha en un bucle de 3 segundos. ¡Pon a prueba todo lo que has aprendido!
+      El sello final de calidad en cualquier interfaz premium es que los elementos no aparecen a la vez como un bloque sólido. Entran en cascada, como en una obra de teatro. Puedes orquestar esto aplicando a todos tus componentes una misma animación de entrada (fade + slide up), pero dándoles a cada uno un <code>animation-delay</code> incremental, y usando <code>animation-fill-mode: both</code> para que se mantengan invisibles mientras esperan su turno en el escenario.
     </p>
   </article>
 

@@ -105,34 +105,37 @@ const practiceSteps = [
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué es animation-direction?</h3>
+    <h3>El problema de los saltos bruscos</h3>
     <p>
-      La propiedad <code>animation-direction</code> define el sentido de reproducción de la animación a lo largo de su línea de tiempo (si avanza hacia adelante, en reversa o si alterna el sentido en cada ciclo).
+      Imagina que animas un péndulo. Defines un fotograma inicial a la izquierda y un fotograma final a la derecha. Le dices que se repita infinitamente. ¿Qué ocurre? El péndulo va de izquierda a derecha... y luego se teletransporta instantáneamente de vuelta a la izquierda para empezar de nuevo. En la vida real, las cosas no se teletransportan. Van, y luego vuelven.
+    </p>
+    <p>
+      <code>animation-direction</code> es la propiedad que le enseña al navegador a "ir y volver". Define el sentido en el que se reproduce la línea temporal a través de sus repeticiones.
     </p>
 
-    <h3>Los cuatro sentidos de reproducción</h3>
+    <h3>Los cuatro caminos posibles</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>normal:</strong> (Valor por defecto) La animación se reproduce en sentido cronológico normal (0% → 100%). Al terminar cada ciclo, se reinicia instantáneamente en el 0%.</span>
+        <span><strong>normal:</strong> (Valor por defecto) El viaje de ida convencional, del 0% al 100%. Cuando termina, el elemento regresa abruptamente al inicio y vuelve a arrancar.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>reverse:</strong> La animación se reproduce hacia atrás (100% → 0%). Las funciones de tiempo (easing) también se invierten.</span>
+        <span><strong>reverse:</strong> El viaje hacia atrás, del 100% al 0%. Pero cuidado: no solo se invierte el orden visual, también se invierten las curvas de aceleración (easing). Lo que antes aceleraba al final, ahora acelerará al principio.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>alternate:</strong> La animación alterna el sentido en cada repetición. Los ciclos impares (1, 3, 5...) van hacia adelante (0% → 100%), mientras que los pares (2, 4, 6...) van en reversa (100% → 0%). Es ideal para lograr un vaivén continuo.</span>
+        <span><strong>alternate:</strong> La magia pura para loops. El primer ciclo va hacia adelante, el segundo hacia atrás. El tren va y vuelve por la misma vía. Es el secreto detrás de animaciones de respiración, indicadores flotantes o elementos que pulsan.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span><strong>alternate-reverse:</strong> Igual que alternate, pero invertido: los ciclos impares se reproducen en reversa (100% → 0%) y los pares hacia adelante (0% → 100%).</span>
+        <span><strong>alternate-reverse:</strong> Exactamente igual que alternate, pero comenzando el primer viaje hacia atrás.</span>
       </li>
     </ul>
 
-    <h3>Evitando los saltos visuales en loops</h3>
+    <h3>¿Por qué no simplemente animar el regreso a mano?</h3>
     <p>
-      En loops infinitos (como péndulos, latidos, o rebotes), el uso de <code>alternate</code> es fundamental. Si una pelota sube del 0% al 100%, con <code>normal</code> saltará bruscamente al suelo al iniciar el siguiente ciclo. Usando <code>alternate</code>, la pelota bajará de forma natural, creando una transición perfectamente fluida y profesional.
+      Claro, podrías definir 0% izquierda, 50% derecha, 100% izquierda. Pero <code>alternate</code> te ahorra escribir ese paso extra. Mantiene tus keyframes limpios y enfoca tu código solo en los dos estados extremos, dejando que el navegador haga el cálculo matemático del regreso, incluyendo la inversión de los easings.
     </p>
   </article>
 
