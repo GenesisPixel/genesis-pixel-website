@@ -1,25 +1,373 @@
 ---
 import TransformLayout from '../../layouts/TransformLayout.astro';
 import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
 
+const cardHtml = `<div class="escena-tarjeta-3d">
+  <div class="tarjeta-3d" id="tarjeta-tilt">
+    <div class="brillo"></div>
+    <div class="contenido-tarjeta">
+      <span class="badge">Premium</span>
+      <h3>Genesis Pixel</h3>
+      <p>Mueve el ratón sobre la tarjeta</p>
+    </div>
+  </div>
+</div>`;
+
+const cardCss = `.escena-tarjeta-3d {
+  width: 280px;
+  height: 170px;
+  perspective: 800px;
+}
+
+.tarjeta-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1a0533, #0a0e1a);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  cursor: pointer;
+}
+
+.brillo {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(168, 85, 247, 0.2) 0%,
+    transparent 60%
+  );
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tarjeta-3d:hover .brillo {
+  opacity: 1;
+}`;
+
+const cardJs = `const tarjeta = document.getElementById('tarjeta-tilt');
+const escena = tarjeta.parentElement;
+
+escena.addEventListener('mousemove', (e) => {
+  const rect = escena.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  const mx = (x / rect.width) * 100;
+  const my = (y / rect.height) * 100;
+  
+  // Calcular la rotación (-15 a 15 grados)
+  const rotY = ((x / rect.width) - 0.5) * 30;
+  const rotX = -((y / rect.height) - 0.5) * 20;
+  
+  tarjeta.style.transform = 
+    'rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg)';
+  tarjeta.style.setProperty('--mx', mx + '%');
+  tarjeta.style.setProperty('--my', my + '%');
+});
+
+escena.addEventListener('mouseleave', () => {
+  tarjeta.style.transform = 'rotateX(0) rotateY(0)';
+});`;
+
+const loaderHtml = `<div class="loader-avanzado">
+  <div class="anillo anillo-1"></div>
+  <div class="anillo anillo-2"></div>
+  <div class="anillo anillo-3"></div>
+</div>`;
+
+const loaderCss = `.loader-avanzado {
+  width: 80px;
+  height: 80px;
+  position: relative;
+}
+
+.anillo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+
+.anillo-1 {
+  border-top-color: #a855f7;
+  animation: girar 1s linear infinite;
+}
+
+.anillo-2 {
+  inset: 10px;
+  border-right-color: #3b82f6;
+  animation: girar 0.7s linear infinite reverse;
+}
+
+.anillo-3 {
+  inset: 20px;
+  border-bottom-color: #ec4899;
+  animation: girar 0.5s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Construye la tarjeta tilt siguiendo el código HTML y CSS de la lección', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Añade el JavaScript que captura la posición del ratón', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Implementa el loader de tres anillos con animaciones de distinta velocidad', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Combina el loader con la tarjeta para un proyecto de presentación completo', color: 'dm-blue', rotate: '-1deg' },
+];
 ---
 
 <TransformLayout
   title="Proyecto Final de Transform - Genesis Pixel"
   currentLesson="/transform/proyecto-final"
-  prevLesson={{ title: 'Lección Anterior', href: '/transform/perspective' }}
-  
+  prevLesson={{ title: 'Perspective', href: '/transform/perspective' }}
 >
   <ChapterHeader
     chapterNumber="02"
     chapterLabel="Capítulo 2 · Proyecto Final"
     title="Proyecto Final de Transform"
-    readingTime={5}
+    readingTime={12}
     difficulty="CSS Transform"
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Próximamente...</h3>
-    <p>Estamos redactando esta lección con historias reales y ejemplos visuales de calidad premium.</p>
+    <h3>Todo lo que aprendiste, en un solo proyecto</h3>
+    <p>
+      Has llegado hasta aquí. Has aprendido a mover elementos con <code>translate</code>, a escalarlos con <code>scale</code>, a girarlos con <code>rotate</code>, a distorsionarlos con <code>skew</code>, a controlar su origen de transformación, a combinar múltiples efectos y a sumergirte en el espacio tridimensional del navegador.
+    </p>
+    <p>
+      Ahora es el momento de juntar todo eso en algo real. Algo que puedas mostrar, compartir y usar como punto de partida en tus proyectos. El objetivo de este proyecto final no es que copies el código: es que lo <strong>entiendas lo suficiente como para adaptarlo y hacerlo tuyo</strong>.
+    </p>
   </article>
+
+  <!-- Proyecto 1: Tarjeta 3D con tilt interactivo -->
+  <div class="mt-16 mb-4">
+    <h3 class="text-lg font-medium text-white mb-2">Proyecto 1 — Tarjeta Tilt Interactiva</h3>
+    <p class="text-sm text-[var(--dm-light-300)] mb-6">
+      Una tarjeta que sigue al ratón en 3D usando <code>rotateX</code> y <code>rotateY</code> calculados con JavaScript. El efecto de brillo (highlight) se mueve con la posición del cursor usando una variable CSS dinámica.
+    </p>
+  </div>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="proyecto-card"
+      tabs={[
+        { id: 'html', label: 'HTML', code: cardHtml },
+        { id: 'css', label: 'CSS', code: cardCss },
+        { id: 'js', label: 'JS', code: cardJs },
+      ]}
+    />
+    <ResultPreview description="Mueve el ratón sobre la tarjeta. El tilt 3D sigue la posición exacta del cursor y el brillo se posiciona bajo el ratón usando una variable CSS personalizada.">
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="escena-final" id="escena-final-card">
+          <div class="tarjeta-final" id="tarjeta-final-tilt">
+            <div class="brillo-final" id="brillo-final"></div>
+            <div class="contenido-tarjeta-final">
+              <span class="badge-final">PREMIUM</span>
+              <h3 class="text-base font-semibold text-white m-0 mt-2">Genesis Pixel</h3>
+              <p class="text-xs text-white/50 m-0 mt-1">Mueve el ratón</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <!-- Proyecto 2: Loader avanzado -->
+  <div class="mt-16 mb-4">
+    <h3 class="text-lg font-medium text-white mb-2">Proyecto 2 — Loader de Tres Anillos</h3>
+    <p class="text-sm text-[var(--dm-light-300)] mb-6">
+      Tres anillos concéntricos, cada uno rotando a velocidad y dirección distinta, creando un spinner premium que transmite procesamiento activo con distintas capas de actividad.
+    </p>
+  </div>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="proyecto-loader"
+      tabs={[
+        { id: 'html', label: 'HTML', code: loaderHtml },
+        { id: 'css', label: 'CSS', code: loaderCss },
+      ]}
+    />
+    <ResultPreview description="Tres anillos con distintas velocidades (1s, 0.7s, 0.5s) y direcciones (normal, reverse, normal). La combinación crea un spinner visualmente rico sin JavaScript.">
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="loader-final">
+          <div class="anillo-f anillo-f-1"></div>
+          <div class="anillo-f anillo-f-2"></div>
+          <div class="anillo-f anillo-f-3"></div>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="En producción, asegúrate de respetar las preferencias de movimiento reducido del sistema operativo del usuario. Usa @media (prefers-reduced-motion: reduce) para desactivar o simplificar las animaciones. Un usuario con epilepsia fotosensible o vértigo puede verse seriamente afectado por animaciones de rotación continua." />
+  </div>
+
+  <div class="my-8">
+    <PracticeCards
+      title="Desafío Final"
+      description="Combina la tarjeta tilt con el loader: cuando pases el ratón sobre la tarjeta, aparece un overlay con el loader (simulando que se está cargando contenido). Al salir el ratón, desaparece. Usa todas las técnicas del capítulo."
+      steps={practiceSteps}
+    />
+  </div>
+
+  <!-- Resumen del capítulo -->
+  <div class="mt-16 p-8 rounded-2xl border border-white/10 bg-white/[0.02]">
+    <h3 class="text-lg font-medium text-white mb-6">Lo que aprendiste en este capítulo</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {[
+        { prop: 'translateX / translateY', desc: 'Mover elementos en ejes horizontales y verticales sin afectar el layout' },
+        { prop: 'translate(x, y)', desc: 'Centrado perfecto con translate(-50%, -50%) en absoluto' },
+        { prop: 'scale()', desc: 'Efectos de hover premium con spring ease y feedback táctil en :active' },
+        { prop: 'rotate()', desc: 'Spinners, acordeones y conversión de iconos' },
+        { prop: 'skew()', desc: 'Geometría diagonal para diseños con energía y velocidad' },
+        { prop: 'transform-origin', desc: 'Control del punto de pivote para rotaciones y escalados precisos' },
+        { prop: 'Múltiples transforms', desc: 'Coreografía de movimiento en múltiples elementos coordinados' },
+        { prop: 'preserve-3d + perspective', desc: 'El espacio tridimensional del navegador y sus dos pilares' },
+        { prop: 'rotateX / rotateY', desc: 'Tarjetas flip y animaciones de entrada 3D' },
+        { prop: 'translateZ + scale3d', desc: 'Profundidad y paralaje de capas en el eje Z' },
+        { prop: 'perspective-origin', desc: 'Punto de vista configurable para composiciones isométricas' },
+        { prop: 'GPU compositing', desc: 'Por qué transform es siempre preferible a top/left/width para animaciones' },
+      ].map((item) => (
+        <div class="flex gap-3 p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+          <span class="text-[var(--dm-purple)] font-mono text-xs shrink-0 mt-0.5">✓</span>
+          <div>
+            <p class="text-xs font-semibold text-white m-0">{item.prop}</p>
+            <p class="text-xs text-white/40 m-0 mt-0.5">{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
 </TransformLayout>
+
+<style>
+  /* Tarjeta Tilt */
+  .escena-final {
+    width: 240px;
+    height: 148px;
+    perspective: 800px;
+    cursor: pointer;
+  }
+
+  .tarjeta-final {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #1a0533, #0a0e1a);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+  }
+
+  .brillo-final {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      rgba(168, 85, 247, 0.2) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .escena-final:hover .brillo-final {
+    opacity: 1;
+  }
+
+  .contenido-tarjeta-final {
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge-final {
+    font-size: 9px;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Loader */
+  .loader-final {
+    width: 72px;
+    height: 72px;
+    position: relative;
+  }
+
+  .anillo-f {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid transparent;
+  }
+
+  .anillo-f-1 {
+    border-top-color: #a855f7;
+    animation: spin-final 1s linear infinite;
+  }
+
+  .anillo-f-2 {
+    inset: 10px;
+    border-right-color: #3b82f6;
+    animation: spin-final 0.7s linear infinite reverse;
+  }
+
+  .anillo-f-3 {
+    inset: 20px;
+    border-bottom-color: #ec4899;
+    animation: spin-final 0.5s linear infinite;
+  }
+
+  @keyframes spin-final {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const escena = document.getElementById('escena-final-card');
+    const tarjeta = document.getElementById('tarjeta-final-tilt');
+    const brillo = document.getElementById('brillo-final');
+
+    if (!escena || !tarjeta) return;
+
+    escena.addEventListener('mousemove', (e) => {
+      const rect = escena.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const mx = (x / rect.width) * 100;
+      const my = (y / rect.height) * 100;
+
+      const rotY = ((x / rect.width) - 0.5) * 28;
+      const rotX = -((y / rect.height) - 0.5) * 18;
+
+      tarjeta.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      tarjeta.style.setProperty('--mx', `${mx}%`);
+      tarjeta.style.setProperty('--my', `${my}%`);
+    });
+
+    escena.addEventListener('mouseleave', () => {
+      tarjeta.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    });
+  });
+</script>
