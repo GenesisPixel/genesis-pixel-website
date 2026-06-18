@@ -1,0 +1,25 @@
+---
+import TransformLayout from '../../layouts/TransformLayout.astro';
+import ChapterHeader from '../../components/ChapterHeader.astro';
+
+---
+
+<TransformLayout
+  title="Rotate - Genesis Pixel"
+  currentLesson="/transform/rotate"
+  prevLesson={{ title: 'Lección Anterior', href: '/transform/scale' }}
+  nextLesson={{ title: 'Lección Siguiente', href: '/transform/skew' }}
+>
+  <ChapterHeader
+    chapterNumber="02"
+    chapterLabel="Capítulo 2 · Lección 7"
+    title="Rotate"
+    readingTime={5}
+    difficulty="CSS Transform"
+  />
+
+  <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
+    <h3>Próximamente...</h3>
+    <p>Estamos redactando esta lección con historias reales y ejemplos visuales de calidad premium.</p>
+  </article>
+</TransformLayout>

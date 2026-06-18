@@ -1,0 +1,160 @@
+---
+import TransformLayout from '../../layouts/TransformLayout.astro';
+import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
+
+const htmlCode = `<div class="escena">
+  <div class="tarjeta-magica">
+    <h3>Pasa el ratón</h3>
+  </div>
+</div>`;
+
+const cssCode = `.tarjeta-magica {
+  background: linear-gradient(135deg, #a855f7, #3b82f6);
+  border-radius: 12px;
+  padding: 24px;
+  color: white;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+  cursor: pointer;
+  
+  /* Aquí ocurre la magia */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Transformamos el elemento al interactuar */
+.tarjeta-magica:hover {
+  transform: translateY(-10px) rotate(3deg) scale(1.05);
+  box-shadow: 0 15px 30px rgba(168, 85, 247, 0.4);
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Crea un div con cualquier color de fondo', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Añade una transición suave: transition: transform 0.3s ease', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Usa la pseudo-clase :hover', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Experimenta añadiendo transform: scale(1.1) rotate(-5deg)', color: 'dm-blue', rotate: '-1deg' },
+];
+---
+
+<TransformLayout
+  title="¿Qué es Transform? - Genesis Pixel"
+  currentLesson="/transform/que-es"
+  nextLesson={{ title: 'Sintaxis de Transform', href: '/transform/sintaxis' }}
+>
+  <ChapterHeader
+    chapterNumber="02"
+    chapterLabel="Capítulo 2 · Lección 1"
+    title="¿Qué es CSS Transform?"
+    readingTime={6}
+    difficulty="CSS Transform"
+  />
+
+  <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
+    <h3>El arte de manipular la realidad del navegador</h3>
+    <p>
+      Imagina que tienes una caja de cartón sobre tu escritorio. Si quieres moverla, puedes empujarla. Si quieres ver qué hay debajo, puedes levantarla. Si quieres que ocupe menos espacio, podrías aplastarla. En el mundo físico, damos por sentado que podemos manipular objetos tridimensionalmente sin alterar el resto de la habitación.
+    </p>
+    <p>
+      En la web tradicional, esto no era tan sencillo. Si querías mover un botón un poco hacia la derecha, usabas <code>margin-left</code> o <code>left</code>. ¿El problema? Al empujar ese botón, este empujaba al texto de al lado, que a su vez movía la imagen de abajo, desencadenando una reacción en cadena masiva. El navegador tenía que recalcular toda la página frame por frame, haciendo que las animaciones se vieran lentas y robóticas.
+    </p>
+    <p>
+      Aquí es donde entra <strong>CSS Transform</strong>, una de las propiedades más poderosas y fascinantes de todo el lenguaje.
+    </p>
+
+    <h3>¿Por qué es tan importante en las animaciones?</h3>
+    <p>
+      La magia de <code>transform</code> radica en que opera en una dimensión diferente. Cuando aplicas una transformación a un elemento, el navegador crea una capa separada —como un trozo de cristal flotando sobre tu página— y manipula ese cristal directamente usando la tarjeta gráfica (GPU) de tu dispositivo.
+    </p>
+    <p>
+      ¿Qué significa esto para ti? Que puedes mover, rotar, escalar y distorsionar elementos <strong>sin afectar absolutamente nada de lo que hay a su alrededor</strong>. Puedes hacer que un modal caiga desde el cielo sin mover un solo píxel de tu texto principal, logrando esos anhelados 60 fotogramas por segundo.
+    </p>
+
+    <h3>Mover vs Transformar</h3>
+    <p>
+      La diferencia fundamental que todo desarrollador de interfaces premium debe entender es esta:
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><strong>Mover (margin, top, left):</strong> Altera la estructura física de la página (el <em>Layout</em>). Es pesado, lento y debe evitarse en animaciones.</li>
+      <li><strong>Transformar (translate, rotate, scale):</strong> Altera únicamente la representación visual (el <em>Compositing</em>). Es fluido, rápido y es el estándar de la industria para Motion Design.</li>
+    </ul>
+
+    <h3>Casos de uso en el mundo real</h3>
+    <p>
+      Si navegas por cualquier producto digital de alta calidad (como Apple, Stripe o Linear), estás viendo <code>transform</code> en acción en cada segundo:
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><strong>Tarjetas interactivas:</strong> Que se elevan (<code>translateY</code>) y crecen (<code>scale</code>) cuando pasas el ratón por encima para invitar al clic.</li>
+      <li><strong>Menús móviles:</strong> Que se deslizan fluidamente desde fuera de la pantalla (<code>translateX</code>).</li>
+      <li><strong>Loaders y Spinners:</strong> Iconos de carga que giran infinitamente (<code>rotate</code>) mientras esperas que una petición se complete.</li>
+      <li><strong>Modales y Popovers:</strong> Que aparecen escalando desde el centro de la pantalla dando una sensación de despliegue orgánico.</li>
+    </ul>
+  </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Como regla de oro en el desarrollo web moderno: Si vas a animar la posición, el tamaño o la rotación de un elemento, usa siempre la propiedad transform. Nunca animes width, height, top o left a menos que sea estrictamente indispensable." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    El poder en acción
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="transform-demo"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Pasa el ratón sobre la tarjeta. Observa cómo se traslada, rota y escala simultáneamente de forma súper fluida.">
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="tarjeta-magica">
+          <h3>Pasa el ratón</h3>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Usar transform en elementos inline', description: 'CSS Transform no funciona en elementos con display: inline (como <span> o <a> normales). Siempre deben ser block o inline-block.' },
+      { label: 'Animar margin o padding para mover', description: 'Causa repintado de todo el layout. El navegador sufre y el usuario nota tirones (jank). Usa transform.' },
+      { label: 'Olvidar la perspectiva', description: 'Si estás intentando hacer rotaciones 3D espectaculares y se ven planas, es porque olvidaste declarar el punto de perspectiva.' },
+    ]} />
+
+    <PracticeCards
+      title="Tu primera transformación"
+      description="Vamos a experimentar. Toma cualquier botón o tarjeta y haz que reaccione al hover escalando ligeramente y rotando unos pocos grados."
+      steps={practiceSteps}
+    />
+  </div>
+</TransformLayout>
+
+<style>
+  .tarjeta-magica {
+    background: linear-gradient(135deg, #a855f7, #3b82f6);
+    border-radius: 12px;
+    padding: 24px 32px;
+    color: white;
+    text-align: center;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .tarjeta-magica:hover {
+    transform: translateY(-10px) rotate(3deg) scale(1.05);
+    box-shadow: 0 15px 30px rgba(168, 85, 247, 0.4);
+  }
+</style>
+
+<script>
+  import { initCodeInteractions } from '../../scripts/code-interactions.js';
+  document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
+</script>

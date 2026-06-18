@@ -1,0 +1,159 @@
+---
+import TransformLayout from '../../layouts/TransformLayout.astro';
+import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
+
+const htmlCode = `<div class="contenedor-avatar">
+  <img src="/img/avatar.png" alt="Avatar" class="avatar" />
+</div>`;
+
+const cssCode = `.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  
+  /* Sintaxis básica de transform */
+  transform: scale(1);
+}
+
+.contenedor-avatar:hover .avatar {
+  /* ¡Importante! El orden de las funciones altera el resultado final */
+  transform: translateY(-20px) scale(1.2) rotate(10deg);
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Selecciona la propiedad transform en tu CSS', color: 'dm-purple', rotate: '5deg' },
+  { number: 2, text: 'Añade una función como translateX(50px)', color: 'dm-green', rotate: '-2deg' },
+  { number: 3, text: 'Intenta añadir una segunda función sin comas separadoras', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Observa qué ocurre si cambias el orden de las funciones', color: 'dm-blue', rotate: '-3deg' },
+];
+---
+
+<TransformLayout
+  title="Sintaxis de Transform - Genesis Pixel"
+  currentLesson="/transform/sintaxis"
+  prevLesson={{ title: '¿Qué es Transform?', href: '/transform/que-es' }}
+  nextLesson={{ title: 'Translate X', href: '/transform/translate-x' }}
+>
+  <ChapterHeader
+    chapterNumber="02"
+    chapterLabel="Capítulo 2 · Lección 2"
+    title="Sintaxis de Transform"
+    readingTime={5}
+    difficulty="CSS Transform"
+  />
+
+  <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
+    <h3>Escribiendo las reglas del movimiento</h3>
+    <p>
+      Si CSS fuera una receta de cocina, la propiedad <code>transform</code> sería el ingrediente secreto que cambia por completo la presentación de tu platillo. Sin embargo, al igual que en la repostería, las medidas y la forma de escribirlas importan muchísimo. Un error de sintaxis no romperá tu página, pero hará que tu elemento simplemente no se mueva.
+    </p>
+
+    <h3>Estructura básica: Propiedad y Función</h3>
+    <p>
+      A diferencia de propiedades como <code>color</code> o <code>margin</code> que toman valores simples como <code>red</code> o <code>20px</code>, <code>transform</code> requiere que le pases <strong>funciones matemáticas</strong>. 
+    </p>
+    <p>
+      La estructura siempre es la misma: la palabra <code>transform</code>, seguida de dos puntos, el nombre de la función (como <code>translate</code>, <code>scale</code> o <code>rotate</code>), y paréntesis que encierran los valores que esa función necesita.
+    </p>
+    <div class="p-4 bg-white/5 rounded-lg border border-white/10 my-4 font-mono text-sm text-[var(--dm-light-200)]">
+      transform: funcion(valor);
+    </div>
+
+    <h3>Múltiples transformaciones: El arte del espacio</h3>
+    <p>
+      Aquí es donde muchos desarrolladores junior tropiezan. Si quieres que un elemento se mueva hacia arriba Y además crezca de tamaño, podrías pensar instintivamente en escribir dos propiedades <code>transform</code> separadas, o tal vez separarlas por comas.
+    </p>
+    <p>
+      La sintaxis correcta requiere que pongas todas las funciones en <strong>una sola línea, separadas únicamente por espacios</strong>.
+    </p>
+    <div class="p-4 bg-white/5 rounded-lg border border-white/10 my-4 font-mono text-sm text-[var(--dm-light-200)]">
+      <span class="text-red-400">/* INCORRECTO: Sobreescribe la anterior */</span><br/>
+      transform: translateY(-20px);<br/>
+      transform: scale(1.2);<br/><br/>
+      
+      <span class="text-red-400">/* INCORRECTO: Las comas rompen el código */</span><br/>
+      transform: translateY(-20px)<span class="text-white">,</span> scale(1.2);<br/><br/>
+
+      <span class="text-green-400">/* CORRECTO: Separado por espacios */</span><br/>
+      transform: translateY(-20px) scale(1.2);
+    </div>
+
+    <h3>El orden es fundamental</h3>
+    <p>
+      Imagina que le dices a alguien: "Camina 5 pasos hacia adelante y luego gira a la derecha". Eso lo llevará a un destino. Pero si le dices: "Gira a la derecha y luego camina 5 pasos hacia adelante", ¡terminará en un lugar completamente diferente!
+    </p>
+    <p>
+      CSS lee las funciones de <code>transform</code> <strong>de izquierda a derecha</strong> (aunque internamente se apliquen multiplicando matrices de derecha a izquierda). Lo vital es entender que si primero rotas un elemento, sus ejes "Arriba" y "Abajo" también rotan. Si luego le aplicas un <code>translateY</code>, no se moverá hacia el norte de tu pantalla, sino hacia donde apunte la nueva parte superior del elemento rotado.
+    </p>
+  </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Cuando uses múltiples transformaciones, acostúmbrate a este orden: Primero traslaciones (translate), luego rotaciones (rotate), y por último escalas (scale). Esto previene comportamientos inesperados causados por mover elementos cuyos ejes o tamaños ya han sido alterados." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Sintaxis en acción
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="sintaxis-demo"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Pasa el ratón sobre el área punteada. Observa cómo el cuadrado combina funciones separadas por espacios para escalar, rotar y trasladarse simultáneamente.">
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="demo-sintaxis-box"></div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Separar funciones con comas', description: 'En CSS Transform las funciones se encadenan usando un espacio en blanco. Las comas invalidarán toda la regla.' },
+      { label: 'Declarar transform varias veces', description: 'Por la cascada de CSS, la última propiedad transform sobreescribirá completamente a las anteriores. ¡Agrúpalas todas en una sola línea!' },
+      { label: 'Olvidar las unidades de medida', description: 'translateY(50) no funcionará. Debes especificar translateY(50px) o translateY(50%).' },
+    ]} />
+
+    <PracticeCards
+      title="Domina la Sintaxis"
+      description="Crea un elemento y añade un hover que encadene tres transformaciones. Intenta cambiar el orden de la función rotate y translate para ver cómo afecta el destino final."
+      steps={practiceSteps}
+    />
+  </div>
+</TransformLayout>
+
+<style>
+  .demo-sintaxis-box {
+    width: 80px;
+    height: 80px;
+    background: #22c55e;
+    border-radius: 16px;
+    transition: transform 0.4s ease;
+    /* Sintaxis base */
+    transform: translateY(0) scale(1) rotate(0);
+    box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2);
+    cursor: pointer;
+  }
+
+  /* Usando una pseudo-clase del contenedor padre para el preview */
+  :global(.preview-container:hover) .demo-sintaxis-box {
+    /* Múltiples transformaciones separadas por espacios */
+    transform: translateY(-20px) scale(1.2) rotate(15deg);
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
+  }
+</style>
+
+<script>
+  import { initCodeInteractions } from '../../scripts/code-interactions.js';
+  document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
+</script>
