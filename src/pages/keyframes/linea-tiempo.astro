@@ -81,29 +81,30 @@ const practiceSteps = [
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué es una Timeline en CSS?</h3>
+    <h3>Un tren que no puede saltarse estaciones</h3>
     <p>
-      La línea de tiempo (timeline) representa la duración total de tu animación mapeada de principio a fin. Cuando especificas <code>animation-duration: 4s</code>, el navegador mapea estos 4 segundos en un porcentaje relativo de 0% a 100%. Así, el 25% corresponderá exactamente a 1 segundo de reproducción, el 50% a 2 segundos, y así sucesivamente.
+      Piensa en la línea de tiempo de una animación como en una vía de tren. El tren sale de la estación cero (0%) y debe llegar a la estación final (100%). En el camino, puedes construir tantas estaciones intermedias como quieras: 25%, 50%, 75%. El tren <em>siempre</em> pasa por cada estación en el orden correcto, y entre cada par de estaciones viaja a una velocidad que tú controlas.
+    </p>
+    <p>
+      Cuando defines <code>animation-duration: 4s</code>, estás diciéndole al navegador que el trayecto completo —de 0% a 100%— debe durar exactamente cuatro segundos. Así, el 25% ocurre al segundo uno, el 50% al segundo dos. El tiempo total se divide de forma proporcional en función de los porcentajes que definas.
     </p>
 
-    <h3>Inicio y Final</h3>
+    <h3>Los extremos: inicio y final</h3>
     <p>
-      El inicio (0%) y el final (100%) son los anclajes esenciales. Si no defines el 0%, el navegador tomará los estilos iniciales del elemento como punto de partida, lo que a veces puede dar lugar a saltos bruscos si los valores por defecto no coinciden con lo que tienes en mente.
+      El <code>0%</code> y el <code>100%</code> son los pilares fundamentales de tu línea de tiempo. Si omites el <code>0%</code>, el navegador tomará como punto de partida los estilos actuales del elemento —y si esos estilos no coinciden con lo que esperabas, verás un salto brusco en el primer fotograma. Definir siempre ambos extremos explícitamente es una práctica que elimina sorpresas desagradables.
     </p>
 
-    <h3>Distribución Temporal</h3>
+    <h3>El secreto que nadie te cuenta: la interpolación</h3>
     <p>
-      Puedes fraccionar la línea de tiempo en tantos pasos como desees. Los intervalos típicos suelen ser múltiplos comunes (0%, 25%, 50%, 75%, 100% o 0%, 50%, 100%). Cada paso indica al navegador: "Al llegar a esta fracción del tiempo total, el elemento debe lucir exactamente así".
+      La interpolación es el proceso matemático por el que el navegador calcula todos los valores que existen <em>entre</em> los keyframes que tú definiste. Si a 0% la opacidad es 0 y a 100% es 1, el navegador calcula 0.1, 0.2, 0.3... 0.9 —cada uno asignado al fotograma correspondiente en esa fracción de segundo— y los pinta en pantalla a 60 fotogramas por segundo.
+    </p>
+    <p>
+      Este es el trabajo invisible que el navegador hace por ti, y es el que convierte tus estados estáticos en una ilusión de movimiento vivo.
     </p>
 
-    <h3>¿Qué es la Interpolación?</h3>
+    <h3>El timing-function actúa tramo a tramo</h3>
     <p>
-      La interpolación es el proceso matemático mediante el cual el navegador calcula automáticamente todos los valores numéricos de una propiedad entre dos keyframes definidos. Por ejemplo, si a 0% la opacidad es 0, y a 50% la opacidad es 1, el navegador calcula suavemente los valores intermedios (0.1, 0.2, 0.3...) para pintar los fotogramas en pantalla a 60fps (o la tasa de refresco del monitor).
-    </p>
-
-    <h3>Cómo interpreta el navegador los estados</h3>
-    <p>
-      El motor del navegador lee los valores y crea transiciones lineales o suavizadas entre cada uno de los keyframes adyacentes. El timing-function se aplica <strong>individualmente entre cada par de keyframes</strong>, no a toda la animación global, lo que permite modular la aceleración en tramos específicos.
+      Aquí viene algo que sorprende a muchos desarrolladores: la función de aceleración (easing) no se aplica a toda la animación como un bloque, sino <strong>individualmente entre cada par de keyframes adyacentes</strong>. Esto significa que puedes hacer que el elemento acelere rápido del 0% al 50%, y luego desacelere suavemente del 50% al 100%, simplemente definiendo distintos timing-functions dentro de cada fotograma clave.
     </p>
   </article>
 

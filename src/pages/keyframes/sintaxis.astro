@@ -79,40 +79,47 @@ const parpadeoCode = `@keyframes parpadeo {
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>¿Qué es la sintaxis y por qué es importante?</h3>
+    <h3>El lenguaje que habla el navegador</h3>
     <p>
-      La sintaxis es el conjunto de reglas que definen cómo se escribe el código para que el navegador lo entienda e interprete correctamente. En CSS Animations, una sintaxis limpia y estandarizada es fundamental para garantizar que las animaciones se ejecuten con suavidad en todos los navegadores modernos y que tu código sea escalable y fácil de mantener.
+      Imagina que quieres contratar a un equipo de arquitectos para construir tu casa. Puedes explicarles en voz alta lo que necesitas, pero si no entregan los planos en el formato correcto —con las medidas en las unidades adecuadas, las especificaciones en el lugar exacto— nada de lo que describan se construirá. La sintaxis es exactamente eso: el formato estricto que permite que tus instrucciones se conviertan en algo real.
+    </p>
+    <p>
+      En CSS Animations, dominar la sintaxis de <code>@keyframes</code> es la diferencia entre una animación que funciona en todos los navegadores y una que desaparece silenciosamente sin generar ningún error visible. Y lo más frustrante de los errores de sintaxis es precisamente eso: no gritan, simplemente no sucede nada.
     </p>
 
-    <h3>Estructura básica de @keyframes</h3>
+    <h3>La estructura: tres ingredientes obligatorios</h3>
     <p>
-      La regla <code>@keyframes</code> se compone de la palabra clave con arroba, seguida del nombre asignado a la animación (identificador) y un bloque de declaraciones encerrado entre llaves <code>{ }</code>. Dentro de estas llaves definimos los selectores de fotogramas clave.
+      Un bloque <code>@keyframes</code> válido siempre tiene tres partes. Primero la palabra reservada <code>@keyframes</code>. Luego el nombre que tú le asignas —ese nombre es el hilo que conectará la animación con el elemento en tu HTML. Finalmente, entre llaves, los fotogramas: cada uno definido por su posición en el tiempo (<code>0%</code>, <code>50%</code>, <code>100%</code>) y los estilos que el elemento debe tener en ese instante exacto.
     </p>
 
-    <h3>Uso de 'from' y 'to'</h3>
+    <h3>La forma corta: from y to</h3>
     <p>
-      Para animaciones de dos estados (inicial y final), podemos usar las palabras clave <code>from</code> (equivalente a 0%) y <code>to</code> (equivalente a 100%):
+      Cuando tu animación solo necesita un estado inicial y uno final —como un elemento que aparece fundido o que se desliza hacia arriba— puedes usar <code>from</code> y <code>to</code> en lugar de <code>0%</code> y <code>100%</code>. Son exactamente equivalentes, pero hacen el código más legible cuando la intención es simple:
     </p>
     <pre><code>{deslizarCode}</code></pre>
 
-    <h3>Uso de Porcentajes</h3>
+    <h3>La forma larga: el control total con porcentajes</h3>
     <p>
-      Cuando requieres más de dos estados clave, los porcentajes te brindan control absoluto sobre la línea de tiempo. Puedes usar cualquier valor decimal o entero entre <code>0%</code> y <code>100%</code>.
+      Ahora imagina que una notificación debe aparecer, detenerse un momento en el centro de la pantalla para que el usuario la lea, y luego desaparecer suavemente. Eso ya son tres momentos distintos: 0% (inicio), 40%–60% (pausa en el centro), 100% (salida). Aquí es donde los porcentajes te dan el control exacto que <code>from/to</code> no puede ofrecer.
+    </p>
+    <p>
+      Puedes colocar un fotograma en cualquier punto entre 0% y 100%, incluso en valores decimales como <code>33.5%</code>. El navegador calculará el movimiento entre cada par de fotogramas adyacentes.
     </p>
 
-    <h3>Reglas para nombres (Identifiers)</h3>
-    <ul class="space-y-2 list-disc pl-6">
-      <li>Deben ser descriptivos (ej. <code>spin-loading</code>, <code>bounce-effect</code>).</li>
-      <li>Pueden contener letras, números, guiones medios (<code>-</code>) y guiones bajos (<code>_</code>).</li>
-      <li><strong>No</strong> pueden empezar con un número ni contener espacios.</li>
-      <li>Evita usar palabras reservadas de CSS como <code>none</code>, <code>initial</code>, <code>inherit</code> o <code>unset</code>.</li>
-    </ul>
-
-    <h3>Agrupar Porcentajes</h3>
+    <h3>El truco de agrupar porcentajes</h3>
     <p>
-      Si quieres aplicar exactamente los mismos estilos en múltiples puntos de la animación, puedes agrupar los porcentajes separándolos con comas. Esto reduce la redundancia de código y optimiza el tamaño del archivo:
+      Cuando quieres que el elemento esté completamente oculto tanto al inicio como al final (y solo visible en el medio), escribirías los mismos estilos en dos líneas separadas. CSS te permite evitar esa repetición agrupando los porcentajes con comas:
     </p>
     <pre><code>{parpadeoCode}</code></pre>
+
+    <h3>Las reglas para elegir nombres</h3>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li>Elige nombres descriptivos que expliquen el efecto: <code>spin-loading</code>, <code>slide-from-bottom</code>, <code>error-shake</code>.</li>
+      <li>Puedes usar letras, números, guiones (<code>-</code>) y guiones bajos (<code>_</code>).</li>
+      <li><strong>Nunca</strong> comiences con un número ni uses espacios.</li>
+      <li>Evita palabras reservadas de CSS como <code>none</code>, <code>initial</code>, <code>inherit</code> o <code>unset</code> — el navegador las interpretaría como valores del lenguaje, no como nombres.</li>
+    </ul>
+  </article>
   </article>
 
   <div class="my-8 not-prose">

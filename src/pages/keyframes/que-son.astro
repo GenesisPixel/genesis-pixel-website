@@ -51,43 +51,47 @@ const practiceSteps = [
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Introducción</h3>
+    <h3>Imagina que estás en un set de animación</h3>
     <p>
-      Los keyframes son el corazón de las animaciones CSS. Al igual que un animador define fotogramas clave en una película, los keyframes CSS definen los estados específicos por los que debe pasar un elemento durante su animación. Esta herramienta fundamental te permite crear movimientos fluidos, transiciones elegantes y efectos visuales que dan vida a tus interfaces web.
+      Antes de que existiera el cine digital, los animadores dibujaban miles de fotogramas a mano. Pero no todos los fotogramas eran iguales: los más experimentados se encargaban de dibujar los momentos decisivos —el inicio del salto, el punto más alto, el aterrizaje— y luego asistentes dibujaban los marcos intermedios. Esos momentos decisivos se llamaron <em>keyframes</em>, fotogramas clave.
     </p>
     <p>
-      Antes de los keyframes, las animaciones web dependían exclusivamente de JavaScript, lo que las hacía más complejas de implementar y menos performantes. Con la llegada de CSS Animations, los keyframes se convirtieron en el estándar para crear animaciones declarativas, eficientes y fáciles de mantener.
-    </p>
-
-    <h3>Conceptos fundamentales</h3>
-    <p>
-      Un keyframe define un punto específico en el tiempo de una animación. Puedes pensar en ellos como las páginas de un libro de animación: cada página muestra cómo se ve el elemento en un momento determinado. El navegador se encarga de interpolar todos los estados intermedios, creando un movimiento suave y natural.
-    </p>
-    <p>
-      Cada animación CSS requiere al menos dos keyframes: uno que define el estado inicial (from o 0%) y otro que define el estado final (to o 100%). Puedes agregar tantos keyframes intermedios como necesites para crear animaciones más complejas y detalladas.
+      CSS funciona exactamente igual. Tú describes los momentos importantes —cómo luce el elemento al inicio, a la mitad, al final— y el navegador calcula automáticamente todo lo que ocurre entre esos puntos. Ese proceso se llama <strong>interpolación</strong>, y es lo que convierte una serie de estados estáticos en movimiento fluido.
     </p>
 
-    <div class="my-8 not-prose">
-      <ConsejoProfesional tip="Siempre define explícitamente los keyframes 0% y 100% aunque no cambies ningún estilo. Esto hace tu código más claro y evita comportamientos inesperados en diferentes navegadores." />
-    </div>
+    <h3>¿Qué pasaría si no existieran los keyframes?</h3>
+    <p>
+      Antes de CSS Animations, animar elementos en la web requería JavaScript puro: calcular posiciones frame a frame, gestionar intervalos de tiempo, y rezar para que la animación no tartamudeara en navegadores lentos. Era código frágil, difícil de mantener y con un impacto brutal en el rendimiento.
+    </p>
+    <p>
+      Los keyframes llegaron para que puedas <em>describir</em> lo que quieres, no <em>programar</em> cómo lograrlo. Declaras los estados clave y el navegador —que tiene acceso directo a la GPU del dispositivo— se encarga de renderizarlo a 60 fotogramas por segundo.
+    </p>
 
-    <h3>Terminología clave</h3>
+    <h3>El modelo mental correcto</h3>
+    <p>
+      Piensa en un keyframe como un <strong>checkpoint en el tiempo</strong>. Le dices al navegador: "Al 0% de la duración de la animación, el elemento luce así. Al 50%, luce asá. Al 100%, termina de esta forma." El navegador conecta esos puntos con una transición fluida.
+    </p>
+    <p>
+      Cada bloque <code>@keyframes</code> necesita como mínimo un nombre único que tú eliges, y al menos dos estados (el inicio con <code>0%</code> o <code>from</code>, y el final con <code>100%</code> o <code>to</code>). Con eso es suficiente para crear tu primera animación. Todo lo demás —duración, repetición, easing— lo controlas desde el selector CSS del elemento.
+    </p>
+
+    <h3>Vocabulario esencial de esta lección</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span class="text-white"><strong class="text-white">@keyframes:</strong> Es la regla CSS principal que funciona como contenedor para todos los fotogramas de una animación.</span>
+        <span class="text-white"><strong class="text-white">@keyframes:</strong> La regla CSS que actúa como contenedor de todos los fotogramas clave de una animación.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span class="text-white"><strong class="text-white">Nombre de la animación:</strong> Un identificador único (como <code>fadeIn</code> o <code>slideUp</code>) usado para vincular los keyframes con un elemento HTML.</span>
+        <span class="text-white"><strong class="text-white">Nombre de animación:</strong> El identificador que usarás para vincular los keyframes a un elemento. Tú lo inventas: <code>fadeIn</code>, <code>slide-up</code>, <code>pulsarHero</code>.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span class="text-white"><strong class="text-white">Porcentajes (0% - 100%):</strong> Definen en qué punto de la línea temporal de la duración se aplican los estilos de cada frame.</span>
+        <span class="text-white"><strong class="text-white">Porcentajes (0%–100%):</strong> Representan momentos dentro de la duración total. Si la animación dura 4 segundos, el 25% ocurre exactamente al segundo 1.</span>
       </li>
       <li class="flex gap-3">
         <span class="text-[var(--dm-green)]">✦</span>
-        <span class="text-white"><strong class="text-white">from / to:</strong> Son atajos exactos y equivalentes matemáticos a 0% y 100% respectivamente.</span>
+        <span class="text-white"><strong class="text-white">from / to:</strong> Sinónimos de 0% y 100%. Perfectos cuando tu animación solo tiene estado inicial y final.</span>
       </li>
     </ul>
   </article>
