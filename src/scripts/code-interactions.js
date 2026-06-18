@@ -6,7 +6,7 @@ export function initCodeInteractions() {
     btn.addEventListener('click', async () => {
       let codeToCopy = btn.getAttribute('data-code');
       if (!codeToCopy) {
-        const parent = btn.closest('.mb-6') || btn.closest('.mb-4')?.parentElement;
+        const parent = btn.closest('.overflow-hidden') || btn.closest('.mb-6') || btn.closest('.mb-4')?.parentElement;
         if (parent) {
           const activeTab = parent.querySelector('.code-content:not(.hidden) code') || parent.querySelector('.code-content code');
           if (activeTab) codeToCopy = activeTab.textContent;
