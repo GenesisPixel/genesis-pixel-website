@@ -139,6 +139,8 @@ const chapters = [
     transition: all 0.2s ease;
     margin-bottom: 2px;
     opacity: 1 !important;
+    position: relative;
+    z-index: 1;
   }
 
   .lesson-link:hover {
@@ -151,8 +153,23 @@ const chapters = [
 
   .lesson-link.active {
     color: white;
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     border-left: 2px solid var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .sidebar-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0 5px 5px 0;
+    transition: top 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    z-index: 0;
   }
 
   .lesson-stars-icon {
@@ -308,7 +325,8 @@ const chapters = [
               <span class="chapter-number">{chapter.number}</span>
               {chapter.title}
             </a>
-            <div class="lesson-list">
+            <div class="lesson-list" style="position: relative;">
+              <div class="sidebar-indicator" id="sidebar-indicator"></div>
               {chapter.lessons.map((lesson) => (
                 <a
                   href={lesson.href}
@@ -459,6 +477,17 @@ const chapters = [
           title.classList.remove('active');
         }
       });
+
+      // Posicionar el indicador en el link activo
+      const indicator = document.getElementById('sidebar-indicator');
+      const activeLink = sidebar.querySelector('.lesson-link.active');
+      if (indicator && activeLink) {
+        const list = activeLink.closest('.lesson-list');
+        const listRect = list.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        indicator.style.top = `${linkRect.top - listRect.top}px`;
+        indicator.style.height = `${linkRect.height}px`;
+      }
     }
 
     if (sidebar && sidebarToggle && sidebarClose && sidebarOverlay) {
