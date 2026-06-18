@@ -165,5 +165,10 @@ function draw() {
 	animationId = window.requestAnimationFrame(draw);
 }
 
-document.addEventListener('astro:page-load', setup);
+// Only initialize once — the canvas container is persisted via transition:persist
+// so we must NOT re-call setup() on subsequent page navigations.
+if (!window.__gradientBlurInitialized) {
+  window.__gradientBlurInitialized = true;
+  document.addEventListener('astro:page-load', setup, { once: true });
+}
 window.addEventListener('resize', resize);
