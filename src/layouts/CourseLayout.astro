@@ -170,6 +170,7 @@ const chapters = [
     flex: 1;
     min-width: 0;
     padding: 32px 0;
+    view-transition-name: main-content;
   }
 
   .lesson-nav {
@@ -283,7 +284,7 @@ const chapters = [
       <!-- Overlay Móvil -->
       <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
 
-      <aside id="sidebar" class="sidebar">
+      <aside id="sidebar" class="sidebar" transition:persist transition:animate="none">
         <!-- Botón Cerrar Móvil -->
         <button id="sidebar-close" class="lg:hidden absolute top-4 right-4 p-2 text-[var(--dm-light-300)] hover:text-white bg-white/5 rounded-md hover:bg-white/10 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -432,6 +433,30 @@ const chapters = [
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const sidebarClose = document.getElementById('sidebar-close');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    // Actualizar enlaces activos en el sidebar persistido
+    if (sidebar) {
+      const currentPath = window.location.pathname;
+      const sidebarLinks = sidebar.querySelectorAll('.lesson-link');
+      sidebarLinks.forEach((link) => {
+        const href = link.getAttribute('href');
+        if (href === currentPath) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      const chapterTitles = sidebar.querySelectorAll('.chapter-title');
+      chapterTitles.forEach((title) => {
+        const href = title.getAttribute('href');
+        if (href && currentPath.startsWith(href)) {
+          title.classList.add('active');
+        } else {
+          title.classList.remove('active');
+        }
+      });
+    }
 
     if (sidebar && sidebarToggle && sidebarClose && sidebarOverlay) {
       const openSidebar = () => {
