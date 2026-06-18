@@ -1,25 +1,205 @@
 ---
 import TransformLayout from '../../layouts/TransformLayout.astro';
 import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
 
+const htmlCode = `<div class="notificacion">
+  <div class="icono-check">✓</div>
+  <p>Pago procesado con éxito</p>
+</div>`;
+
+const cssCode = `.notificacion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  padding: 16px 24px;
+  border-radius: 12px;
+  color: white;
+  font-family: system-ui, sans-serif;
+  
+  /* Estado inicial: Escondido a la derecha (fuera de pantalla) */
+  transform: translateX(100%);
+  opacity: 0;
+  
+  /* Animamos tanto el movimiento como la opacidad */
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              opacity 0.4s ease;
+}
+
+/* Al pasar el ratón por el contenedor (simulando que aparece) */
+.contenedor-demo:hover .notificacion {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.icono-check {
+  background: #22c55e;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Crea un div que simule un menú lateral (sidebar) oculto con translateX(-100%)', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Añade una transición suave a la propiedad transform', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Usa una pseudo-clase para cambiar el translateX a 0', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Prueba cambiar los píxeles por porcentajes (ej. translateX(50vw))', color: 'dm-blue', rotate: '-1deg' },
+];
 ---
 
 <TransformLayout
   title="Translate X - Genesis Pixel"
   currentLesson="/transform/translate-x"
-  prevLesson={{ title: 'Lección Anterior', href: '/transform/sintaxis' }}
-  nextLesson={{ title: 'Lección Siguiente', href: '/transform/translate-y' }}
+  prevLesson={{ title: 'Sintaxis de Transform', href: '/transform/sintaxis' }}
+  nextLesson={{ title: 'Translate Y', href: '/transform/translate-y' }}
 >
   <ChapterHeader
     chapterNumber="02"
     chapterLabel="Capítulo 2 · Lección 3"
     title="Translate X"
-    readingTime={5}
+    readingTime={6}
     difficulty="CSS Transform"
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Próximamente...</h3>
-    <p>Estamos redactando esta lección con historias reales y ejemplos visuales de calidad premium.</p>
+    <h3>El deslizamiento perfecto</h3>
+    <p>
+      Imagina que estás construyendo el dashboard de un banco. Cuando el usuario hace una transferencia exitosa, una notificación debe deslizarse elegantemente desde el borde derecho de la pantalla, quedarse unos segundos, y volver a desaparecer.
+    </p>
+    <p>
+      Podrías intentar mover esa notificación cambiando su propiedad <code>right</code> de <code>-300px</code> a <code>20px</code>. Pero como vimos antes, eso obligaría al navegador a recalcular toda la geometría de la página frame a frame. El resultado sería un movimiento entrecortado, como si la notificación estuviera "temblando" al entrar.
+    </p>
+    <p>
+      La solución profesional es usar <code>translateX()</code>.
+    </p>
+
+    <h3>¿Qué es translateX?</h3>
+    <p>
+      <code>translateX()</code> mueve un elemento a lo largo del <strong>eje X</strong> (la línea horizontal). Piensa en la pantalla como un plano cartesiano:
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><strong>Valores Positivos (ej. 100px):</strong> Mueven el elemento hacia la <strong>derecha</strong>.</li>
+      <li><strong>Valores Negativos (ej. -100px):</strong> Mueven el elemento hacia la <strong>izquierda</strong>.</li>
+      <li><strong>Valor 0:</strong> Es la posición original, sin alteraciones.</li>
+    </ul>
+
+    <h3>El poder de los porcentajes</h3>
+    <p>
+      Usar píxeles está bien, pero el verdadero superpoder de <code>translateX()</code> se desbloquea cuando usas porcentajes. Y aquí hay un concepto que confunde al 90% de los desarrolladores junior: <strong>el porcentaje se calcula en base al tamaño del propio elemento, no de su contenedor.</strong>
+    </p>
+    <p>
+      Si tienes una tarjeta que mide 300px de ancho y le aplicas <code>transform: translateX(100%)</code>, la tarjeta se moverá exactamente 300px hacia la derecha. Esto es increíblemente útil porque te permite ocultar elementos fuera de la pantalla sin importar en qué dispositivo lo estés viendo o cuánto texto contengan.
+    </p>
+
+    <h3>Casos reales de uso</h3>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><strong>Sidebars (Menús laterales):</strong> Un menú móvil que está oculto a la izquierda tiene <code>translateX(-100%)</code>. Cuando el usuario toca el botón de hamburguesa, lo cambiamos a <code>translateX(0)</code>.</li>
+      <li><strong>Carruseles y Sliders:</strong> Para pasar de la imagen 1 a la imagen 2, mueves el contenedor entero usando <code>translateX(-100%)</code>, <code>-200%</code>, etc.</li>
+      <li><strong>Notificaciones (Toast):</strong> Deslizándose desde la derecha (<code>translateX(100%)</code>) hacia su posición original (<code>translateX(0)</code>).</li>
+    </ul>
   </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Una técnica muy común en el desarrollo frontend moderno es combinar translateX con opacidad. Un elemento que entra moviéndose ligeramente (ej. desde translateX(-20px)) mientras su opacidad pasa de 0 a 1 crea una sensación de revelación premium que no distrae." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Entrada Premium
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="translatex-demo"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Pasa el ratón sobre el área punteada. Simulamos una notificación que entra a la pantalla usando translateX(100%) a translateX(0) con un efecto de rebote (cubic-bezier).">
+      <div class="flex items-center justify-center h-full w-full overflow-hidden contenedor-demo relative">
+        <div class="notificacion-demo">
+          <div class="icono-check">✓</div>
+          <p class="m-0 text-sm font-medium">Pago procesado con éxito</p>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Usar animaciones de margin-left', description: 'Margin-left empuja a los elementos vecinos. translateX() los ignora flotando sobre ellos, lo que es necesario para animaciones a 60fps.' },
+      { label: 'Olvidar el overflow: hidden en el contenedor', description: 'Si sacas un elemento de la pantalla con translateX() y no ocultas el desbordamiento (overflow-x: hidden) del body o el contenedor, el navegador mostrará una fea barra de scroll horizontal.' },
+    ]} />
+
+    <PracticeCards
+      title="Domina el eje X"
+      description="Construye un pequeño interruptor (switch toggle) donde la bolita cambie de lado animando su propiedad translateX en lugar de usar left/right."
+      steps={practiceSteps}
+    />
+  </div>
 </TransformLayout>
+
+<style>
+  .contenedor-demo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .notificacion-demo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    padding: 16px 24px;
+    border-radius: 12px;
+    color: white;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    
+    position: absolute;
+    right: 20px;
+    
+    /* Estado inicial: Escondido a la derecha */
+    transform: translateX(120%);
+    opacity: 0;
+    
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+  }
+
+  /* Hover en cualquier parte del contenedor simulando la entrada */
+  :global(.preview-container:hover) .notificacion-demo {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .icono-check {
+    background: #22c55e;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #121212;
+  }
+</style>
+
+<script>
+  import { initCodeInteractions } from '../../scripts/code-interactions.js';
+  document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
+</script>
