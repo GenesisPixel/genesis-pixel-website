@@ -25,7 +25,6 @@ const navItems = [
       0 8px 32px rgba(0, 0, 0, 0.3),
       0 2px 8px rgba(0, 0, 0, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     padding: 6px 12px;
   }
 
@@ -299,7 +298,7 @@ const navItems = [
   }
 </style>
 
-<header class="nav-island" id="nav-island">
+<header class="nav-island" id="nav-island" transition:persist transition:animate="none">
   <nav class="nav-inner">
     <a href="/" class="nav-brand">
       <span style="color: white; font-weight: 200; font-family: var(--font-afronaut);">GenesisPixel</span>
@@ -333,7 +332,7 @@ const navItems = [
   </nav>
 </header>
 
-<div class="mobile-menu" id="mobile-menu">
+<div class="mobile-menu" id="mobile-menu" transition:persist transition:animate="none">
   <div class="mobile-menu-inner">
     {navItems.map((item) => (
       <a href={item.href}>
