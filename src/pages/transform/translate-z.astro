@@ -1,25 +1,220 @@
 ---
 import TransformLayout from '../../layouts/TransformLayout.astro';
 import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
 
+const htmlCode = `<div class="escena-profundidad">
+  <div class="capas">
+    <div class="capa capa-3">Fondo</div>
+    <div class="capa capa-2">Medio</div>
+    <div class="capa capa-1">Primer plano</div>
+  </div>
+</div>`;
+
+const cssCode = `/* El escenario 3D con perspectiva */
+.escena-profundidad {
+  width: 240px;
+  height: 160px;
+  perspective: 600px;
+}
+
+.capas {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  
+  /* Inclinamos ligeramente la escena para ver la profundidad */
+  transform: rotateX(15deg) rotateY(-10deg);
+  transition: transform 0.5s ease;
+}
+
+.escena-profundidad:hover .capas {
+  transform: rotateX(20deg) rotateY(10deg);
+}
+
+.capa {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, sans-serif;
+  color: white;
+  font-weight: bold;
+}
+
+/* Cada capa en diferente posición Z */
+.capa-1 {
+  background: rgba(168, 85, 247, 0.8);
+  transform: translateZ(60px) scale(0.8);
+}
+
+.capa-2 {
+  background: rgba(59, 130, 246, 0.6);
+  transform: translateZ(20px) scale(0.9);
+}
+
+.capa-3 {
+  background: rgba(16, 185, 129, 0.4);
+  transform: translateZ(-20px);
+  border: 1px solid rgba(255,255,255,0.1);
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Crea una escena 3D con perspective y preserve-3d', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Añade tres divs hermanos con distintos translateZ (100px, 0px, -100px)', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Inclina la escena con rotateX(15deg) para ver la profundidad', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Experimenta con scale3d(1.2, 1.2, 1.2) para ver el escalado tridimensional', color: 'dm-blue', rotate: '-1deg' },
+];
 ---
 
 <TransformLayout
   title="TranslateZ y Scale3D - Genesis Pixel"
   currentLesson="/transform/translate-z"
-  prevLesson={{ title: 'Lección Anterior', href: '/transform/rotate-xy' }}
-  nextLesson={{ title: 'Lección Siguiente', href: '/transform/perspective' }}
+  prevLesson={{ title: 'RotateX y RotateY', href: '/transform/rotate-xy' }}
+  nextLesson={{ title: 'Perspective', href: '/transform/perspective' }}
 >
   <ChapterHeader
     chapterNumber="02"
     chapterLabel="Capítulo 2 · Lección 13"
     title="TranslateZ y Scale3D"
-    readingTime={5}
+    readingTime={7}
     difficulty="CSS Transform"
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Próximamente...</h3>
-    <p>Estamos redactando esta lección con historias reales y ejemplos visuales de calidad premium.</p>
+    <h3>La ilusión de la profundidad</h3>
+    <p>
+      Hay una razón por la que los juegos de video, el cine y la realidad virtual son tan inmersivos: tienen profundidad. Los elementos más cercanos son más grandes y más nítidos. Los elementos lejanos son más pequeños y difusos. Nuestro cerebro interpreta esas diferencias de escala y posición como distancia real en el espacio.
+    </p>
+    <p>
+      CSS puede replicar esa ilusión de profundidad para crear interfaces con capas que se sienten tridimensionales. Las herramientas para lograrlo son <code>translateZ()</code> y <code>scale3d()</code>.
+    </p>
+
+    <h3>translateZ: acercar y alejar elementos</h3>
+    <p>
+      Si <code>translateX</code> mueve en horizontal y <code>translateY</code> en vertical, <code>translateZ</code> mueve un elemento a lo largo del eje de profundidad: hacia ti o hacia el fondo.
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><code>translateZ(100px):</code> Acerca el elemento hacia el espectador. Si hay una <code>perspective</code> activa, se verá más grande.</li>
+      <li><code>translateZ(-100px):</code> Aleja el elemento. Se verá más pequeño y distante.</li>
+    </ul>
+    <p>
+      Un truco muy popular para crear botones que "salen" en 3D es combinar <code>translateZ</code> con <code>perspective</code> para que el elemento parezca flotar hacia el usuario al hacer hover, mucho más convincente que un simple <code>translateY</code> plano.
+    </p>
+
+    <h3>scale3d(): escalado tridimensional</h3>
+    <p>
+      La función <code>scale3d(x, y, z)</code> es la versión tridimensional de <code>scale()</code>. Los primeros dos valores (x, y) controlan el escalado en los ejes que ya conoces. El tercer valor (z) escala el elemento a lo largo del eje de profundidad.
+    </p>
+    <p>
+      En la práctica, escalar en Z es menos común porque no tiene un efecto visual directo en un elemento 2D plano. Pero cuando tienes objetos 3D con volumen real (como el cubo de la lección anterior), <code>scale3d</code> sí tiene un impacto visible en sus proporciones volumétricas.
+    </p>
+
+    <h3>Paralaje de capas: el efecto de profundidad más popular</h3>
+    <p>
+      Una aplicación fascinante de <code>translateZ</code> es crear escenas con múltiples capas a diferentes profundidades. Cuando el usuario mueve el ratón, cada capa se mueve a velocidades diferentes (las más cercanas se mueven más rápido, las lejanas más lento), creando una ilusión de paralaje tridimensional que se ve absolutamente premium.
+    </p>
   </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="translateZ() y scale() producen efectos similares en apariencia (ambos hacen que el elemento parezca más grande o pequeño), pero son fundamentalmente diferentes: translateZ mueve el elemento en el espacio 3D de verdad, lo que significa que interactúa correctamente con la perspectiva y con otros elementos 3D. scale() es solo una escala visual plana." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Profundidad con múltiples capas
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="translatez-demo"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Tres capas a distintas profundidades (translateZ) con la escena inclinada para apreciar la profundidad. Pasa el ratón para ver cómo cambia la perspectiva.">
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="escena-prl">
+          <div class="capas-prl">
+            <div class="capa-prl capa-prl-3">Fondo</div>
+            <div class="capa-prl capa-prl-2">Medio</div>
+            <div class="capa-prl capa-prl-1">Primer plano</div>
+          </div>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Usar translateZ sin perspective en el padre', description: 'translateZ sin perspectiva no produce ningún cambio visual. La perspectiva es lo que convierte el movimiento en el eje Z en un efecto de acercamiento/alejamiento visible.' },
+      { label: 'Confundir scale() con translateZ()', description: 'scale(1.2) hace que el elemento se vea 20% más grande sin cambiar su posición real. translateZ(60px) lo acerca 60px en el espacio 3D, lo que con perspectiva activa también lo hace parecer más grande pero de forma física diferente.' },
+    ]} />
+
+    <PracticeCards
+      title="Paralaje de Capas"
+      description="Construye una escena con al menos tres divs a distintas profundidades (translateZ). Detecta el movimiento del ratón con JavaScript y ajusta la rotación del contenedor para crear un efecto de paralaje interactivo."
+      steps={practiceSteps}
+    />
+  </div>
 </TransformLayout>
+
+<style>
+  .escena-prl {
+    width: 180px;
+    height: 120px;
+    perspective: 500px;
+    cursor: pointer;
+  }
+
+  .capas-prl {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(15deg) rotateY(-10deg);
+    transition: transform 0.5s ease;
+  }
+
+  :global(.preview-container:hover) .capas-prl {
+    transform: rotateX(20deg) rotateY(15deg);
+  }
+
+  .capa-prl {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    font-size: 11px;
+    color: white;
+    font-weight: 600;
+  }
+
+  .capa-prl-1 {
+    background: rgba(168, 85, 247, 0.85);
+    transform: translateZ(55px) scale(0.75);
+  }
+
+  .capa-prl-2 {
+    background: rgba(59, 130, 246, 0.6);
+    transform: translateZ(20px) scale(0.88);
+  }
+
+  .capa-prl-3 {
+    background: rgba(16, 185, 129, 0.35);
+    transform: translateZ(-20px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+</style>
