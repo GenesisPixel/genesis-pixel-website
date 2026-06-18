@@ -108,9 +108,10 @@ const practiceSteps = [
         { id: 'css', label: 'CSS', code: cssCode },
       ]}
     />
-    <ResultPreview description="El elemento aparece suavemente deslizándose desde abajo hacia arriba.">
-      <div class="animate-fadeIn">
-        <img src="/svg/stars-in-orbit.svg" alt="Estrella" class="h-24 w-24" />
+    <ResultPreview description="La tarjeta aparece suavemente deslizándose desde abajo hacia arriba con la animación fadeIn.">
+      <div class="card">
+        <h2>Título de la Tarjeta</h2>
+        <p>Contenido de ejemplo que se animará.</p>
       </div>
     </ResultPreview>
   </div>
@@ -147,8 +148,34 @@ const practiceSteps = [
     }
   }
 
-  .animate-fadeIn {
+  .card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 280px;
+    text-align: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    
+    /* Animación */
+    opacity: 0;
+    transform: translateY(20px);
     animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .card h2 {
+    color: var(--dm-purple, #a855f7);
+    font-size: 1.1rem;
+    margin: 0 0 8px 0;
+    font-weight: bold;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+  }
+
+  .card p {
+    color: var(--dm-light-300);
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.4;
   }
 </style>
 
