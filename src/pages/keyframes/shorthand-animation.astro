@@ -87,15 +87,27 @@ const multipleShorthandCode = `.button-fancy {
     <p>
       Aunque el orden (excepto los tiempos) es flexible, los profesionales usan una estructura mental predecible. Piensa en responder estas preguntas: <em>¿Qué? ¿Cuánto dura? ¿Cómo acelera? ¿Espera? ¿Cuántas veces? ¿Cómo va y viene? ¿Qué pasa al final?</em>
     </p>
-    <div class="bg-white/5 border border-white/10 rounded-xl p-4 font-mono text-xs text-center text-white mb-6">
-      animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode];
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="shorthand-structure"
+        tabs={[
+          { id: 'css', label: 'CSS', code: 'animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode];' },
+        ]}
+      />
     </div>
 
     <h3>Lectura y traducción de código real</h3>
     <p>
       Lee la siguiente línea de código profesional en voz alta:
     </p>
-    <pre><code>animation: slideGlow 2s ease-in-out 0.5s infinite alternate both;</code></pre>
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="shorthand-line"
+        tabs={[
+          { id: 'css', label: 'CSS', code: 'animation: slideGlow 2s ease-in-out 0.5s infinite alternate both;' },
+        ]}
+      />
+    </div>
     <p>
       La traducción mental automática del navegador es: "Ejecuta <code>slideGlow</code> en 2 segundos, con aceleración suave en los extremos, esperando medio segundo antes de empezar. Repítelo infinitamente, yendo y viniendo, y mantén los estilos antes de empezar y después de terminar".
     </p>
@@ -104,7 +116,14 @@ const multipleShorthandCode = `.button-fancy {
     <p>
       El verdadero poder del shorthand brilla cuando aplicas múltiples animaciones al mismo elemento separándolas por comas. Es la forma más limpia de componer movimientos complejos a partir de animaciones simples y reutilizables:
     </p>
-    <pre><code>{multipleShorthandCode}</code></pre>
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="multiple-shorthand"
+        tabs={[
+          { id: 'css', label: 'CSS', code: multipleShorthandCode },
+        ]}
+      />
+    </div>
   </article>
 
   <div class="my-8 not-prose">
@@ -167,7 +186,8 @@ const multipleShorthandCode = `.button-fancy {
     align-items: center;
     justify-content: center;
     font-size: 0.75rem;
-    color: white;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
     font-weight: bold;
     animation: slideGlow 2s ease-in-out 0.5s infinite alternate both;
   }
@@ -176,4 +196,5 @@ const multipleShorthandCode = `.button-fancy {
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

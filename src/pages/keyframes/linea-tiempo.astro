@@ -201,4 +201,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

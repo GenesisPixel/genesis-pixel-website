@@ -32,7 +32,8 @@ const cssCode = `@keyframes orbitSpin {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
   font-weight: bold;
   font-size: 0.75rem;
   
@@ -52,7 +53,8 @@ const cssCode = `@keyframes orbitSpin {
   background-color: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  color: white;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
@@ -99,11 +101,11 @@ const hoverPauseCode = `.marquee-container:hover .marquee-track {
     <h3>Los dos únicos estados</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>running:</strong> (Por defecto) La animación avanza por su línea de tiempo normalmente.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>paused:</strong> La animación se congela. El reloj se detiene y el elemento mantiene exactamente los estilos interpolados que tenía en ese instante.</span>
       </li>
     </ul>
@@ -115,7 +117,14 @@ const hoverPauseCode = `.marquee-container:hover .marquee-track {
     <p>
       El patrón de diseño más elegante para solucionar esto es pausar las animaciones cuando el usuario posiciona el cursor sobre ellas (<code>:hover</code>). Esto le devuelve el control al usuario de forma intuitiva sin necesidad de escribir una sola línea de JavaScript:
     </p>
-    <pre><code>{hoverPauseCode}</code></pre>
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="hover-pause"
+        tabs={[
+          { id: 'css', label: 'CSS', code: hoverPauseCode },
+        ]}
+      />
+    </div>
 
     <h3>Pausas interactivas con JavaScript</h3>
     <p>
@@ -184,7 +193,8 @@ const hoverPauseCode = `.marquee-container:hover .marquee-track {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
     font-weight: bold;
     font-size: 0.75rem;
     animation: orbitSpin 6s infinite linear;
@@ -199,27 +209,28 @@ const hoverPauseCode = `.marquee-container:hover .marquee-track {
 
   .control-btn {
     padding: 8px 16px;
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: white;
+    background-color: var(--dm-green, #A0F36D);
+    border: none;
+    border-radius: 0;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
     font-size: 0.8125rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease;
+    margin-top: 15px;
   }
 
   .control-btn:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--dm-green, #A0F36D);
+    opacity: 0.8;
   }
 </style>
 
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
-  document.addEventListener('astro:page-load', () => {
-    initCodeInteractions();
-    
-    // Configuración del botón de Play/Pause interactivo
+
+  function setupPlayPause() {
     const btn = document.getElementById('toggle-play-btn');
     const target = document.getElementById('play-state-target');
     
@@ -229,5 +240,28 @@ const hoverPauseCode = `.marquee-container:hover .marquee-track {
         btn.textContent = isPaused ? 'Reanudar' : 'Pausar';
       });
     }
+  }
+
+  function setupRefreshReset() {
+    document.querySelectorAll('.refresh-btn').forEach((rbtn) => {
+      if (rbtn.hasAttribute('data-play-reset')) return;
+      rbtn.setAttribute('data-play-reset', 'true');
+      rbtn.addEventListener('click', () => {
+        setTimeout(() => {
+          setupPlayPause();
+        }, 50);
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    initCodeInteractions();
+    setupPlayPause();
+    setupRefreshReset();
+  });
+  document.addEventListener('astro:after-swap', () => {
+    initCodeInteractions();
+    setupPlayPause();
+    setupRefreshReset();
   });
 </script>

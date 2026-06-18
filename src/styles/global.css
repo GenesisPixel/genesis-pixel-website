@@ -241,6 +241,24 @@ p {
   line-height: 1.7;
 }
 
+.prose li,
+.prose li span {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  font-weight: 200;
+  opacity: 0.8;
+}
+
+.prose li strong {
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
 .prose strong {
   color: white;
   font-weight: 600;

@@ -46,9 +46,9 @@ const cssCode = `/* Animación optimizada con GPU */
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
-  font-weight: bold;
   border-radius: 8px;
-  color: white;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
   position: relative;
 }
 
@@ -107,23 +107,23 @@ const practiceSteps = [
     <h3>Propiedades animables populares</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>opacity:</strong> Controla la opacidad del elemento (0 a 1) y es sumamente eficiente en rendimiento.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>transform:</strong> Permite escalar, rotar, trasladar o inclinar. Es la propiedad reina de la aceleración por hardware.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>color & background-color:</strong> Cambios de color interpolados mediante transiciones cromáticas en el canal RGB/HSL.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>width & height:</strong> Modifican las dimensiones físicas, pero tienen un costo de rendimiento alto.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>top, left, bottom, right:</strong> Modifican la posición física del elemento si está posicionado. Al igual que el ancho/alto, activan el ciclo de layout del navegador.</span>
       </li>
     </ul>
@@ -222,9 +222,9 @@ const practiceSteps = [
     align-items: center;
     justify-content: center;
     font-size: 0.75rem;
-    font-weight: bold;
     border-radius: 8px;
-    color: white;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
     position: relative;
   }
 
@@ -242,4 +242,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

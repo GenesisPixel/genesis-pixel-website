@@ -133,19 +133,19 @@ const practiceSteps = [
     </p>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>100ms–200ms (Instante):</strong> El umbral en el que el usuario percibe una respuesta como inmediata. Perfecto para botones, toggles y micro-interacciones. Más rápido se convierte en parpadeo; más lento, en retraso.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>200ms–350ms (Fluido):</strong> El estándar de oro para menús desplegables, modales y transiciones de estado. Se siente rápido pero el ojo tiene tiempo de registrar el movimiento.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>350ms–600ms (Pausado):</strong> Para elementos que recorren una distancia grande en pantalla, como drawers laterales o paneles completos. El cerebro necesita ese tiempo para seguir el movimiento.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>+1000ms (Cinemático):</strong> Solo para ilustraciones, fondos animados, loaders o elementos narrativos. En la UI interactiva del día a día, se sentirá pesado e impaciente.</span>
       </li>
     </ul>
@@ -275,4 +275,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

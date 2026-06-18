@@ -69,7 +69,8 @@ const cssCode = `@keyframes slideFadeIn {
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
-  color: white;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
   font-weight: bold;
   
   /* Retraso de 1s para ver el efecto de backwards/both */
@@ -125,19 +126,19 @@ const practiceSteps = [
     <h3>Los cuatro modos de persistencia</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>none:</strong> (Por defecto) Ningún estilo de la animación se aplica antes de que empiece ni después de que termine.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>forwards:</strong> El más usado. Le dice al navegador: "cuando termines la animación, quédate congelado en el último fotograma clave que ejecutaste". Obligatorio para modales que entran, elementos que desaparecen (fade out) y cualquier cosa que no deba resetearse.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>backwards:</strong> Aplica durante el tiempo de espera (delay). Si tu animación tiene un delay de 2s y en el 0% es invisible, <code>backwards</code> fuerza a que el elemento sea invisible durante esos 2s de espera. Sin él, el elemento sería visible 2s y de repente parpadearía a invisible para arrancar la animación.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>both:</strong> Aplica ambos comportamientos. El elemento adopta el estado inicial durante el delay y se queda con el estado final cuando termina. La opción más segura para secuencias de entrada completas.</span>
       </li>
     </ul>
@@ -245,7 +246,8 @@ const practiceSteps = [
     align-items: center;
     justify-content: center;
     font-size: 0.75rem;
-    color: white;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
     font-weight: bold;
     animation: slideFadeIn 2.5s 1.5s 1 ease-in-out;
   }
@@ -270,4 +272,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

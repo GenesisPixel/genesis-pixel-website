@@ -126,23 +126,23 @@ const practiceSteps = [
     <h3>Las cinco curvas estándar de CSS</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>linear:</strong> Velocidad perfectamente constante de principio a fin. Útil para rotaciones continuas, fondos en movimiento o cualquier cosa donde quieras que el usuario no perciba inicio ni final del ciclo.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>ease:</strong> (Valor por defecto) Arranca despacio, acelera en el centro y termina despacio. Produce transiciones bastante naturales para la mayoría de casos genéricos.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>ease-in:</strong> Comienza muy despacio y acelera progresivamente. Imita un objeto que toma impulso, como una pelota que empieza a rodar cústera abajo.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>ease-out:</strong> Empieza a velocidad máxima y desacelera suavemente. Perfecto para elementos que entran a la pantalla —se sienten responsivos e inmediatos.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>ease-in-out:</strong> Simétrico: inicio lento, centro rápido, final lento. Ideal para movimientos de vaivén o carruseles que van y vienen.</span>
       </li>
     </ul>
@@ -285,4 +285,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

@@ -75,7 +75,8 @@ const cssCode = `/* 1. Loader Animado Circular */
 .glow-card h3 {
   margin: 0 0 6px 0;
   font-size: 1rem;
-  color: white;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
 }
 
 .glow-card p {
@@ -98,7 +99,8 @@ const cssCode = `/* 1. Loader Animado Circular */
   background: linear-gradient(135deg, var(--dm-purple, #a855f7), var(--dm-blue, #3b82f6));
   border: none;
   border-radius: 10px;
-  color: white;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
   font-weight: bold;
   font-size: 0.75rem;
   cursor: pointer;
@@ -275,7 +277,8 @@ const practiceSteps = [
   .glow-card h3 {
     margin: 0 0 6px 0;
     font-size: 1rem;
-    color: white;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
     font-weight: 600;
   }
 
@@ -298,7 +301,8 @@ const practiceSteps = [
     background: linear-gradient(135deg, var(--dm-purple, #a855f7), var(--dm-blue, #3b82f6));
     border: none;
     border-radius: 10px;
-    color: white;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
     font-weight: bold;
     font-size: 0.75rem;
     cursor: pointer;
@@ -336,4 +340,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

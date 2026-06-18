@@ -65,7 +65,8 @@ const cssCode = `@keyframes spinAround {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
   font-weight: bold;
   font-size: 0.75rem;
   animation: spinAround 1.5s ease-in-out;
@@ -133,15 +134,15 @@ const practiceSteps = [
     </p>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>Distracción visual:</strong> El ojo humano está biológicamente programado para detectar movimiento. Si hay un banner parpadeando indefinidamente al lado de un texto, el usuario tendrá dificultades para concentrarse en la lectura.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>Consumo de batería:</strong> Mantener la GPU o la CPU renderizando elementos a 60fps continuamente consume mucha energía en dispositivos móviles.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>Regla general:</strong> Las animaciones que busquen llamar la atención del usuario (ej. un sacudón en un botón de "¡Compra ahora!") no deben repetirse más de 3 veces.</span>
       </li>
     </ul>
@@ -236,7 +237,8 @@ const practiceSteps = [
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
     font-weight: bold;
     font-size: 0.75rem;
     animation: spinAround 1.5s ease-in-out;
@@ -260,4 +262,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

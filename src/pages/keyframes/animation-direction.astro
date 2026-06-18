@@ -116,19 +116,19 @@ const practiceSteps = [
     <h3>Los cuatro caminos posibles</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>normal:</strong> (Valor por defecto) El viaje de ida convencional, del 0% al 100%. Cuando termina, el elemento regresa abruptamente al inicio y vuelve a arrancar.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>reverse:</strong> El viaje hacia atrás, del 100% al 0%. Pero cuidado: no solo se invierte el orden visual, también se invierten las curvas de aceleración (easing). Lo que antes aceleraba al final, ahora acelerará al principio.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>alternate:</strong> La magia pura para loops. El primer ciclo va hacia adelante, el segundo hacia atrás. El tren va y vuelve por la misma vía. Es el secreto detrás de animaciones de respiración, indicadores flotantes o elementos que pulsan.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
+        <span>✦</span>
         <span><strong>alternate-reverse:</strong> Exactamente igual que alternate, pero comenzando el primer viaje hacia atrás.</span>
       </li>
     </ul>
@@ -251,4 +251,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

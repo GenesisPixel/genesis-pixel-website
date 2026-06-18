@@ -78,20 +78,20 @@ const practiceSteps = [
     <h3>Vocabulario esencial de esta lección</h3>
     <ul class="space-y-3 mt-4 mb-8 list-none pl-0">
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
-        <span class="text-white"><strong class="text-white">@keyframes:</strong> La regla CSS que actúa como contenedor de todos los fotogramas clave de una animación.</span>
+        <span>✦</span>
+        <span><strong>@keyframes:</strong> La regla CSS que actúa como contenedor de todos los fotogramas clave de una animación.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
-        <span class="text-white"><strong class="text-white">Nombre de animación:</strong> El identificador que usarás para vincular los keyframes a un elemento. Tú lo inventas: <code>fadeIn</code>, <code>slide-up</code>, <code>pulsarHero</code>.</span>
+        <span>✦</span>
+        <span><strong>Nombre de animación:</strong> El identificador que usarás para vincular los keyframes a un elemento. Tú lo inventas: <code>fadeIn</code>, <code>slide-up</code>, <code>pulsarHero</code>.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
-        <span class="text-white"><strong class="text-white">Porcentajes (0%–100%):</strong> Representan momentos dentro de la duración total. Si la animación dura 4 segundos, el 25% ocurre exactamente al segundo 1.</span>
+        <span>✦</span>
+        <span><strong>Porcentajes (0%–100%):</strong> Representan momentos dentro de la duración total. Si la animación dura 4 segundos, el 25% ocurre exactamente al segundo 1.</span>
       </li>
       <li class="flex gap-3">
-        <span class="text-[var(--dm-green)]">✦</span>
-        <span class="text-white"><strong class="text-white">from / to:</strong> Sinónimos de 0% y 100%. Perfectos cuando tu animación solo tiene estado inicial y final.</span>
+        <span>✦</span>
+        <span><strong>from / to:</strong> Sinónimos de 0% y 100%. Perfectos cuando tu animación solo tiene estado inicial y final.</span>
       </li>
     </ul>
   </article>
@@ -155,4 +155,5 @@ const practiceSteps = [
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

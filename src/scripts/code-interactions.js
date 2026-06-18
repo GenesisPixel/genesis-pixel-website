@@ -1,5 +1,8 @@
 export function initCodeInteractions() {
   document.querySelectorAll('.copy-btn').forEach((btn) => {
+    if (btn.hasAttribute('data-initialized')) return;
+    btn.setAttribute('data-initialized', 'true');
+    
     btn.addEventListener('click', async () => {
       let codeToCopy = btn.getAttribute('data-code');
       if (!codeToCopy) {
@@ -27,6 +30,9 @@ export function initCodeInteractions() {
   });
 
   document.querySelectorAll('.code-tab').forEach((tab) => {
+    if (tab.hasAttribute('data-initialized')) return;
+    tab.setAttribute('data-initialized', 'true');
+    
     tab.addEventListener('click', () => {
       const group = tab.getAttribute('data-group') || 'default';
       const groupId = tab.getAttribute('data-group');
@@ -40,4 +46,23 @@ export function initCodeInteractions() {
       });
     });
   });
+
+  document.querySelectorAll('.refresh-btn').forEach((btn) => {
+    if (btn.hasAttribute('data-initialized')) return;
+    btn.setAttribute('data-initialized', 'true');
+    
+    btn.addEventListener('click', () => {
+      const container = btn.closest('.overflow-hidden')?.querySelector('.preview-content');
+      if (!container) return;
+
+      // Clonar y reemplazar el nodo es la forma más robusta de reiniciar TODAS
+      // las animaciones CSS hijas, sin importar las clases que usen.
+      const clone = container.cloneNode(true);
+      container.parentNode.replaceChild(clone, container);
+    });
+  });
+}
+
+export function initAllCodeInteractions() {
+  initCodeInteractions();
 }

@@ -17,8 +17,9 @@ const cssCode = `/* Vinculación explícita con el nombre de la animación */
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  color: white;
-  font-weight: 500;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
+  font-weight: bold;
   text-align: center;
   
   /* Nombre descriptivo e intuitivo */
@@ -90,7 +91,14 @@ const multiplesCode = `.hero-image {
     <p>
       La vinculación entre keyframes y elemento es estrictamente por coincidencia de nombre. Y aquí hay algo que atrapa a mucha gente: la propiedad es <strong>case-sensitive</strong>. <code>fadeIn</code> y <code>fadein</code> son nombres completamente distintos para el navegador.
     </p>
-    <pre><code>{vinculacionCode}</code></pre>
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="vinculacion"
+        tabs={[
+          { id: 'css', label: 'CSS', code: vinculacionCode },
+        ]}
+      />
+    </div>
 
     <h3>Convenciones de nomenclatura que usan los profesionales</h3>
     <p>
@@ -114,7 +122,14 @@ const multiplesCode = `.hero-image {
     <p>
       Una de las capacidades más poderosas de CSS es que puedes ejecutar múltiples animaciones simultáneamente en el mismo elemento, simplemente separando los nombres por comas. Cada animación mantiene sus propias propiedades de duración, delay y easing:
     </p>
-    <pre><code>{multiplesCode}</code></pre>
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="multiples"
+        tabs={[
+          { id: 'css', label: 'CSS', code: multiplesCode },
+        ]}
+      />
+    </div>
   </article>
 
   <div class="my-8 not-prose">
@@ -161,8 +176,9 @@ const multiplesCode = `.hero-image {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    color: white;
-    font-weight: 500;
+    color: var(--color-bg);
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    font-weight: bold;
     text-align: center;
     animation-name: textGlowEffect;
     animation-duration: 3s;
@@ -185,4 +201,5 @@ const multiplesCode = `.hero-image {
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>

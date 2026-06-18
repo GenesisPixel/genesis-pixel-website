@@ -96,7 +96,14 @@ const parpadeoCode = `@keyframes parpadeo {
     <p>
       Cuando tu animación solo necesita un estado inicial y uno final —como un elemento que aparece fundido o que se desliza hacia arriba— puedes usar <code>from</code> y <code>to</code> en lugar de <code>0%</code> y <code>100%</code>. Son exactamente equivalentes, pero hacen el código más legible cuando la intención es simple:
     </p>
-    <pre><code>{deslizarCode}</code></pre>
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="deslizar"
+        tabs={[
+          { id: 'css', label: 'CSS', code: deslizarCode },
+        ]}
+      />
+    </div>
 
     <h3>La forma larga: el control total con porcentajes</h3>
     <p>
@@ -110,7 +117,14 @@ const parpadeoCode = `@keyframes parpadeo {
     <p>
       Cuando quieres que el elemento esté completamente oculto tanto al inicio como al final (y solo visible en el medio), escribirías los mismos estilos en dos líneas separadas. CSS te permite evitar esa repetición agrupando los porcentajes con comas:
     </p>
-    <pre><code>{parpadeoCode}</code></pre>
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="parpadeo"
+        tabs={[
+          { id: 'css', label: 'CSS', code: parpadeoCode },
+        ]}
+      />
+    </div>
 
     <h3>Las reglas para elegir nombres</h3>
     <ul class="space-y-2 list-disc pl-6 mb-6">
@@ -191,4 +205,5 @@ const parpadeoCode = `@keyframes parpadeo {
 <script>
   import { initCodeInteractions } from '../../scripts/code-interactions.js';
   document.addEventListener('astro:page-load', () => initCodeInteractions());
+  document.addEventListener('astro:after-swap', () => initCodeInteractions());
 </script>
