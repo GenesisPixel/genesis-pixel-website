@@ -1,25 +1,239 @@
 ---
 import TransformLayout from '../../layouts/TransformLayout.astro';
 import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
 
+const htmlCode = `<div class="reloj-contenedor">
+  <div class="aguja aguja-hora"></div>
+  <div class="aguja aguja-minuto"></div>
+  <div class="centro-reloj"></div>
+</div>`;
+
+const cssCode = `.reloj-contenedor {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+}
+
+.aguja {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  width: 3px;
+  border-radius: 4px;
+  background: white;
+  
+  /* El punto de origen en el extremo inferior de la aguja */
+  transform-origin: bottom center;
+}
+
+.aguja-hora {
+  height: 30%;
+  margin-left: -1.5px;
+  /* Empieza en la posición de las 3 (90 grados) */
+  transform: rotate(90deg);
+  animation: tick-hora 43200s linear infinite;
+}
+
+.aguja-minuto {
+  height: 40%;
+  margin-left: -1.5px;
+  background: #a855f7;
+  transform: rotate(0deg);
+  animation: tick-minuto 3600s linear infinite;
+}
+
+@keyframes tick-hora {
+  to { transform: rotate(450deg); }
+}
+
+@keyframes tick-minuto {
+  to { transform: rotate(360deg); }
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Crea un div rectangular y aplica rotate(45deg) y observa desde qué punto gira', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Añade transform-origin: top left y repite el rotate(45deg)', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Prueba transform-origin: bottom right para una rotación opuesta', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Crea una aguja de reloj que gire desde su base inferior usando transform-origin: bottom center', color: 'dm-blue', rotate: '-1deg' },
+];
 ---
 
 <TransformLayout
   title="Transform Origin - Genesis Pixel"
   currentLesson="/transform/transform-origin"
-  prevLesson={{ title: 'Lección Anterior', href: '/transform/skew' }}
-  nextLesson={{ title: 'Lección Siguiente', href: '/transform/multiples-transformaciones' }}
+  prevLesson={{ title: 'Skew', href: '/transform/skew' }}
+  nextLesson={{ title: 'Múltiples Transformaciones', href: '/transform/multiples-transformaciones' }}
 >
   <ChapterHeader
     chapterNumber="02"
     chapterLabel="Capítulo 2 · Lección 9"
     title="Transform Origin"
-    readingTime={5}
+    readingTime={7}
     difficulty="CSS Transform"
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Próximamente...</h3>
-    <p>Estamos redactando esta lección con historias reales y ejemplos visuales de calidad premium.</p>
+    <h3>El pivot point: desde dónde todo comienza</h3>
+    <p>
+      Piensa en la aguja de un reloj. Cuando el reloj marca las 12 y avanza hacia la 1, la aguja gira. Pero no gira desde su centro: gira desde su extremo inferior, anclada en el centro del reloj. Si girara desde su propio centro, haría algo completamente diferente, nada que se parecería a un reloj.
+    </p>
+    <p>
+      Este concepto de "desde dónde gira un elemento" se llama <strong>punto de origen</strong> (transform-origin), y es uno de los conceptos más poderosos y subutilizados de todo CSS Transform. Sin entenderlo, muchas rotaciones y escalas no se comportarán como esperas.
+    </p>
+
+    <h3>¿Qué es transform-origin?</h3>
+    <p>
+      Por defecto, todas las transformaciones (rotate, scale, skew) tienen su punto de origen en el <strong>centro exacto del elemento</strong>, que se representa como <code>50% 50%</code> o <code>center center</code>.
+    </p>
+    <p>
+      <code>transform-origin</code> te permite mover ese punto a cualquier lugar: una esquina, un borde, un punto exacto en píxeles, o fuera del elemento por completo:
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><code>transform-origin: top left</code> — Esquina superior izquierda. Ideal para menús que se despliegan desde la esquina.</li>
+      <li><code>transform-origin: bottom center</code> — Centro del borde inferior. Esencial para agujas de reloj.</li>
+      <li><code>transform-origin: right center</code> — Centro del borde derecho. Útil para elementos que "crecen" hacia la izquierda.</li>
+      <li><code>transform-origin: 20px 80px</code> — Valores exactos en píxeles para posicionamiento preciso.</li>
+    </ul>
+
+    <h3>Impacto en rotaciones</h3>
+    <p>
+      La diferencia visual más dramática se aprecia con <code>rotate()</code>. Si tienes un rectángulo y lo rotas 90 grados:
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li>Con <code>transform-origin: center</code> (defecto): El rectángulo gira sobre su centro y termina en una posición completamente diferente.</li>
+      <li>Con <code>transform-origin: top left</code>: La esquina superior izquierda permanece fija como un pivote y el rectángulo "cae" hacia la derecha desde ahí.</li>
+    </ul>
+
+    <h3>Impacto en scale (escalado)</h3>
+    <p>
+      Con <code>scale(2)</code> y el origen por defecto, el elemento crece hacia todos lados por igual desde su centro. Pero si cambias el origin a <code>top left</code>, el elemento crecerá hacia abajo y a la derecha, anclándose en su esquina superior izquierda. Esto es muy útil para menús desplegables que "crecen" desde el botón que los activa.
+    </p>
+
+    <h3>Caso real: El menú que se despliega</h3>
+    <p>
+      Cuando un menú desplegable de una aplicación moderna aparece debajo de su botón (como el menú de usuario en GitHub o Vercel), visualmente parece que "crece" desde el botón hacia abajo. La técnica exacta: se aplica <code>scale(0)</code> al estado inicial y <code>scale(1)</code> al estado visible, con <code>transform-origin: top right</code> (o la esquina correspondiente al botón) para que el crecimiento empiece desde donde está el cursor.
+    </p>
   </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Recuerda que transform-origin debe definirse ANTES de que ocurra la transformación, en el estado base del elemento (no en el :hover). Si lo defines dentro del selector :hover, el elemento saltará de posición bruscamente al hacer hover antes de aplicar la animación." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Agujas que giran desde su base
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="origin-demo"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Un mini reloj CSS. Las agujas rotan desde su extremo inferior gracias a transform-origin: bottom center. Sin este ajuste, girarían desde su propio centro y el efecto sería completamente diferente.">
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="reloj-demo">
+          <!-- Marcas del reloj -->
+          <div class="marca" style="transform: rotate(0deg) translateY(-52px);"></div>
+          <div class="marca" style="transform: rotate(90deg) translateY(-52px);"></div>
+          <div class="marca" style="transform: rotate(180deg) translateY(-52px);"></div>
+          <div class="marca" style="transform: rotate(270deg) translateY(-52px);"></div>
+          <!-- Agujas -->
+          <div class="aguja-demo aguja-hora-demo"></div>
+          <div class="aguja-demo aguja-minuto-demo"></div>
+          <div class="centro-demo"></div>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Definir transform-origin en el estado :hover', description: 'Si defines transform-origin solo en el :hover, el elemento cambia de pivot point bruscamente al entrar al hover antes de que la animación comience, generando un "salto" visual desagradable.' },
+      { label: 'No considerar el transform-origin al escalar desde un borde', description: 'Si quieres que un menú crezca desde la esquina superior derecha, necesitas transform-origin: top right antes de usar scale(0) → scale(1). Sin este cambio, el menú crecerá desde su centro y aparecerá en el lugar equivocado.' },
+    ]} />
+
+    <PracticeCards
+      title="Controla el pivot"
+      description="Crea un menú desplegable animado con scale(0) → scale(1) que aparezca desde la esquina correcta de su botón trigger. El secreto está en transform-origin."
+      steps={practiceSteps}
+    />
+  </div>
 </TransformLayout>
+
+<style>
+  .reloj-demo {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .marca {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    margin-left: -2px;
+    margin-top: -2px;
+  }
+
+  .aguja-demo {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    border-radius: 4px 4px 0 0;
+    transform-origin: bottom center;
+  }
+
+  .aguja-hora-demo {
+    width: 3px;
+    height: 30px;
+    background: white;
+    margin-left: -1.5px;
+    transform: rotate(90deg);
+    animation: tick-hora-d 43200s linear infinite;
+  }
+
+  .aguja-minuto-demo {
+    width: 2px;
+    height: 42px;
+    background: #a855f7;
+    margin-left: -1px;
+    transform: rotate(0deg);
+    animation: tick-minuto-d 3600s linear infinite;
+  }
+
+  .centro-demo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: #a855f7;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  @keyframes tick-hora-d {
+    to { transform: rotate(450deg); }
+  }
+
+  @keyframes tick-minuto-d {
+    to { transform: rotate(360deg); }
+  }
+</style>
