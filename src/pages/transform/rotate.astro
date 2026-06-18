@@ -1,25 +1,163 @@
 ---
 import TransformLayout from '../../layouts/TransformLayout.astro';
 import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
 
+const htmlCode = `<div class="loader-contenedor">
+  <div class="loader-spinner"></div>
+  <p>Procesando tu solicitud...</p>
+</div>`;
+
+const cssCode = `/* El spinner que gira infinitamente */
+.loader-spinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid rgba(168, 85, 247, 0.2);
+  border-top-color: #a855f7;
+  font-family: system-ui, sans-serif;
+  
+  /* Animación de rotación continua */
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Un icono de menú que se convierte en X al abrirse */
+.btn-menu {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-menu.abierto {
+  transform: rotate(45deg);
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Crea un div cuadrado con border-radius: 50%', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Aplica un border superior de color (border-top-color: #color)', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Crea @keyframes que anime de rotate(0) a rotate(360deg)', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Asigna animation: nombre 0.8s linear infinite al elemento', color: 'dm-blue', rotate: '-1deg' },
+];
 ---
 
 <TransformLayout
   title="Rotate - Genesis Pixel"
   currentLesson="/transform/rotate"
-  prevLesson={{ title: 'Lección Anterior', href: '/transform/scale' }}
-  nextLesson={{ title: 'Lección Siguiente', href: '/transform/skew' }}
+  prevLesson={{ title: 'Scale', href: '/transform/scale' }}
+  nextLesson={{ title: 'Skew', href: '/transform/skew' }}
 >
   <ChapterHeader
     chapterNumber="02"
     chapterLabel="Capítulo 2 · Lección 7"
     title="Rotate"
-    readingTime={5}
+    readingTime={6}
     difficulty="CSS Transform"
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Próximamente...</h3>
-    <p>Estamos redactando esta lección con historias reales y ejemplos visuales de calidad premium.</p>
+    <h3>Todo gira, incluso la web</h3>
+    <p>
+      Existe un icono en particular que todos los usuarios de internet reconocen instintivamente: un círculo con una flecha, o simplemente un arco de círculo. Lo interpretamos como "cargando", "procesando", "espera un momento". No hay texto que lo acompañe. No hace falta. El giro continuo es un lenguaje universal.
+    </p>
+    <p>
+      Todos esos spinners, loaders y indicadores de carga que ves en aplicaciones como Gmail, Figma o Notion están hechos con exactamente dos líneas de CSS: un <code>@keyframes</code> que va de <code>rotate(0deg)</code> a <code>rotate(360deg)</code>, y una propiedad <code>animation</code> que lo ejecuta en bucle infinito.
+    </p>
+
+    <h3>¿Qué es rotate()?</h3>
+    <p>
+      <code>rotate()</code> gira un elemento alrededor de su punto de origen (que por defecto es su centro exacto). El ángulo de rotación se expresa en grados (<code>deg</code>):
+    </p>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><strong>Rotaciones positivas (ej. 45deg):</strong> Giran el elemento en sentido <strong>horario</strong>.</li>
+      <li><strong>Rotaciones negativas (ej. -45deg):</strong> Giran el elemento en sentido <strong>antihorario</strong>.</li>
+      <li><strong>360deg:</strong> Una vuelta completa, volviendo al punto de partida. La base de todos los spinners.</li>
+      <li><strong>Unidades adicionales:</strong> También puedes usar <code>turn</code> (1turn = 360deg) o <code>rad</code> (radianes).</li>
+    </ul>
+
+    <h3>Transformaciones que convierten iconos</h3>
+    <p>
+      Una de las aplicaciones más elegantes de <code>rotate()</code> en las interfaces modernas es la conversión de un icono en otro mediante la rotación. El ejemplo más clásico: el icono de menú hamburguesa (≡) que se convierte en una X cuando el menú se abre.
+    </p>
+    <p>
+      Si tienes tres líneas paralelas y rotas el contenedor 45 grados, las líneas diagonales que se cruzan crean visualmente una X. Esto elimina la necesidad de cambiar el icono SVG, intercambiar imágenes o manipular el DOM: una simple rotación lo hace todo.
+    </p>
+
+    <h3>Casos reales</h3>
+    <ul class="space-y-2 list-disc pl-6 mb-6">
+      <li><strong>Loaders y Spinners:</strong> De 0deg a 360deg en bucle infinito. El más usado de todos.</li>
+      <li><strong>Iconos de acordeón:</strong> Una flecha (›) rota 90deg cuando el contenido se despliega para indicar que apunta hacia abajo.</li>
+      <li><strong>Interruptores hamburguesa → X:</strong> El menú hamburguesa rota para convertirse en un botón de cierre.</li>
+      <li><strong>Efectos decorativos:</strong> Estrellas, formas geométricas que giran como elemento visual de landing pages.</li>
+      <li><strong>Cartas y tarjetas flip:</strong> Combinadas con rotateY en 3D para el efecto de voltear una tarjeta.</li>
+    </ul>
   </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Para los loaders, usa siempre linear como función de timing (animation-timing-function: linear). Los eases como ease-in o ease-out hacen que el spinner acelere y frene en cada vuelta, lo que se percibe como un movimiento raro y artificial. La rotación continua debe ser siempre constante." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Rotación en contexto real
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="rotate-demo"
+      tabs={[
+        { id: 'html', label: 'HTML', code: htmlCode },
+        { id: 'css', label: 'CSS', code: cssCode },
+      ]}
+    />
+    <ResultPreview description="Un spinner clásico construido con solo CSS. Observa cómo un borde de color en un círculo, rotando continuamente, crea la ilusión perfecta de carga.">
+      <div class="flex flex-col items-center justify-center gap-4 h-full w-full">
+        <div class="spinner-demo"></div>
+        <p class="text-sm text-white/50 m-0 font-[var(--font-afronaut)]">Procesando tu solicitud...</p>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Usar animation-timing-function: ease en un spinner', description: 'ease hace que el spinner acelere y desacelere en cada ciclo. La rotación debe ser siempre constante (linear) para que el usuario perciba un proceso continuo y no errático.' },
+      { label: 'Rotar sin considerar el transform-origin', description: 'Por defecto, los elementos rotan desde su centro. Si tu diseño requiere que el elemento gire desde una esquina (como una aguja de reloj), necesitarás cambiar el transform-origin antes de aplicar rotate().' },
+      { label: 'Animar en rotación valores como width', description: 'Una trampa común es querer hacer un loader animando el width de una barra. Es ineficiente. Usa rotate() en @keyframes, que opera en el compositor de la GPU.' },
+    ]} />
+
+    <PracticeCards
+      title="Construye un Loader"
+      description="Crea tu propio spinner de carga usando solo CSS. Luego construye un acordeón donde la flecha del título rota 180 grados cuando el contenido está visible."
+      steps={practiceSteps}
+    />
+  </div>
 </TransformLayout>
+
+<style>
+  .spinner-demo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid rgba(168, 85, 247, 0.15);
+    border-top-color: #a855f7;
+    animation: spin-it 0.8s linear infinite;
+  }
+
+  @keyframes spin-it {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
