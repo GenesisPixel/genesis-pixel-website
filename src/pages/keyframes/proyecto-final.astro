@@ -46,21 +46,12 @@ const cardHtml = `<div class="tarjeta-animada">
   <div class="contenido">
     <h3>Genesis Pixel</h3>
     <p>Aprende animaciones CSS avanzadas de forma visual.</p>
-    <button class="btn-pulso">
-      <span>Explorar Curso</span>
-    </button>
   </div>
 </div>`;
 
 const cardCss = `@keyframes flotar {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes pulso {
-  0% { box-shadow: 0 0 0 0 rgba(159, 166, 255, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(159, 166, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(159, 166, 255, 0); }
+  50% { transform: translateY(-16px); }
 }
 
 .tarjeta-animada {
@@ -219,9 +210,6 @@ const practiceSteps = [
           <div class="contenido">
             <h3>Genesis Pixel</h3>
             <p>Aprende animaciones CSS avanzadas de forma visual.</p>
-            <button class="btn-pulso">
-              <span>Explorar Curso</span>
-            </button>
           </div>
         </div>
       </div>
@@ -304,13 +292,7 @@ const practiceSteps = [
 
   @keyframes flotar {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-
-  @keyframes pulso {
-    0% { box-shadow: 0 0 0 0 rgba(159, 166, 255, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(159, 166, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(159, 166, 255, 0); }
+    50% { transform: translateY(-16px); }
   }
 
   .tarjeta-animada {
@@ -343,29 +325,12 @@ const practiceSteps = [
   }
 
   .tarjeta-animada p {
-    margin: 0 0 16px 0;
+    margin: 0;
+    padding-top: 70px;
     font-size: 0.75rem;
     color: var(--color-bg);
     opacity: 0.7;
     line-height: 1.4;
-  }
-
-  .btn-pulso {
-    width: 100%;
-    padding: 10px 16px;
-    background: var(--color-bg);
-    border: none;
-    border-radius: 0;
-    color: #9FA6FF;
     font-family: var(--font-afronaut, system-ui, sans-serif);
-    font-weight: bold;
-    font-size: 0.75rem;
-    cursor: pointer;
-    animation: pulso 2s infinite;
-    transition: transform 0.2s ease;
-  }
-
-  .btn-pulso:active {
-    transform: scale(0.96);
   }
 </style>
