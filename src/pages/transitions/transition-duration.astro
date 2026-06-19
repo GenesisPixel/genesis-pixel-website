@@ -88,6 +88,12 @@ const practiceSteps = [
     </p>
   </article>
 
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Las transiciones de salida (cuando el usuario quita el hover) pueden ser ligeramente más rápidas que las de entrada. Al usuario ya no le interesa ese elemento, así que ciérralo ágilmente." />
+  </div>
+
+  
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico
   </h3>
@@ -118,12 +124,13 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
+  
+
   <div class="my-8 flex flex-col gap-6">
     <ErroresComunesV3 errors={[
       { label: 'Duraciones mayores a 1 segundo', description: 'Hacer que un usuario espere 1 segundo o más para que un botón termine de reaccionar arruina la percepción de rendimiento de la página.' },
       { label: 'Valor sin unidad', description: 'Si escribes transition-duration: 3; sin la "s" o "ms", el navegador lo ignorará por completo.' }
     ]} />
-
     <PracticeCards
       title="Practica lo Aprendido"
       description="Encuentra el punto dulce de la velocidad para diferentes elementos UI."

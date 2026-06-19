@@ -87,6 +87,10 @@ const practiceSteps = [
     </div>
   </article>
 
+  <div class="not-prose">
+      <ConsejoProfesional tip="Al usar múltiples transiciones con comas, mantén cada transición en una línea separada dentro de tu CSS para facilitar la lectura. ¡Es una gran práctica de código limpio!" />
+    </div>
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico
   </h3>
@@ -112,11 +116,13 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
-  <div class="my-8 flex flex-col gap-6">
-    <ConsejoProfesional>
-      Al usar múltiples transiciones con comas, mantén cada transición en una línea separada dentro de tu CSS para facilitar la lectura. ¡Es una gran práctica de código limpio!
-    </ConsejoProfesional>
+  
 
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Olvidar el orden del delay', description: 'Si escribes transition: transform ease 0.2s 0.5s;, el navegador siempre tomará el primer tiempo (0.2s) como duración y el segundo (0.5s) como delay.' },
+      { label: 'Sobrescribir el shorthand', description: 'Si escribes el shorthand transition: all 0.3s; y debajo pones transition-duration: 0.5s;, la última propiedad sobreescribirá parte del shorthand.' }
+    ]} />
     <PracticeCards
       title="Practica lo Aprendido"
       description="A partir de ahora, utiliza el shorthand en todos tus proyectos."

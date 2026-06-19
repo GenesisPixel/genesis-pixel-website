@@ -97,6 +97,10 @@ const practiceSteps = [
     </ul>
   </article>
 
+  <div class="not-prose">
+      <ConsejoProfesional tip="Regla de oro de UX: Cuando un elemento entra en pantalla o responde al hover, usa ease-out (responde rápido, frena suave). Cuando sale, usa ease-in (empieza lento y escapa rápido)." />
+    </div>
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico
   </h3>
@@ -131,11 +135,13 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
-  <div class="my-8 flex flex-col gap-6">
-    <ConsejoProfesional>
-      <strong>Regla de oro de UX:</strong> Cuando un elemento <em>entra</em> en pantalla o responde al hover, usa <code>ease-out</code> (responde rápido, frena suave). Cuando un elemento <em>sale</em> de la pantalla, usa <code>ease-in</code> (empieza lento y se "escapa" rápido).
-    </ConsejoProfesional>
+  
 
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Usar ease-in para elementos interactivos', description: 'Si un botón usa ease-in al hacer hover, tardará en reaccionar al principio, haciendo que la UI se sienta poco responsiva y pesada.' },
+      { label: 'Abusar del linear', description: 'El linear rara vez se ve natural, ya que en el mundo real nada arranca y frena a velocidad constante de manera instantánea.' }
+    ]} />
     <PracticeCards
       title="Practica lo Aprendido"
       description="Controla la curva de velocidad para crear interacciones orgánicas y naturales."

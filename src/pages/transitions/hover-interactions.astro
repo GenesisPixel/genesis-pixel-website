@@ -129,6 +129,10 @@ const practiceSteps = [
     </ul>
   </article>
 
+  <div class="not-prose">
+      <ConsejoProfesional tip="Al escalar imágenes en hover (transform: scale(1.05)), asegúrate de que el contenedor padre tenga overflow: hidden. Esto crea un efecto de zoom de lente muy profesional." />
+    </div>
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico
   </h3>
@@ -168,11 +172,13 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
-  <div class="my-8 flex flex-col gap-6">
-    <ConsejoProfesional>
-      Al escalar imágenes en hover (<code>transform: scale(1.05)</code>), asegúrate de que el contenedor padre tenga <code>overflow: hidden</code>. Esto crea un efecto de "zoom de lente" muy profesional.
-    </ConsejoProfesional>
+  
 
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Animar margin o padding', description: 'Cambiar dimensiones estructurales empujará otros elementos de la página. Usa transform: translateY() en su lugar para mover cosas sin afectar el layout.' },
+      { label: 'Olvidar el estado por defecto', description: 'Asegúrate de definir una transición suave tanto para el :hover como para el estado base, para que no salte de golpe al quitar el cursor.' }
+    ]} />
     <PracticeCards
       title="Practica lo Aprendido"
       description="Combina múltiples transiciones en un solo contenedor."

@@ -111,6 +111,10 @@ const practiceSteps = [
 
   </article>
 
+  <div class="not-prose">
+      <ConsejoProfesional tip="Al cerrar un modal, asegúrate de que la transición tenga tiempo suficiente para completarse antes de que cualquier script JS remueva el elemento del DOM." />
+    </div>
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico
   </h3>
@@ -149,16 +153,13 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
-  <div class="my-8 flex flex-col gap-6">
-    <div class="not-prose">
-      <ConsejoProfesional tip="Al cerrar un modal, asegúrate de que la transición tenga tiempo suficiente para completarse antes de que cualquier script JS remueva el elemento del DOM." />
-    </div>
+  
 
+  <div class="my-8 flex flex-col gap-6">
     <ErroresComunesV3 errors={[
       { label: 'Animar display: none', description: 'display no es animable. Usa opacity + visibility para ocultar componentes sin sacarlos bruscamente de la pantalla.' },
       { label: 'Bloquear clicks con visibilidad', description: 'Si usas solo opacity: 0, el modal será invisible pero seguirá capturando clics y tapando la página. Usa siempre visibility: hidden junto con opacity.' }
     ]} />
-
     <PracticeCards
       title="Practica lo Aprendido"
       description="Crea componentes robustos que no desaparezcan de la nada."

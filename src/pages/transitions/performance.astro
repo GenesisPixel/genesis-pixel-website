@@ -83,6 +83,10 @@ const practiceSteps = [
     <p>Siempre que sea posible, debes fingir movimientos y tamaños usando transform en lugar de manipular la estructura del layout.</p>
   </article>
 
+  <div class="not-prose">
+      <ConsejoProfesional tip="Si tienes una animación compleja con transform que tartamudea levemente, puedes aplicar will-change: transform; al elemento original. Esto le avisa al navegador con antelación que lo pase a la GPU." />
+    </div>
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     GPU vs CPU
   </h3>
@@ -110,11 +114,13 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
-  <div class="my-8 flex flex-col gap-6">
-    <ConsejoProfesional>
-      Si tienes una animación compleja con <code>transform</code> que tartamudea levemente, puedes aplicar <code>will-change: transform;</code> al elemento original. Esto le avisa al navegador con antelación que mueva el elemento a una capa de la GPU.
-    </ConsejoProfesional>
+  
 
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Animar box-shadow en todo momento', description: 'Transicionar sombras amplias consume demasiados recursos. Una técnica avanzada es animar la opacidad de un pseudo-elemento con la sombra ya dibujada.' },
+      { label: 'Uso abusivo de will-change', description: 'Poner will-change: all a todos los elementos saturará la memoria RAM de los dispositivos móviles. Úsalo como último recurso.' }
+    ]} />
     <PracticeCards
       title="Practica lo Aprendido"
       description="Optimiza tus animaciones para que funcionen fluidas hasta en móviles antiguos."

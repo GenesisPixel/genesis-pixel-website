@@ -105,6 +105,12 @@ const practiceSteps = [
     </ul>
   </article>
 
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="En controles interactivos (como el toggle), oculta siempre el input checkbox nativo pero aségurate de que la etiqueta o div visual tenga tabindex para mantener la accesibilidad con teclado." />
+  </div>
+
+  
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico (Toggle Switch)
   </h3>
@@ -138,11 +144,12 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
+  
+
   <div class="my-8 flex flex-col gap-6">
     <ErroresComunesV3 errors={[
       { label: 'Excederse en la duración', description: 'Una microinteracción pesada frustra al usuario. Mantén las duraciones entre 0.15s y 0.3s como máximo.' }
     ]} />
-
     <PracticeCards
       title="Practica lo Aprendido"
       description="Convierte los elementos de formulario aburridos en componentes premium."

@@ -1,73 +1,355 @@
 ---
 import TransitionsLayout from '../../layouts/TransitionsLayout.astro';
 import ChapterHeader from '../../components/ChapterHeader.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
 
-const htmlCode = `<div class="app-container">
-  <!-- Construye aquí tu interfaz interactiva -->
+const uiHtml = `<div class="app-ui">
+  <!-- Sidebar simplificado -->
+  <aside class="ui-sidebar">
+    <div class="ui-logo"></div>
+    <div class="ui-menu-item active"></div>
+    <div class="ui-menu-item"></div>
+    <div class="ui-menu-item"></div>
+  </aside>
+
+  <!-- Tarjeta de Producto -->
+  <main class="ui-main">
+    <div class="product-card">
+      <div class="product-img">
+        <div class="like-btn">♥</div>
+      </div>
+      <div class="product-info">
+        <h3>Zapatillas Nitro</h3>
+        <p>$129.99</p>
+        <button class="buy-btn">Agregar al Carrito</button>
+      </div>
+    </div>
+  </main>
 </div>`;
 
-const cssCode = `/* Usa todo lo que has aprendido:
-1. Variables CSS para tiempos
-2. Coreografía con hover y padre-hijos
-3. Optimización con transform y opacity
-4. Microinteracciones de entrada y salida */`;
+const uiCss = `:root {
+  --t-fast: 0.15s;
+  --t-base: 0.3s;
+  --t-slow: 0.5s;
+  --e-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --e-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.app-ui {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  height: 300px;
+  background: #18181b;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+}
+
+/* Sidebar interacciones */
+.ui-sidebar {
+  width: 60px;
+  background: #27272a;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: width var(--t-base) var(--e-out);
+}
+
+.ui-sidebar:hover {
+  width: 120px;
+}
+
+.ui-logo { width: 30px; height: 30px; background: #06b6d4; border-radius: 8px; margin-bottom: 24px; }
+.ui-menu-item { width: 30px; height: 10px; background: #3f3f46; border-radius: 4px; transition: width var(--t-fast) var(--e-out), background var(--t-fast) ease; }
+.ui-sidebar:hover .ui-menu-item { width: 80px; }
+.ui-menu-item:hover, .ui-menu-item.active { background: #a1a1aa; }
+
+/* Product Card interacciones */
+.ui-main { flex: 1; padding: 24px; display: flex; justify-content: center; align-items: center; }
+.product-card { width: 200px; background: #27272a; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform var(--t-base) var(--e-out), box-shadow var(--t-base) var(--e-out); }
+.product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+
+.product-img { height: 120px; background: linear-gradient(45deg, #a855f7, #ec4899); position: relative; }
+.like-btn { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #ec4899; font-size: 16px; transform: scale(1); transition: transform var(--t-fast) var(--e-bounce); }
+.like-btn:hover { transform: scale(1.2); }
+.like-btn:active { transform: scale(0.9); }
+
+.product-info { padding: 16px; position: relative; }
+.product-info h3 { margin: 0; font-size: 16px; color: white; }
+.product-info p { margin: 4px 0 0; font-size: 14px; color: #a1a1aa; transition: opacity var(--t-base) ease; }
+.buy-btn { position: absolute; bottom: 16px; left: 16px; right: 16px; padding: 8px; background: #06b6d4; color: white; border: none; border-radius: 6px; font-weight: bold; opacity: 0; transform: translateY(10px); transition: all var(--t-base) var(--e-out); transition-delay: 0s; pointer-events: none; }
+
+.product-card:hover .product-info p { opacity: 0; }
+.product-card:hover .buy-btn { opacity: 1; transform: translateY(0); transition-delay: 0.1s; pointer-events: auto; }
+.buy-btn:hover { background: #0891b2; }`;
+
+const dropdownHtml = `<div class="navbar-demo">
+  <div class="nav-item">
+    Productos
+    <div class="nav-dropdown">
+      <div class="drop-item">SaaS Platform</div>
+      <div class="drop-item">Mobile App</div>
+      <div class="drop-item">API Integrations</div>
+    </div>
+  </div>
+</div>`;
+
+const dropdownCss = `.navbar-demo {
+  background: #27272a;
+  padding: 16px 32px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-item {
+  position: relative;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px) scale(0.95);
+  margin-top: 16px;
+  background: #18181b;
+  border: 1px solid #3f3f46;
+  border-radius: 12px;
+  padding: 8px;
+  width: 180px;
+  
+  /* Estados ocultos */
+  opacity: 0;
+  visibility: hidden;
+  
+  /* Transición de salida: con delay para tolerancia */
+  transition: all 0.2s ease;
+  transition-delay: 0.3s;
+}
+
+.nav-item:hover .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+  
+  /* Transición de entrada: rápida y sin delay */
+  transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
+  transition-delay: 0s;
+}
+
+.drop-item {
+  padding: 10px 12px;
+  color: #a1a1aa;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.drop-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateX(4px);
+}`;
+
+const practiceSteps = [
+  { number: 1, text: 'Aplica el sistema de tokens de animación a todo el proyecto', color: 'dm-purple', rotate: '2deg' },
+  { number: 2, text: 'Asegúrate de que la tarjeta principal eleve sin causar repaints usando transform', color: 'dm-green', rotate: '-3deg' },
+  { number: 3, text: 'Coreografía el botón de compra para que aparezca después de que el título suba', color: 'app-color-yellow400', rotate: '4deg' },
+  { number: 4, text: 'Supera el desafío ajustando la tolerancia del dropdown para que no se cierre accidentalmente', color: 'dm-blue', rotate: '-1deg' },
+];
 ---
 
 <TransitionsLayout
-  title="Proyecto final - Genesis Pixel"
+  title="Proyecto Final de Transitions - Genesis Pixel"
   currentLesson="/transitions/proyecto-final"
   prevLesson={{ title: 'Sistema consistente de UI', href: '/transitions/sistema-consistente' }}
 >
   <ChapterHeader
     chapterNumber="03"
     chapterLabel="Capítulo 3 · Proyecto Final"
-    title="La Interfaz Premium"
-    readingTime={15}
+    title="Proyecto Final de Transitions"
+    readingTime={10}
   />
 
   <article class="prose prose-invert max-w-none" style="margin-top: 64px;">
-    <h3>Tu momento de brillar</h3>
+    <h3>El arte de la coreografía interactiva</h3>
     <p>
-      Has completado el capítulo de <strong>CSS Transitions</strong>. Ahora sabes que el movimiento no trata solo de hacer que las cosas vuelen por la pantalla, sino de generar feedback visual rápido, construir confianza en el usuario y crear interfaces que se sientan <em>vivas y físicas</em>.
+      ¡Felicidades! Has llegado al final del Capítulo 3. Hasta ahora hemos estudiado las propiedades de las transiciones de forma aislada (duraciones, curvas, delays). Pero en un proyecto real, la magia no ocurre por usar una propiedad compleja; ocurre cuando logras que múltiples elementos simples interactúen con el usuario en perfecta sincronía. A esto lo llamamos <strong>coreografía interactiva</strong>.
     </p>
 
-    <div class="bg-[#27272a] rounded-xl p-8 my-8 border border-white/5 relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#a855f7]/20 to-transparent opacity-50"></div>
-      <h4 class="text-white mt-0 text-xl font-bold font-afronaut relative z-10">Requerimientos del Proyecto Final</h4>
-      <p class="text-[#a1a1aa] mb-6 relative z-10">Construye una "Product Card" interactiva que cumpla estrictamente las siguientes reglas:</p>
-      
-      <ul class="space-y-4 list-none pl-0 relative z-10">
-        <li class="flex items-start gap-3">
-          <div class="mt-1 w-6 h-6 rounded-full bg-[#a855f7]/20 text-[#a855f7] flex items-center justify-center shrink-0">1</div>
-          <span class="text-gray-300"><strong>Variables:</strong> Declara al menos 3 variables CSS de tiempo y 2 de easing en el <code>:root</code> y úsalas en todos los elementos.</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <div class="mt-1 w-6 h-6 rounded-full bg-[#a855f7]/20 text-[#a855f7] flex items-center justify-center shrink-0">2</div>
-          <span class="text-gray-300"><strong>Elevación Suave:</strong> Al hacer hover en la tarjeta principal, ésta debe escalar a 1.02 y ganar una sombra pronunciada. Todo procesado en GPU.</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <div class="mt-1 w-6 h-6 rounded-full bg-[#a855f7]/20 text-[#a855f7] flex items-center justify-center shrink-0">3</div>
-          <span class="text-gray-300"><strong>Revelación coreografiada:</strong> Muestra un botón de "Comprar" dentro de la tarjeta usando opacidad y transform, aplicándole un <em>delay</em> para que aparezca una fracción de segundo después del hover principal.</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <div class="mt-1 w-6 h-6 rounded-full bg-[#a855f7]/20 text-[#a855f7] flex items-center justify-center shrink-0">4</div>
-          <span class="text-gray-300"><strong>Microinteracción (Favorito):</strong> Incluye un botón o ícono de "Corazón" que al hacerle clic o hover aplique una curva de Bézier tipo rebote.</span>
-        </li>
-      </ul>
-    </div>
-
-    <h3>Siguiente paso en tu carrera</h3>
+    <h3>1. La Product Card Completa</h3>
     <p>
-      Las transiciones son la herramienta más pragmática del diseño web interactivo, y te felicito por haber dominado sus fundamentos. ¡Comparte tus resultados en el foro de la comunidad Genesis Pixel y prepárate para los próximos módulos donde uniremos Keyframes, Transforms y Transitions para dominar el arte completo del Motion Design!
+      Nuestra tarjeta de producto utiliza una orquestación avanzada. ¿Recuerdas la lección sobre <code>transition-delay</code> y <code>hover interactions</code>? Aquí aplicamos todo: elevamos el contenedor principal, desvanecemos el precio, deslizamos el botón de compra con un ligero retraso y le aplicamos un rebote físico al botón de favorito. Todo controlado mediante un sistema consistente de variables CSS.
     </p>
 
-    <div class="flex justify-center mt-12 mb-8">
-      <a href="/" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-bold font-afronaut hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-300">
-        Volver al Inicio ✨
-      </a>
-    </div>
+    <h3>2. El Menú Desplegable Tolerante</h3>
+    <p>
+      Un dropdown moderno no usa <code>display: none</code>. Utiliza la combinación mágica de <code>opacity</code>, <code>visibility</code> y <code>transform: scale</code> para entrar fluidamente desde el centro. Pero el verdadero secreto profesional es la <strong>tolerancia</strong>: al quitar el cursor, el menú tiene un <code>transition-delay</code> de salida para no cerrarse si el usuario mueve el ratón accidentalmente por fuera durante un milisegundo.
+    </p>
 
+    <h3>El verdadero secreto: El Motion System</h3>
+    <p>
+      El sello final de calidad en esta interfaz es que las velocidades no están escritas a mano en cada clase. Se definen en el <code>:root</code>. Si el equipo de diseño decide que la app debe sentirse más ágil, cambian <code>--t-base</code> de 0.3s a 0.2s, y todos los modales, botones y tarjetas se actualizan instantáneamente sin romper la coreografía.
+    </p>
   </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="¡Has dominado el puente entre estados en CSS! Las Transitions son el núcleo de la experiencia de usuario diaria. Las aplicarás en absolutamente todo lo interactivo que construyas." />
+  </div>
+
+  <!-- Proyecto 1: Tarjeta Coreografiada -->
+  <div class="mt-16 mb-4 text-center">
+    <h3 class="font-medium mb-2">Proyecto 1 — Tarjeta Coreografiada</h3>
+    <p class="text-sm mb-6" style="color: white; opacity: 0.7;">
+      Una simulación de app con un sidebar expansible y una tarjeta de producto interactiva. Todo sincronizado mediante variables.
+    </p>
+  </div>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="proyecto-card"
+      tabs={[
+        { id: 'html', label: 'HTML', code: uiHtml },
+        { id: 'css', label: 'CSS', code: uiCss },
+      ]}
+    />
+    <ResultPreview description="Haz hover en la barra izquierda para expandirla suavemente. Pasa el cursor por la tarjeta para ver cómo el contenido se reacomoda y revela el botón. Haz hover en el corazón para sentir el rebote físico.">
+      <div class="flex items-center justify-center h-full w-full px-4 font-[system-ui,sans-serif]">
+        <style>
+          .t-sys { --t-fast: 0.15s; --t-base: 0.3s; --t-slow: 0.5s; --e-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); --e-out: cubic-bezier(0, 0, 0.2, 1); }
+          .t-app { display: flex; width: 100%; max-width: 450px; height: 280px; background: #18181b; border-radius: 12px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+          .t-sb { width: 60px; background: #27272a; padding: 16px 0; display: flex; flex-direction: column; align-items: center; gap: 16px; transition: width var(--t-base) var(--e-out); }
+          .t-sb:hover { width: 120px; }
+          .t-logo { width: 30px; height: 30px; background: #06b6d4; border-radius: 8px; margin-bottom: 24px; }
+          .t-mi { width: 30px; height: 10px; background: #3f3f46; border-radius: 4px; transition: width var(--t-fast) var(--e-out), background var(--t-fast) ease; }
+          .t-sb:hover .t-mi { width: 80px; }
+          .t-mi.active, .t-mi:hover { background: #a1a1aa; }
+          .t-main { flex: 1; padding: 24px; display: flex; justify-content: center; align-items: center; }
+          .t-card { width: 180px; background: #27272a; border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform var(--t-base) var(--e-out), box-shadow var(--t-base) var(--e-out); }
+          .t-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+          .t-img { height: 110px; background: linear-gradient(45deg, #a855f7, #ec4899); position: relative; }
+          .t-like { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #ec4899; font-size: 14px; transition: transform var(--t-fast) var(--e-bounce); }
+          .t-like:hover { transform: scale(1.2); }
+          .t-like:active { transform: scale(0.9); }
+          .t-info { padding: 16px; position: relative; }
+          .t-info h3 { margin: 0; font-size: 15px; color: white; }
+          .t-info p { margin: 4px 0 0; font-size: 13px; color: #a1a1aa; transition: opacity var(--t-base) ease; }
+          .t-buy { position: absolute; bottom: 16px; left: 16px; right: 16px; padding: 8px; background: #06b6d4; color: white; border: none; border-radius: 6px; font-weight: bold; opacity: 0; transform: translateY(10px); transition: all var(--t-base) var(--e-out); pointer-events: none; }
+          .t-card:hover .t-info p { opacity: 0; }
+          .t-card:hover .t-buy { opacity: 1; transform: translateY(0); transition-delay: 0.1s; pointer-events: auto; }
+          .t-buy:hover { background: #0891b2; cursor: pointer; }
+        </style>
+        <div class="t-sys t-app">
+          <aside class="t-sb">
+            <div class="t-logo"></div>
+            <div class="t-mi active"></div><div class="t-mi"></div><div class="t-mi"></div>
+          </aside>
+          <main class="t-main">
+            <div class="t-card">
+              <div class="t-img"><div class="t-like">♥</div></div>
+              <div class="t-info">
+                <h3>Zapatillas Nitro</h3><p>$129.99</p>
+                <button class="t-buy">Comprar</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <!-- Proyecto 2: Menú Tolerante -->
+  <div class="mt-16 mb-4 text-center">
+    <h3 class="font-medium mb-2">Proyecto 2 — Menú Desplegable Tolerante</h3>
+    <p class="text-sm mb-6" style="color: white; opacity: 0.7;">
+      Un dropdown clásico usando visibilidad y delay para mejorar la experiencia del usuario (UX) previniendo cierres accidentales.
+    </p>
+  </div>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="proyecto-menu"
+      tabs={[
+        { id: 'html', label: 'HTML', code: dropdownHtml },
+        { id: 'css', label: 'CSS', code: dropdownCss },
+      ]}
+    />
+    <ResultPreview description="Haz hover sobre 'Productos'. Cuando muevas el mouse fuera, notarás que no se cierra instantáneamente, dándote margen de error si te saliste por accidente.">
+      <div class="flex items-start justify-center h-full w-full pt-10 font-[system-ui,sans-serif]">
+        <style>
+          .t-nav { background: #27272a; padding: 12px 32px; border-radius: 8px; display: flex; justify-content: center; z-index: 10; }
+          .t-ni { position: relative; color: white; font-weight: bold; cursor: pointer; padding: 8px 16px; }
+          .t-nd { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-10px) scale(0.95); margin-top: 16px; background: #18181b; border: 1px solid #3f3f46; border-radius: 12px; padding: 8px; width: 180px; opacity: 0; visibility: hidden; transition: all 0.2s ease; transition-delay: 0.3s; }
+          .t-ni:hover .t-nd { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0) scale(1); transition: all 0.3s cubic-bezier(0, 0, 0.2, 1); transition-delay: 0s; }
+          .t-di { padding: 10px 12px; color: #a1a1aa; border-radius: 6px; font-size: 14px; transition: all 0.2s ease; }
+          .t-di:hover { background: rgba(255, 255, 255, 0.1); color: white; transform: translateX(4px); }
+        </style>
+        <div class="t-nav">
+          <div class="t-ni">Productos
+            <div class="t-nd">
+              <div class="t-di">SaaS Platform</div>
+              <div class="t-di">Mobile App</div>
+              <div class="t-di">API Integrations</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Desafío Final"
+      description="Combina ambos proyectos: Añade el menú de navegación en la parte superior de la interfaz de la tarjeta, creando una dashboard completa y orquestada con animaciones consistentes y profesionales."
+      steps={practiceSteps}
+    />
+  </div>
+
+  <!-- Resumen del capítulo -->
+  <div class="py-6">
+    <h3 class="mb-8 text-center font-medium text-[var(--color-text)]">
+      Lo que aprendiste en este capítulo
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+      {[
+        { prop: '¿Qué son?', desc: 'Conectan estados de manera natural, evitando saltos bruscos' },
+        { prop: 'transition-property', desc: 'Define qué animar. Previene el all para mejor rendimiento' },
+        { prop: 'transition-duration', desc: 'La velocidad ideal. Microinteracciones (150ms-300ms)' },
+        { prop: 'transition-timing-function', desc: 'Personalidad de la curva: linear, ease-in, ease-out, cubic-bezier' },
+        { prop: 'transition-delay', desc: 'Espera intencional para crear secuencias o tolerancia' },
+        { prop: 'Shorthand', desc: 'propiedad, duración, curva y delay en una sola línea limpia' },
+        { prop: 'Coreografía en Hover', desc: 'Animar elementos hijos al interactuar con el contenedor padre' },
+        { prop: 'Focus interactivos', desc: 'Mejorar accesibilidad mediante anillos y animaciones en inputs' },
+        { prop: 'Visibilidad vs Display', desc: 'Usar opacity y visibility, ya que display: none no es animable' },
+        { prop: 'GPU Acceleration', desc: 'Preferir transform y opacity para alcanzar los fluidos 60fps' },
+      ].map((item, index) => (
+        <div class="flex gap-4">
+          <span class="mt-0.5 shrink-0 font-afronaut text-[13px] text-[var(--color-text)]" style="opacity: 0.4 !important;">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <div class="flex flex-col gap-1">
+            <span class="text-[14px] text-white" style="color: white; opacity: 1 !important; font-family: var(--font-afronaut, system-ui, sans-serif); font-weight: 300;">
+              {item.prop}
+            </span>
+            <span class="text-[13px] leading-relaxed text-[var(--dm-light-200)]">
+              {item.desc}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
 </TransitionsLayout>
 
 <script>

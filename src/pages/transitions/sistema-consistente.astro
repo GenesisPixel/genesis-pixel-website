@@ -84,6 +84,10 @@ const practiceSteps = [
     </div>
   </article>
 
+  <div class="not-prose">
+      <ConsejoProfesional tip="Frameworks modernos como Tailwind CSS incluyen un sistema de escalas por defecto (clases como duration-300 o ease-in-out). Usa esos tokens de diseño para no reinventar la rueda." />
+    </div>
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico
   </h3>
@@ -116,11 +120,13 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
-  <div class="my-8 flex flex-col gap-6">
-    <ConsejoProfesional>
-      Frameworks modernos como Tailwind CSS incluyen este sistema por defecto (clases como <code>duration-300</code> o <code>ease-in-out</code>). Usa esos tokens de diseño predefinidos para no reinventar la rueda y mantener tu código limpio.
-    </ConsejoProfesional>
+  
 
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      { label: 'Valores quemados (Hardcoded)', description: 'Escribir 0.28s en diferentes archivos de manera manual. Usa variables para que los cambios sean escalables a nivel de sistema.' },
+      { label: 'Variables excesivamente complejas', description: 'Tener --duration-200, --duration-250, --duration-300. Demasiadas opciones derrotan el propósito del sistema. Limítate a rápido, base y lento.' }
+    ]} />
     <PracticeCards
       title="Practica lo Aprendido"
       description="Audita tu código actual y reemplaza todos los tiempos estáticos por variables CSS."

@@ -95,6 +95,12 @@ const practiceSteps = [
     </p>
   </article>
 
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="El pseudo-selector :focus-within es súper útil. Permite aplicar estilos a un formulario o div padre entero siempre que cualquiera de sus inputs hijos esté enfocado." />
+  </div>
+
+  
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico (Floating Label)
   </h3>
@@ -124,12 +130,13 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
+  
+
   <div class="my-8 flex flex-col gap-6">
     <ErroresComunesV3 errors={[
       { label: 'Usar display: none en etiquetas', description: 'Ocultar las etiquetas (labels) afecta seriamente a los lectores de pantalla y a la accesibilidad. Usa floating labels o déjalas fijas.' },
       { label: 'Focus sin contraste', description: 'Si el color de focus es casi idéntico al color normal, el usuario no sabrá dónde está escribiendo.' }
     ]} />
-
     <PracticeCards
       title="Practica lo Aprendido"
       description="Construye formularios accesibles y con una gran respuesta táctil/visual."

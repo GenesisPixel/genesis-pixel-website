@@ -99,6 +99,12 @@ const practiceSteps = [
     </ul>
   </article>
 
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Los delays negativos (ej. -0.2s) son un truco avanzado: hacen que la transición comience instantáneamente pero saltándose los primeros 0.2 segundos de la animación." />
+  </div>
+
+  
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico (Menú tolerante)
   </h3>
@@ -132,11 +138,12 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
+  
+
   <div class="my-8 flex flex-col gap-6">
     <ErroresComunesV3 errors={[
       { label: 'Delays iniciales demasiado largos', description: 'Si un botón tarda medio segundo en reaccionar cuando le haces hover, el usuario pensará que la página web está colgada.' }
     ]} />
-
     <PracticeCards
       title="Practica lo Aprendido"
       description="Comprende cómo el tiempo de espera puede mejorar la tolerancia a errores de la UI."

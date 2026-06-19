@@ -89,6 +89,8 @@ const practiceSteps = [
 
   </article>
 
+  
+
   <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
     Ejemplo práctico
   </h3>
@@ -110,13 +112,14 @@ const practiceSteps = [
     </ResultPreview>
   </div>
 
+  
+
   <div class="my-8 flex flex-col gap-6">
     <ErroresComunesV3 errors={[
       { label: 'Aplicar la transición en el estado final (:hover)', description: 'La transición debe ir en el selector principal, no en el pseudo-estado. Si la pones en el :hover, el elemento cambiará suave al entrar, pero volverá brusco al salir.' },
       { label: 'Transiciones en todo (* { transition: all })', description: 'Esto arruinará el rendimiento de tu sitio y creará comportamientos inesperados, como transiciones no deseadas al redimensionar la ventana.' },
       { label: 'Tiempos excesivamente largos', description: 'Una interacción UI debe sentirse rápida y responsiva. Duraciones mayores a 0.5s suelen sentirse pesadas y letárgicas.' }
     ]} />
-
     <PracticeCards
       title="Practica lo Aprendido"
       description="Crea tu primer botón interactivo aplicando el concepto de interpolación suave entre el estado normal y hover."
