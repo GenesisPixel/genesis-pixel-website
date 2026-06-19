@@ -7,26 +7,24 @@ import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
 import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../components/PracticeCards.astro';
 
-const htmlCode = `<div class="escena">
-  <div class="tarjeta-magica">
-    <h3>Pasa el ratón</h3>
-  </div>
+const htmlCode = `<div class="contenedor">
+  <h3 class="tarjeta-magica">Pasa el ratón</h3>
 </div>`;
 
 const cssCode = `.tarjeta-magica {
-  background: linear-gradient(135deg, #a855f7, #3b82f6);
-  border-radius: 12px;
-  padding: 24px;
-  color: white;
-  text-align: center;
-  font-family: system-ui, sans-serif;
+  background-color: #9FA6FF;
+  color: var(--color-bg);
+  font-family: var(--font-afronaut, system-ui, sans-serif);
+  font-weight: bold;
+  font-size: 0.8125rem;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 0;
   cursor: pointer;
-  
-  /* Aquí ocurre la magia */
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.4s ease;
 }
 
-/* Transformamos el elemento al interactuar */
 .tarjeta-magica:hover {
   transform: translateY(-10px) rotate(3deg) scale(1.05);
   box-shadow: 0 15px 30px rgba(168, 85, 247, 0.4);
