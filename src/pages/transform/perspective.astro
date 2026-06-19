@@ -11,9 +11,9 @@ const htmlCode = `<!-- La perspectiva va en el padre -->
 <div class="escena-perspectiva">
   <!-- El elemento que se transforma va aquí -->
   <div class="tarjeta-perspectiva">
-    <div class="p-6 text-white text-center">
-      <h4>Perspectiva: 400px</h4>
-      <p>Dramática y cercana</p>
+    <div class="p-6 text-center">
+      <h4 style="color: var(--color-bg)">Perspectiva: 400px</h4>
+      <p style="color: var(--color-bg); opacity: 0.7">Dramática y cercana</p>
     </div>
   </div>
 </div>
@@ -21,9 +21,9 @@ const htmlCode = `<!-- La perspectiva va en el padre -->
 <!-- Comparación con perspectiva distante -->
 <div class="escena-perspectiva-lejana">
   <div class="tarjeta-perspectiva">
-    <div class="p-6 text-white text-center">
-      <h4>Perspectiva: 2000px</h4>
-      <p>Sutil y ortogonal</p>
+    <div class="p-6 text-center">
+      <h4 style="color: var(--color-bg)">Perspectiva: 2000px</h4>
+      <p style="color: var(--color-bg); opacity: 0.7">Sutil y ortogonal</p>
     </div>
   </div>
 </div>`;
@@ -40,10 +40,13 @@ const cssCode = `/* Perspectiva cercana y dramática */
 
 /* El mismo elemento con el mismo rotate */
 .tarjeta-perspectiva {
-  background: linear-gradient(135deg, #a855f7, #3b82f6);
-  border-radius: 12px;
-  
-  /* La misma rotación en ambos casos */
+  background: #9FA6FF;
+  border-radius: 0;
+  padding: 8px 16px;
+  font-family: var(--font-afronaut, system-ui, sans-serif);
+  font-size: 0.8125rem;
+  font-weight: bold;
+  color: var(--color-bg);
   transform: rotateY(25deg);
   transition: transform 0.4s ease;
 }
@@ -51,14 +54,6 @@ const cssCode = `/* Perspectiva cercana y dramática */
 .escena-perspectiva:hover .tarjeta-perspectiva,
 .escena-perspectiva-lejana:hover .tarjeta-perspectiva {
   transform: rotateY(0deg);
-}
-
-/* perspective-origin: controla desde dónde "miras" */
-.escena-con-origen {
-  perspective: 600px;
-  
-  /* El punto de vista está arriba a la derecha */
-  perspective-origin: 80% 20%;
 }`;
 
 const practiceSteps = [
@@ -140,14 +135,14 @@ const practiceSteps = [
       <div class="flex flex-col items-center justify-center gap-6 h-full w-full py-4">
         <div class="escena-p1">
           <div class="tarj-p">
-            <p class="m-0 text-xs font-semibold text-white">300px</p>
-            <p class="m-0 text-[10px] text-white/60">Dramática</p>
+            <p class="m-0 text-xs font-semibold" style="color: var(--color-bg)">300px</p>
+            <p class="m-0 text-[10px] opacity-70" style="color: var(--color-bg)">Dramática</p>
           </div>
         </div>
         <div class="escena-p2">
           <div class="tarj-p">
-            <p class="m-0 text-xs font-semibold text-white">1500px</p>
-            <p class="m-0 text-[10px] text-white/60">Sutil</p>
+            <p class="m-0 text-xs font-semibold" style="color: var(--color-bg)">1500px</p>
+            <p class="m-0 text-[10px] opacity-70" style="color: var(--color-bg)">Sutil</p>
           </div>
         </div>
       </div>
@@ -178,14 +173,18 @@ const practiceSteps = [
   }
 
   .tarj-p {
-    background: linear-gradient(135deg, #a855f7, #3b82f6);
-    border-radius: 8px;
-    padding: 12px 24px;
+    background: #9FA6FF;
+    border-radius: 0;
+    padding: 8px 16px;
     text-align: center;
     transform: rotateY(25deg);
     transition: transform 0.4s ease;
     cursor: pointer;
     min-width: 120px;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    font-size: 0.8125rem;
+    font-weight: bold;
+    color: var(--color-bg);
   }
 
   .escena-p1:hover .tarj-p,
