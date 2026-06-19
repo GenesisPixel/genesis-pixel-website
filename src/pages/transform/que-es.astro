@@ -112,9 +112,7 @@ const practiceSteps = [
     />
     <ResultPreview description="Pasa el ratón sobre la tarjeta. Observa cómo se traslada, rota y escala simultáneamente de forma súper fluida.">
       <div class="flex items-center justify-center h-full w-full">
-        <div class="tarjeta-magica">
-          <h3>Pasa el ratón</h3>
-        </div>
+        <h3 class="tarjeta-magica">Pasa el ratón</h3>
       </div>
     </ResultPreview>
   </div>
@@ -136,25 +134,8 @@ const practiceSteps = [
 
 <style>
   .tarjeta-magica {
-    background: linear-gradient(135deg, #a855f7, #3b82f6);
-    border-radius: 12px;
-    padding: 24px 32px;
-    color: white;
-    text-align: center;
-    font-family: var(--font-afronaut, system-ui, sans-serif);
-    cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  }
-
-  .tarjeta-magica:hover {
-    transform: translateY(-10px) rotate(3deg) scale(1.05);
-    box-shadow: 0 15px 30px rgba(168, 85, 247, 0.4);
-  }
-
-  .tarjeta-magica h3 {
-    background-color: #a855f7;
-    color: #121212;
+    background-color: #9FA6FF;
+    color: var(--color-bg);
     font-family: var(--font-afronaut, system-ui, sans-serif);
     font-weight: bold;
     font-size: 0.8125rem;
@@ -162,6 +143,13 @@ const practiceSteps = [
     border: none;
     border-radius: 0;
     margin: 0;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  }
+
+  .tarjeta-magica:hover {
+    transform: translateY(-10px) rotate(3deg) scale(1.05);
+    box-shadow: 0 15px 30px rgba(168, 85, 247, 0.4);
   }
 </style>
 
