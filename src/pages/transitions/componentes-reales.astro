@@ -150,9 +150,14 @@ const practiceSteps = [
   </div>
 
   <div class="my-8 flex flex-col gap-6">
-    <ConsejoProfesional>
-      Al cerrar un modal, asegúrate de que la transición tenga tiempo suficiente para completarse antes de que cualquier script JS remueva el elemento del DOM. Si usas React o Vue, esto requiere librerías adicionales como Framer Motion.
-    </ConsejoProfesional>
+    <div class="not-prose">
+      <ConsejoProfesional tip="Al cerrar un modal, asegúrate de que la transición tenga tiempo suficiente para completarse antes de que cualquier script JS remueva el elemento del DOM." />
+    </div>
+
+    <ErroresComunesV3 errors={[
+      { label: 'Animar display: none', description: 'display no es animable. Usa opacity + visibility para ocultar componentes sin sacarlos bruscamente de la pantalla.' },
+      { label: 'Bloquear clicks con visibilidad', description: 'Si usas solo opacity: 0, el modal será invisible pero seguirá capturando clics y tapando la página. Usa siempre visibility: hidden junto con opacity.' }
+    ]} />
 
     <PracticeCards
       title="Practica lo Aprendido"
