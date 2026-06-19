@@ -17,46 +17,51 @@ const htmlCode = `<div class="contenedor-botones">
 </div>`;
 
 const cssCode = `.btn-principal {
-  background: #a855f7;
-  color: white;
+  background-color: #9FA6FF;
+  color: var(--color-bg);
   border: none;
-  border-radius: 10px;
-  padding: 14px 28px;
-  font-family: system-ui, sans-serif;
-  font-size: 1rem;
+  border-radius: 0;
+  padding: 8px 16px;
+  font-family: var(--font-afronaut, system-ui, sans-serif);
+  font-size: 0.8125rem;
+  font-weight: bold;
   cursor: pointer;
   
-  /* Transición suave */
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
               box-shadow 0.25s ease;
 }
 
-/* Al hacer hover: el botón crece y se eleva */
 .btn-principal:hover {
   transform: scale(1.06);
-  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
 }
 
-/* Al hacer clic: el botón se comprime (feedback táctil) */
 .btn-principal:active {
   transform: scale(0.97);
   box-shadow: none;
 }
 
-/* Botón de icono que crece de forma uniforme */
 .btn-icono {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background-color: #57B0FB;
+  border: none;
   border-radius: 50%;
-  padding: 12px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  color: white;
+  color: var(--color-bg);
   transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-icono svg {
+  width: 16px;
+  height: 16px;
 }
 
 .btn-icono:hover {
   transform: scale(1.15);
-  color: #f43f5e;
+  color: var(--color-bg);
 }`;
 
 const practiceSteps = [
@@ -169,13 +174,14 @@ const practiceSteps = [
 
 <style>
   .btn-demo-scale {
-    background: #a855f7;
-    color: white;
+    background-color: #9FA6FF;
+    color: var(--color-bg);
     border: none;
-    border-radius: 10px;
-    padding: 14px 28px;
+    border-radius: 0;
+    padding: 8px 16px;
     font-family: var(--font-afronaut, system-ui, sans-serif);
-    font-size: 0.9rem;
+    font-size: 0.8125rem;
+    font-weight: bold;
     cursor: pointer;
     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
                 box-shadow 0.25s ease;
@@ -183,7 +189,6 @@ const practiceSteps = [
 
   .btn-demo-scale:hover {
     transform: scale(1.06);
-    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.45);
   }
 
   .btn-demo-scale:active {
@@ -192,21 +197,26 @@ const practiceSteps = [
   }
 
   .btn-icono-demo {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background-color: #57B0FB;
+    border: none;
     border-radius: 50%;
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: white;
+    color: var(--color-bg);
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+  }
+
+  .btn-icono-demo svg {
+    width: 16px;
+    height: 16px;
   }
 
   .btn-icono-demo:hover {
     transform: scale(1.2);
-    color: #f43f5e;
+    color: var(--color-bg);
   }
 </style>
