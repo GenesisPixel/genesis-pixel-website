@@ -144,9 +144,8 @@ const practiceSteps = [
     cursor: pointer;
   }
 
-  /* Usando una pseudo-clase del contenedor padre para el preview */
-  :global(.preview-container:hover) .demo-sintaxis-box {
-    /* Múltiples transformaciones separadas por espacios */
+  /* Múltiples transformaciones separadas por espacios al hacer hover */
+  .demo-sintaxis-box:hover {
     transform: translateY(-20px) scale(1.2) rotate(15deg);
     box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
   }

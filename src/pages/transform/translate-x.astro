@@ -7,24 +7,43 @@ import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
 import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../components/PracticeCards.astro';
 
-const htmlCode = `<div class="notificacion">
-  <div class="icono-check">✓</div>
-  <p>Pago procesado con éxito</p>
+const htmlCode = `<div class="contenedor-demo">
+  <span class="texto-instruccion">Pase el cursor por acá</span>
+  <button class="btn-transform-x">Transform X</button>
 </div>`;
 
-const cssCode = `.notificacion {
+const cssCode = `.contenedor-demo {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 0;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.2);
-  padding: 16px 24px;
-  border-radius: 12px;
-  color: white;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.texto-instruccion {
+  color: rgba(255, 255, 255, 0.4);
   font-family: system-ui, sans-serif;
+  font-size: 14px;
+}
+
+.btn-transform-x {
+  position: absolute;
+  right: 20px;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #a855f7;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-family: system-ui, sans-serif;
+  cursor: pointer;
   
   /* Estado inicial: Escondido a la derecha (fuera de pantalla) */
-  transform: translateX(100%);
+  transform: translateX(120%);
   opacity: 0;
   
   /* Animamos tanto el movimiento como la opacidad */
@@ -33,21 +52,9 @@ const cssCode = `.notificacion {
 }
 
 /* Al pasar el ratón por el contenedor (simulando que aparece) */
-.contenedor-demo:hover .notificacion {
+.contenedor-demo:hover .btn-transform-x {
   transform: translateX(0);
   opacity: 1;
-}
-
-.icono-check {
-  background: #22c55e;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
 }`;
 
 const practiceSteps = [
@@ -126,12 +133,10 @@ const practiceSteps = [
         { id: 'css', label: 'CSS', code: cssCode },
       ]}
     />
-    <ResultPreview description="Pasa el ratón sobre el área punteada. Simulamos una notificación que entra a la pantalla usando translateX(100%) a translateX(0) con un efecto de rebote (cubic-bezier).">
+    <ResultPreview description="Pasa el ratón sobre el área punteada. Simulamos un botón que entra a la pantalla usando translateX(120%) a translateX(0) con un efecto de rebote (cubic-bezier).">
       <div class="flex items-center justify-center h-full w-full overflow-hidden contenedor-demo relative">
-        <div class="notificacion-demo">
-          <div class="icono-check">✓</div>
-          <p class="m-0 text-sm font-medium">Pago procesado con éxito</p>
-        </div>
+        <span class="text-white/40 text-sm font-medium">Pase el cursor por acá</span>
+        <button class="btn-transform-x">Transform X</button>
       </div>
     </ResultPreview>
   </div>
@@ -155,21 +160,22 @@ const practiceSteps = [
     position: relative;
     width: 100%;
     height: 100%;
+    min-height: 250px;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 0;
   }
 
-  .notificacion-demo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid rgba(34, 197, 94, 0.2);
-    padding: 16px 24px;
-    border-radius: 12px;
-    color: white;
-    font-family: var(--font-afronaut, system-ui, sans-serif);
-    
+  .btn-transform-x {
     position: absolute;
     right: 20px;
+    background-color: #9FA6FF;
+    color: var(--color-bg);
+    border: none;
+    border-radius: 0;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-family: var(--font-afronaut, system-ui, sans-serif);
+    cursor: pointer;
     
     /* Estado inicial: Escondido a la derecha */
     transform: translateX(120%);
@@ -179,22 +185,9 @@ const practiceSteps = [
   }
 
   /* Hover en cualquier parte del contenedor simulando la entrada */
-  :global(.preview-container:hover) .notificacion-demo {
+  .contenedor-demo:hover .btn-transform-x {
     transform: translateX(0);
     opacity: 1;
-  }
-
-  .icono-check {
-    background: #22c55e;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    color: #121212;
   }
 </style>
 
