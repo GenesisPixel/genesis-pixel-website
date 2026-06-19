@@ -1,0 +1,143 @@
+---
+import InteractionsLayout from '../../layouts/InteractionsLayout.astro';
+import TabbedCodeBlock from '../../components/TabbedCodeBlock.astro';
+import ResultPreview from '../../components/ResultPreview.astro';
+import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
+import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
+import PracticeCards from '../../components/PracticeCards.astro';
+
+const codeFiles = [
+  {
+    name: "index.html",
+    language: "html",
+    icon: "html",
+    content: `<div class="system-demo">
+  <button class="sys-btn sys-primary">Botón A</button>
+  <button class="sys-btn sys-secondary">Botón B</button>
+  <div class="sys-card">Card que sigue las mismas reglas</div>
+</div>`
+  },
+  {
+    name: "styles.css",
+    language: "css",
+    icon: "css",
+    content: `:root {
+  /* Motion Tokens */
+  --t-fast: 0.15s;
+  --t-base: 0.3s;
+  --ease-snappy: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --hover-lift: translateY(-4px);
+  --active-press: scale(0.95);
+}
+
+.system-demo {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Clases base que consumen los tokens */
+.sys-btn, .sys-card {
+  transition: transform var(--t-fast) var(--ease-snappy),
+              box-shadow var(--t-base) var(--ease-smooth),
+              background var(--t-fast) ease;
+}
+
+.sys-btn {
+  padding: 12px 24px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; color: white;
+}
+.sys-primary { background: #3b82f6; }
+.sys-secondary { background: #10b981; }
+
+.sys-card {
+  padding: 24px; background: #1e293b; border-radius: 12px; border: 1px solid #333; color: white; cursor: pointer;
+}
+
+/* Mismo comportamiento interactivo en distintos componentes */
+.sys-btn:hover, .sys-card:hover {
+  transform: var(--hover-lift);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.sys-btn:active, .sys-card:active {
+  transform: var(--active-press);
+}`
+  }
+];
+
+const practiceSteps = [
+      {
+        title: "Cambia el Token",
+        description: "Modifica --ease-snappy a un valor extremo como cubic-bezier(0.68, -0.55, 0.265, 1.55) en :root y observa cómo todos los componentes heredan este rebote exagerado a la vez."
+      },
+      {
+        title: "Añade token de opacidad",
+        description: "Crea un token --hover-opacity: 0.8; y aplícalo de manera consistente en los estados :active de los componentes."
+      }
+    ];
+---
+
+<InteractionsLayout
+  title="Sistemas consistentes - Genesis Pixel"
+  currentLesson="/interactions/sistemas-consistentes"
+  nextLesson={{ title: 'Interacciones combinadas', href: '/interactions/interacciones-combinadas' }}
+>
+  <div class="mb-12">
+    <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--dm-green-500)]/30 bg-[var(--dm-green-500)]/10 px-3 py-1 text-sm text-[var(--dm-green-500)]">
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+      Interactions
+    </div>
+    <h1 class="font-afronaut text-4xl font-light text-[var(--color-text)] md:text-5xl lg:text-6xl">
+      Sistemas consistentes
+    </h1>
+    <p class="mt-4 text-xl text-[var(--dm-light-300)]">
+      Descubre cómo dar vida a tus interfaces.
+    </p>
+  </div>
+
+  <article class="prose prose-invert max-w-none">
+    
+      <h2>Orquestación de la UI</h2>
+      <p>Un producto se siente barato si un botón rebota con un <em>bounce</em> exagerado, pero el siguiente botón simplemente se desvanece de forma aburrida. La consistencia interactiva es tan importante como la consistencia en tu paleta de colores o tipografía.</p>
+      <p>Un sistema de interacciones define <strong>Motion Tokens</strong> (Variables CSS). Defines tus curvas de animación globales, duraciones base, y escalas de hover para que cada componente hable el mismo lenguaje físico.</p>
+    
+  </article>
+
+  <div class="my-8 not-prose">
+    <ConsejoProfesional tip="Crea 3 variables globales en el root: --duration-fast (150ms) para hovers, --duration-base (300ms) para modales/drowpdowns, y --ease-spring para rebotes orgánicos. Úsalas en todos tus componentes." />
+  </div>
+
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    Usando CSS Variables para Motion Consistente
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock files={codeFiles} />
+    <ResultPreview />
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <ErroresComunesV3 errors={[
+      {
+        title: "Magic numbers por todas partes",
+        description: "Escribir 'transition: all 0.2s ease' manualmente en 50 componentes distintos. Si mañana decides que la app sea más 'snappy', tendrás que cambiar 50 archivos."
+      },
+      {
+        title: "Múltiples personalidades",
+        description: "Mezclar curvas de Material Design (ease-in-out) con curvas elásticas de iOS en la misma interfaz."
+      }
+    ]} />
+    <PracticeCards steps={practiceSteps} />
+  </div>
+</InteractionsLayout>
+
+<script>
+  import { initCodeInteractions } from '../../scripts/code-interactions';
+  document.addEventListener('astro:page-load', () => {
+    initCodeInteractions();
+  });
+</script>
