@@ -84,8 +84,13 @@ const practiceSteps = [
     <p>
       El orden matemático en el que CSS aplica las transformaciones es de derecha a izquierda (aunque visualmente se lean de izquierda a derecha). Esto significa que en:
     </p>
-    <div class="p-4 bg-white/5 rounded-lg border border-white/10 my-4 font-mono text-sm text-[var(--dm-light-200)]">
-      transform: translateX(50px) rotate(45deg);
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="multiples-orden"
+        tabs={[
+          { id: 'css', label: 'CSS', code: `transform: translateX(50px) rotate(45deg);` },
+        ]}
+      />
     </div>
     <p>
       Primero se aplica el <code>rotate(45deg)</code> y luego el <code>translateX(50px)</code>. Pero como el elemento ya fue rotado, su eje X ya no apunta a la derecha original de la pantalla, sino a la dirección en la que apunta el elemento rotado. Esto puede resultar en movimientos inesperados.

@@ -86,14 +86,20 @@ const practiceSteps = [
     <p>
       Cuando aplicas <code>skewX(-10deg)</code> a un div, todo su contenido también se inclina: el texto, las imágenes, los botones. Si quieres que el "marco" esté inclinado pero el contenido interior se vea recto (como en los banners de las tiendas de moda), necesitas aplicar la transformación inversa al contenedor del contenido:
     </p>
-    <div class="p-4 bg-white/5 rounded-lg border border-white/10 my-4 font-mono text-sm text-[var(--dm-light-200)]">
-      .seccion-inclinada {"{"}
-      <br/>&nbsp;&nbsp;transform: skewX(-10deg);<br/>
-      {"}"}<br/><br/>
-      .seccion-inclinada .contenido {"{"}
-      <br/>&nbsp;&nbsp;<span class="text-green-400">/* El valor opuesto cancela el skew del padre */</span><br/>
-      &nbsp;&nbsp;transform: skewX(10deg);<br/>
-      {"}"}
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="skew-compensado"
+        tabs={[
+          { id: 'css', label: 'CSS', code: `.seccion-inclinada {
+  transform: skewX(-10deg);
+}
+
+.seccion-inclinada .contenido {
+  /* El valor opuesto cancela el skew del padre */
+  transform: skewX(10deg);
+}` },
+        ]}
+      />
     </div>
 
     <h3>Separadores de sección: el uso más frecuente</h3>

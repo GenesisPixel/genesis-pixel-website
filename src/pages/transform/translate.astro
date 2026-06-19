@@ -94,10 +94,15 @@ const practiceSteps = [
     <p>
       <code>translate(x, y)</code> es simplemente una versión combinada de <code>translateX()</code> y <code>translateY()</code> en una sola función. El primer valor controla el eje horizontal y el segundo el vertical:
     </p>
-    <div class="p-4 bg-white/5 rounded-lg border border-white/10 my-4 font-mono text-sm text-[var(--dm-light-200)]">
-      <span class="text-[var(--color-text)]">/* Equivalencias exactas */</span><br/>
-      transform: translate(50px, 30px);<br/>
-      <span class="opacity-50">/* = translateX(50px) translateY(30px) */</span>
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="translate-equiv"
+        tabs={[
+          { id: 'css', label: 'CSS', code: `/* Equivalencias exactas */
+transform: translate(50px, 30px);
+/* = translateX(50px) translateY(30px) */` },
+        ]}
+      />
     </div>
 
     <h3>El truco del centrado perfecto</h3>
@@ -110,13 +115,18 @@ const practiceSteps = [
     <p>
       Si añades <code>transform: translate(-50%, -50%)</code>, el elemento se mueve hacia la izquierda un 50% de <strong>su propio ancho</strong> y hacia arriba un 50% de <strong>su propia altura</strong>. Como recordarás, los porcentajes en <code>transform</code> son relativos al propio elemento, no al padre. Esto lo coloca perfectamente centrado, sin importar cuánto mida.
     </p>
-    <div class="p-4 bg-white/5 rounded-lg border border-white/10 my-4 font-mono text-sm text-[var(--dm-light-200)]">
-      .elemento-centrado {"{"}
-      <br/>&nbsp;&nbsp;position: absolute;<br/>
-      &nbsp;&nbsp;top: 50%;<br/>
-      &nbsp;&nbsp;left: 50%;<br/>
-      &nbsp;&nbsp;<span class="text-green-400">transform: translate(-50%, -50%);</span> <span class="opacity-50">/* La clave */</span><br/>
-      {"}"}
+    <div class="my-6">
+      <TabbedCodeBlock
+        group="translate-centro"
+        tabs={[
+          { id: 'css', label: 'CSS', code: `.elemento-centrado {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* La clave */
+}` },
+        ]}
+      />
     </div>
 
     <h3>Tooltips: el caso de uso más común</h3>
