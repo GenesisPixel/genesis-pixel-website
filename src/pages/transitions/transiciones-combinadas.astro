@@ -8,7 +8,7 @@ import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../components/PracticeCards.astro';
 
 const htmlCode = `<button class="download-btn">
-  <span class="icon">↓</span>
+  <span class="icon">⬇</span>
   Descargar
 </button>`;
 
@@ -17,12 +17,13 @@ const cssCode = `.download-btn {
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: #8b5cf6;
-  color: white;
+  background: #a855f7;
+  color: #0f172a;
   border: none;
-  border-radius: 8px;
+  border-radius: 0;
   cursor: pointer;
   font-weight: bold;
+  font-family: 'afronaut', serif;
   
   /* Transicionamos el color de fondo y una ligera elevación */
   transition: transform 0.2s ease, background 0.2s ease;
@@ -35,7 +36,7 @@ const cssCode = `.download-btn {
 }
 
 .download-btn:hover {
-  background: #7c3aed;
+  background: #06b6d4;
   transform: translateY(-2px);
 }
 
@@ -105,13 +106,13 @@ const practiceSteps = [
     <ResultPreview description="Haz hover. El botón sube ligeramente de forma rápida. Sin embargo, la flecha de descarga baja bruscamente y rebota con una curva elástica.">
       <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
         <style>
-          .t-down-btn { display: flex; align-items: center; gap: 8px; padding: 12px 24px; background: #8b5cf6; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: system-ui, sans-serif; transition: transform 0.2s ease, background 0.2s ease; font-size: 16px; }
+          .t-down-btn { display: flex; align-items: center; gap: 8px; padding: 12px 24px; background: #a855f7; color: #0f172a; border: none; border-radius: 0; cursor: pointer; font-weight: bold; font-family: 'afronaut', serif; transition: transform 0.2s ease, background 0.2s ease; font-size: 16px; }
           .t-down-icon { display: inline-block; font-size: 18px; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-          .t-down-btn:hover { background: #7c3aed; transform: translateY(-2px); }
+          .t-down-btn:hover { background: #06b6d4; transform: translateY(-2px); }
           .t-down-btn:hover .t-down-icon { transform: translateY(4px); }
         </style>
         <button class="t-down-btn">
-          <span class="t-down-icon">↓</span>
+          <span class="t-down-icon">⬇</span>
           Descargar
         </button>
       </div>
