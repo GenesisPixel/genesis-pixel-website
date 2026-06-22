@@ -8,25 +8,25 @@ import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../components/PracticeCards.astro';
 
 const htmlCode = `<div class="bad-example">
-  Este es un error común
+  Hover Me!
 </div>`;
 
 const cssCode = `.bad-example {
   width: 200px;
   height: 50px;
-  background: #f43f5e;
-  border-radius: 8px;
+  background: #a855f7;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #0f172a;
   font-weight: bold;
+  font-family: 'afronaut', serif;
 }
 
 /* ERROR: La transición solo se definió en el :hover */
 .bad-example:hover {
   transform: scale(1.1);
-  background: #e11d48;
   transition: all 0.5s ease;
 }`;
 
@@ -98,8 +98,8 @@ const practiceSteps = [
     <ResultPreview description="Pasa el cursor por el botón rojo. Entrará suavemente (0.5s). Pero al retirar el cursor... ¡Regresará de golpe! La transición solo existía en el hover.">
       <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
         <style>
-          .t-bad { width: 200px; height: 50px; background: #f43f5e; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-family: system-ui, sans-serif; cursor: pointer; }
-          .t-bad:hover { transform: scale(1.1); background: #e11d48; transition: all 0.5s ease; }
+          .t-bad { width: 200px; height: 50px; background: #a855f7; border-radius: 0; display: flex; align-items: center; justify-content: center; color: #0f172a; font-weight: bold; font-family: 'afronaut', serif; cursor: pointer; }
+          .t-bad:hover { transform: scale(1.1); transition: all 0.5s ease; }
         </style>
         <div class="t-bad">Hover Me!</div>
       </div>
