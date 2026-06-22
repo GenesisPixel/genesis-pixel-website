@@ -13,12 +13,12 @@ const htmlCode = `<button class="btn">
 
 const cssCode = `.btn {
   background-color: #a855f7;
-  color: #121212;
+  color: var(--color-bg);
   font-family: system-ui, sans-serif;
   font-weight: bold;
   padding: 12px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 0;
   cursor: pointer;
   
   /* Estado inicial y transición */
@@ -131,13 +131,13 @@ const practiceSteps = [
 <style>
   .btn {
     background-color: #a855f7;
-    color: #121212;
+    color: var(--color-bg);
     font-family: var(--font-afronaut, system-ui, sans-serif);
     font-weight: bold;
     font-size: 0.8125rem;
     padding: 12px 24px;
     border: none;
-    border-radius: 8px;
+    border-radius: 0;
     cursor: pointer;
     
     /* Transición */
