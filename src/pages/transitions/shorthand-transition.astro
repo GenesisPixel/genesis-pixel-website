@@ -67,8 +67,8 @@ const practiceSteps = [
     <p>
       Aunque el navegador es bastante flexible interpretando el shorthand, existe un orden estándar y recomendado que la comunidad adopta:
     </p>
-    <div class="bg-black/30 p-4 rounded-lg my-6 font-mono text-center text-sm border border-white/10">
-      transition: [propiedad] [duración] [curva] [retraso];
+    <div class="my-6">
+      <TabbedCodeBlock group="shorthand-order" tabs={[{ id: 'css', label: 'CSS', code: `transition: [propiedad] [duración] [curva] [retraso];` }]} />
     </div>
 
     <p>Ejemplo: <code>transition: background-color 0.3s ease-out 0.1s;</code></p>
@@ -83,8 +83,8 @@ const practiceSteps = [
     <p>
       ¿Qué pasa si quieres animar el color en 0.2s pero la posición en 0.5s? Usas una coma. Es como escribir múltiples shorthands en una sola línea:
     </p>
-    <div class="bg-black/30 p-4 rounded-lg my-4 font-mono text-sm border border-white/10">
-      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.2s ease-in;
+    <div class="my-4">
+      <TabbedCodeBlock group="shorthand-multi" tabs={[{ id: 'css', label: 'CSS', code: `transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.2s ease-in;` }]} />
     </div>
   </article>
 
