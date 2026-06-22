@@ -19,11 +19,12 @@ const htmlCode = `<div class="menu">
 const cssCode = `.menu {
   position: relative;
   padding: 12px 24px;
-  background: #27272a;
-  border-radius: 8px;
-  color: white;
+  background: #a855f7;
+  border-radius: 0;
+  color: #0f172a;
   cursor: pointer;
   font-weight: bold;
+  font-family: 'afronaut', serif;
 }
 
 .dropdown {
@@ -32,21 +33,29 @@ const cssCode = `.menu {
   left: 0;
   margin-top: 8px;
   background: #18181b;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 8px;
   opacity: 0;
   transform: translateY(-10px);
   visibility: hidden;
-  /* Retrasamos la salida para que no se cierre accidentalmente */
   transition: all 0.3s ease;
   transition-delay: 0.5s; 
+}
+
+.item {
+  padding: 8px 16px;
+  background: #a855f7;
+  border-radius: 0;
+  color: #0f172a;
+  font-family: 'afronaut', serif;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .menu:hover .dropdown {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
-  /* Al entrar, el delay es 0 para que abra rápido */
   transition-delay: 0s; 
 }`;
 
@@ -120,9 +129,9 @@ const practiceSteps = [
     <ResultPreview description="Pasa el cursor. El menú se abre al instante (delay 0s). Al quitar el cursor, espera medio segundo antes de cerrarse (delay 0.5s). ¡Esto perdona errores de puntería del usuario!">
       <div style="display: flex; justify-content: center; height: 100%; align-items: start; padding-top: 30px;">
         <style>
-          .t-menu { position: relative; padding: 12px 24px; background: #27272a; border-radius: 8px; color: white; cursor: pointer; font-weight: bold; font-family: system-ui, sans-serif; }
-          .t-dropdown { position: absolute; top: 100%; left: 0; margin-top: 8px; background: #18181b; border-radius: 8px; padding: 8px; width: 150px; opacity: 0; transform: translateY(-10px); visibility: hidden; transition: all 0.3s ease; transition-delay: 0.5s; border: 1px solid rgba(255,255,255,0.1); }
-          .t-item { padding: 8px; color: #a1a1aa; font-size: 14px; }
+          .t-menu { position: relative; padding: 12px 24px; background: #a855f7; border-radius: 0; color: #0f172a; cursor: pointer; font-weight: bold; font-family: 'afronaut', serif; }
+          .t-dropdown { position: absolute; top: 100%; left: 0; margin-top: 8px; background: #18181b; border-radius: 0; padding: 8px; width: 150px; opacity: 0; transform: translateY(-10px); visibility: hidden; transition: all 0.3s ease; transition-delay: 0.5s; border: 1px solid rgba(255,255,255,0.1); }
+          .t-item { padding: 8px 16px; background: #a855f7; border-radius: 0; color: #0f172a; font-family: 'afronaut', serif; font-weight: bold; cursor: pointer; }
           .t-item:hover { color: white; background: rgba(255,255,255,0.05); border-radius: 4px; }
           .t-menu:hover .t-dropdown { opacity: 1; transform: translateY(0); visibility: visible; transition-delay: 0s; }
         </style>
