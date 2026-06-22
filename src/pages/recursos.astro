@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 import Container from '../components/Container.astro';
+import Hero from '../components/Hero.astro';
 
 const resources = [
   {
@@ -36,14 +37,11 @@ const resources = [
 
 <Layout title="Recursos - GenesisPixel">
   <main class="pb-24 pt-24">
+    <Hero
+      title="Recursos"
+      description="Herramientas, documentación y recursos recomendados para tu aprendizaje."
+    />
     <Container>
-      <div class="mb-12">
-        <h1 class="font-afronaut text-4xl font-light text-[var(--color-text)] sm:text-5xl">Recursos</h1>
-        <p class="mt-4 text-lg text-[var(--dm-light-300)]">
-          Herramientas, documentación y recursos recomendados para tu aprendizaje.
-        </p>
-      </div>
-
       <div class="space-y-12">
         {resources.map((section) => (
           <section>
