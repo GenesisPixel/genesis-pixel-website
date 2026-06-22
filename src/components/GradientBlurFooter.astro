@@ -1,31 +1,111 @@
 ---
 ---
+
 <div class="gradient-blur-footer-container" id="footer-gradient-container">
-  <div class="content--canvas gradient-blur-wrapper"></div>
+  <div class="footer-canvas-wrapper"></div>
   <div class="gradient-overlay"></div>
 </div>
 
-<script is:inline src="/js/noise.min.js"></script>
-<script is:inline src="/js/util.js"></script>
-<script is:inline src="/js/shift.js"></script>
-
-<script>
+<script is:inline>
   function initFooterGradient() {
-    // We need to temporarily make the footer container the only '.content--canvas' 
-    // because shift.js uses document.querySelector('.content--canvas')
-    const heroCanvas = document.querySelector('.gradient-blur-container .content--canvas');
-    if (heroCanvas) heroCanvas.style.display = 'none';
+    const container = document.getElementById('footer-gradient-container');
+    const wrapper = container?.querySelector('.footer-canvas-wrapper');
+    if (!wrapper) return;
 
-    if (typeof setup === 'function') {
-      setup();
+    // Remove any existing canvas
+    const existing = wrapper.querySelector('canvas');
+    if (existing) existing.remove();
+
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block;';
+    wrapper.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let animationId;
+    let hue = 220;
+    const particles = [];
+    const particleCount = 60;
+
+    function resize() {
+      const rect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    if (heroCanvas) heroCanvas.style.display = 'block';
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(createParticle());
+    }
+
+    function createParticle() {
+      const rect = container.getBoundingClientRect();
+      return {
+        x: Math.random() * rect.width,
+        y: Math.random() * rect.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: 30 + Math.random() * 120,
+        hue: hue + (Math.random() - 0.5) * 60,
+        life: 0,
+        ttl: 100 + Math.random() * 200,
+        alpha: 0
+      };
+    }
+
+    function draw() {
+      const rect = container.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'screen';
+      hue++;
+
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life++;
+        p.alpha = Math.min(p.life / 30, 1) * Math.max(1 - p.life / p.ttl, 0);
+
+        if (p.life > p.ttl || p.x < -p.radius || p.x > w + p.radius || p.y < -p.radius || p.y > h + p.radius) {
+          Object.assign(p, createParticle());
+        }
+
+        if (p.alpha > 0) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius * (1 - p.life / p.ttl * 0.5), 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${p.hue}, 60%, 30%, ${p.alpha * 0.15})`;
+          ctx.fill();
+        }
+      }
+
+      // Self-blur: draw canvas onto itself with blur filter
+      ctx.filter = 'blur(50px)';
+      ctx.drawImage(canvas, 0, 0);
+      ctx.filter = 'none';
+
+      animationId = requestAnimationFrame(draw);
+    }
+
+    resize();
+    draw();
+
+    const resizeObserver = new ResizeObserver(() => resize());
+    resizeObserver.observe(container);
+
+    document.addEventListener('astro:before-swap', () => {
+      if (animationId) cancelAnimationFrame(animationId);
+      resizeObserver.disconnect();
+    });
   }
 
   document.addEventListener('astro:page-load', initFooterGradient);
-  // Also call it immediately in case it's already loaded
-  initFooterGradient();
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initFooterGradient();
+  }
 </script>
 
 <style>
@@ -40,7 +120,10 @@
     overflow: hidden;
   }
 
-  .gradient-blur-wrapper {
+  .footer-canvas-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
   }
@@ -53,15 +136,5 @@
     height: 100%;
     background: linear-gradient(to bottom, transparent 0%, hsla(160, 23%, 18%, 0.3) 50%, var(--color-bg) 100%);
     z-index: 5;
-  }
-
-  :global(.content--canvas canvas) {
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-    z-index: 1;
   }
 </style>
