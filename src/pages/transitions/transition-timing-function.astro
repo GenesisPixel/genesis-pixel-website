@@ -22,24 +22,24 @@ const cssCode = `.race:hover .box {
 .box {
   width: 100px;
   height: 40px;
-  background: #10b981;
-  border-radius: 8px;
+  border-radius: 0;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #0f172a;
   font-weight: bold;
+  font-family: 'afronaut', serif;
   font-size: 12px;
   /* Todos duran exactamente 1 segundo */
   transition: transform 1s;
 }
 
-.linear { transition-timing-function: linear; }
-.ease { transition-timing-function: ease; }
-.ease-in { transition-timing-function: ease-in; }
-.ease-out { transition-timing-function: ease-out; }
-.bouncy { transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55); }`;
+.linear { background: #9FA6FF; transition-timing-function: linear; }
+.ease { background: #56C288; transition-timing-function: ease; }
+.ease-in { background: #FDD88E; transition-timing-function: ease-in; }
+.ease-out { background: #57B0FB; transition-timing-function: ease-out; }
+.bouncy { background: #FC5D7D; transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55); }`;
 
 const practiceSteps = [
   { number: 1, text: 'Prueba la diferencia entre ease-in (acelerar) y ease-out (desacelerar).', color: 'dm-purple', rotate: '10deg' },
