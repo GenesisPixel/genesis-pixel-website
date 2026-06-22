@@ -105,9 +105,11 @@ const practiceSteps = [
     />
     <ResultPreview description="Pasa el cursor sobre el botón. Nota cómo se eleva, cambia de color y la sombra se expande de manera suave, no abrupta.">
       <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-        <button class="btn">
-          Pasa el cursor
-        </button>
+        <div class="btn-container" style="cursor: pointer;">
+          <button class="btn">
+            Pasa el cursor
+          </button>
+        </div>
       </div>
     </ResultPreview>
   </div>
@@ -146,7 +148,7 @@ const practiceSteps = [
     transition: all 0.3s ease;
   }
 
-  .btn:hover {
+  .btn-container:hover .btn {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4);
     background-color: #c084fc;
