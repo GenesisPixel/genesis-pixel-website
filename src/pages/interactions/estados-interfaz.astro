@@ -11,35 +11,38 @@ const htmlCode = `<button class="state-btn">Estado Normal</button>
 <button class="state-btn" disabled>Estado Disabled</button>`;
 
 const cssCode = `.state-btn {
+  display: block;
+  width: 100%;
   padding: 12px 28px;
-  background: #2563eb;
-  color: white;
+  background: #a855f7;
+  color: #0f172a;
   font-weight: 600;
-  border: 2px solid transparent;
-  border-radius: 8px;
+  font-family: 'afronaut', serif;
+  border: none;
+  border-radius: 0;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .state-btn:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: #9333ea;
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.4);
 }
 
 .state-btn:active:not(:disabled) {
   transform: translateY(1px);
-  box-shadow: 0 5px 5px -3px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 5px 5px -3px rgba(168, 85, 247, 0.4);
 }
 
 .state-btn:focus-visible {
   outline: none;
-  border-color: #93c5fd;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.3);
+  border-color: #c084fc;
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.3);
 }
 
 .state-btn:disabled {
-  background: #475569;
+  background: hsla(158, 23%, 18%, 1);
   color: #94a3b8;
   cursor: not-allowed;
   opacity: 0.7;
@@ -128,7 +131,7 @@ const practiceSteps = [
     />
     <ResultPreview description="Interactúa con los botones (hover, click, y navega con Tab) para ver sus estados.">
       <div class="flex items-center justify-center h-full w-full">
-        <div style="display:flex; gap:16px;">
+        <div style="display:flex; flex-direction:column; gap:16px; width:200px;">
   <button class="state-btn-p">Estado Normal</button>
   <button class="state-btn-p" disabled>Estado Disabled</button>
 </div>
@@ -156,33 +159,36 @@ const practiceSteps = [
   </div>
 </InteractionsLayout>
 
-<style>
+<style is:global>
 .state-btn-p {
+  display: block;
+  width: 100%;
   padding: 12px 28px;
-  background: #2563eb;
-  color: white;
+  background: #a855f7;
+  color: #0f172a;
   font-weight: 600;
-  border: 2px solid transparent;
-  border-radius: 8px;
+  font-family: 'afronaut', serif;
+  border: none;
+  border-radius: 0;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .state-btn-p:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: #9333ea;
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.4);
 }
 
 .state-btn-p:active:not(:disabled) {
   transform: translateY(1px);
-  box-shadow: 0 5px 5px -3px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 5px 5px -3px rgba(168, 85, 247, 0.4);
 }
 
 .state-btn-p:focus-visible {
   outline: none;
-  border-color: #93c5fd;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.3);
+  border-color: #c084fc;
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.3);
 }
 
 .state-btn-p:disabled {
