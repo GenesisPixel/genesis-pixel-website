@@ -10,9 +10,12 @@ import PracticeCards from '../../components/PracticeCards.astro';
 const htmlCode = `<div class="card-gpu">GPU (Rápido)</div>
 <div class="card-cpu">CPU (Lento)</div>`;
 
-const cssCode = `/* 🔥 OPTIMIZADO - Usa la Tarjeta Gráfica (GPU) */
+const cssCode = `/* OPTIMIZADO - Usa la Tarjeta Gráfica (GPU) */
 .card-gpu {
-  background: #10b981;
+  background: #a855f7;
+  color: #0f172a;
+  border-radius: 0;
+  font-family: 'afronaut', serif;
   transition: transform 0.3s ease;
 }
 
@@ -20,9 +23,12 @@ const cssCode = `/* 🔥 OPTIMIZADO - Usa la Tarjeta Gráfica (GPU) */
   transform: translateX(50px);
 }
 
-/* 🐢 NO OPTIMIZADO - Forza recálculo del layout (CPU) */
+/* NO OPTIMIZADO - Forza recálculo del layout (CPU) */
 .card-cpu {
-  background: #f59e0b;
+  background: #a855f7;
+  color: #0f172a;
+  border-radius: 0;
+  font-family: 'afronaut', serif;
   position: relative;
   transition: left 0.3s ease;
   left: 0;
@@ -102,10 +108,10 @@ const practiceSteps = [
     <ResultPreview description="Aunque el resultado visual parece idéntico, por debajo ocurren cosas distintas. El primero se procesa en la tarjeta de video. El segundo hace trabajar a la CPU del dispositivo.">
       <div style="display: flex; flex-direction: column; gap: 16px; justify-content: center; height: 100%; padding: 20px;">
         <style>
-          .t-perf-card { width: 150px; padding: 12px; border-radius: 8px; color: white; font-weight: bold; text-align: center; font-family: system-ui, sans-serif; cursor: pointer; }
-          .t-gpu { background: #10b981; transition: transform 0.3s ease; }
+          .t-perf-card { width: 150px; padding: 12px; border-radius: 0; color: #0f172a; font-weight: bold; text-align: center; font-family: 'afronaut', serif; cursor: pointer; }
+          .t-gpu { background: #a855f7; transition: transform 0.3s ease; }
           .t-gpu:hover { transform: translateX(50px); }
-          .t-cpu { background: #f59e0b; position: relative; transition: left 0.3s ease; left: 0; }
+          .t-cpu { background: #3b82f6; position: relative; transition: left 0.3s ease; left: 0; }
           .t-cpu:hover { left: 50px; }
         </style>
         <div class="t-perf-card t-gpu">GPU (Rápido)</div>
