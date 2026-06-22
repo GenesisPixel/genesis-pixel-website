@@ -19,7 +19,7 @@ const htmlCode = `<div class="card">
 const cssCode = `.card {
   width: 280px;
   background: #27272a;
-  border-radius: 16px;
+  border-radius: 0;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -27,12 +27,20 @@ const cssCode = `.card {
 
 .card-image {
   height: 140px;
-  background: linear-gradient(45deg, #f43f5e, #8b5cf6);
+  background: linear-gradient(45deg, #9FA6FF, #57B0FB);
   transition: transform 0.6s ease;
 }
 
 .card-content {
   padding: 20px;
+}
+
+.card-title {
+  margin: 0 0 8px 0;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'afronaut', serif;
 }
 
 .card-desc {
@@ -45,16 +53,17 @@ const cssCode = `.card {
 .card-btn {
   margin-top: 16px;
   padding: 8px 16px;
-  background: transparent;
-  color: #8b5cf6;
-  border: 1px solid #8b5cf6;
-  border-radius: 6px;
+  background: #a855f7;
+  color: #0f172a;
+  border: none;
+  border-radius: 0;
+  font-weight: bold;
+  font-family: 'afronaut', serif;
   opacity: 0;
   transform: translateY(10px);
   transition: all 0.3s ease;
 }
 
-/* La magia ocurre al hacer hover sobre el contenedor principal */
 .card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
@@ -71,9 +80,9 @@ const cssCode = `.card {
 .card:hover .card-btn {
   opacity: 1;
   transform: translateY(0);
-  background: #8b5cf6;
-  color: white;
-  transition-delay: 0.1s; /* Un toque de coreografía */
+  background: #c084fc;
+  color: #0f172a;
+  transition-delay: 0.1s;
 }`;
 
 const practiceSteps = [
@@ -148,17 +157,17 @@ const practiceSteps = [
     <ResultPreview description="Pasa el cursor sobre la tarjeta. Nota cómo 4 cosas ocurren a la vez: la tarjeta se eleva, la imagen crece, el texto se aclara y el botón aparece con un ligero retraso.">
       <div style="display: flex; justify-content: center; align-items: center; padding: 30px 0;">
         <style>
-          .t-card { width: 280px; background: #27272a; border-radius: 16px; overflow: hidden; cursor: pointer; font-family: system-ui, sans-serif; transition: transform 0.4s ease, box-shadow 0.4s ease; text-align: left; }
-          .t-card-image { height: 140px; background: linear-gradient(45deg, #f43f5e, #8b5cf6); transition: transform 0.6s ease; }
+          .t-card { width: 280px; background: #27272a; border-radius: 0; overflow: hidden; cursor: pointer; font-family: 'afronaut', serif; transition: transform 0.4s ease, box-shadow 0.4s ease; text-align: left; }
+          .t-card-image { height: 140px; background: linear-gradient(45deg, #9FA6FF, #57B0FB); transition: transform 0.6s ease; }
           .t-card-content { padding: 20px; }
-          .t-card-title { margin: 0 0 8px 0; color: white; font-size: 18px; font-weight: bold; }
+          .t-card-title { margin: 0 0 8px 0; color: white; font-size: 18px; font-weight: bold; font-family: 'afronaut', serif; }
           .t-card-desc { color: #a1a1aa; font-size: 14px; opacity: 0.8; transition: opacity 0.3s ease; margin: 0; line-height: 1.4; }
-          .t-card-btn { margin-top: 16px; padding: 8px 16px; background: transparent; color: #8b5cf6; border: 1px solid #8b5cf6; border-radius: 6px; font-weight: bold; cursor: pointer; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; font-size: 13px; }
+          .t-card-btn { margin-top: 16px; padding: 8px 16px; background: #a855f7; color: #0f172a; border: none; border-radius: 0; font-weight: bold; font-family: 'afronaut', serif; cursor: pointer; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; font-size: 13px; }
           
           .t-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
           .t-card:hover .t-card-image { transform: scale(1.05); }
           .t-card:hover .t-card-desc { opacity: 1; }
-          .t-card:hover .t-card-btn { opacity: 1; transform: translateY(0); background: #8b5cf6; color: white; transition-delay: 0.1s; }
+          .t-card:hover .t-card-btn { opacity: 1; transform: translateY(0); background: #c084fc; color: #0f172a; transition-delay: 0.1s; }
         </style>
         <div class="t-card">
           <div class="t-card-image"></div>
