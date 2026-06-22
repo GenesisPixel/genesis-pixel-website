@@ -1,6 +1,6 @@
 ---
 ---
-<div class="gradient-blur-footer-container">
+<div class="gradient-blur-footer-container" id="footer-gradient-container">
   <div class="content--canvas gradient-blur-wrapper"></div>
   <div class="gradient-overlay"></div>
 </div>
@@ -8,6 +8,25 @@
 <script is:inline src="/js/noise.min.js"></script>
 <script is:inline src="/js/util.js"></script>
 <script is:inline src="/js/shift.js"></script>
+
+<script>
+  function initFooterGradient() {
+    // We need to temporarily make the footer container the only '.content--canvas' 
+    // because shift.js uses document.querySelector('.content--canvas')
+    const heroCanvas = document.querySelector('.gradient-blur-container .content--canvas');
+    if (heroCanvas) heroCanvas.style.display = 'none';
+
+    if (typeof setup === 'function') {
+      setup();
+    }
+
+    if (heroCanvas) heroCanvas.style.display = 'block';
+  }
+
+  document.addEventListener('astro:page-load', initFooterGradient);
+  // Also call it immediately in case it's already loaded
+  initFooterGradient();
+</script>
 
 <style>
   .gradient-blur-footer-container {
