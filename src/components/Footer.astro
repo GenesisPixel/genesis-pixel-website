@@ -15,7 +15,7 @@ const footerLinks = [
   {
     title: 'Comunidad',
     links: [
-      { label: 'GitHub', href: 'https://github.com', external: true },
+      { label: 'GitHub', href: 'https://github.com/GenesisPixel', external: true },
       { label: 'LinkedIn', href: '#', external: true },
     ],
   },
@@ -65,7 +65,7 @@ const footerLinks = [
       </div>
 
       <!-- Inferior -->
-      <div class="relative z-10 mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row">
+      <div class="relative z-10 mt-16 flex flex-col items-center justify-between gap-6 pt-8 sm:flex-row footer-divider">
         <p class="text-[13px] text-white/40">
           &copy; {currentYear} GenesisPixel.
         </p>
@@ -74,3 +74,19 @@ const footerLinks = [
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-divider {
+    border-top: none;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0,
+      rgba(255, 255, 255, 0.25) 15px,
+      transparent 15px,
+      transparent 31px
+    );
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: top;
+  }
+</style>
