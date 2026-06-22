@@ -10,7 +10,7 @@ interface Props {
   author?: string;
 }
 
-const { chapterNumber, chapterLabel, title, readingTime, difficulty = '', author = 'Genesis Pixel' } = Astro.props;
+const { chapterNumber, chapterLabel, title, readingTime, difficulty = '', author = 'Sebastian V.' } = Astro.props;
 
 // Extract lesson number from chapterLabel (e.g. "Capítulo 1 · Lección 3" → 3)
 const lessonMatch = chapterLabel.match(/Lección (\d+)/);
