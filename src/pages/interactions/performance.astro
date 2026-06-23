@@ -19,7 +19,18 @@ const htmlCode = `<div class="perf-container">
   </div>
 </div>`;
 
-const cssCode = `/* --- MAL: CPU Reflow (Layout) --- */
+const cssCode = `.perf-box {
+  background: #9FA6FF;
+  color: hsla(158,23%,18%,1);
+  padding: 16px;
+  border-radius: 0;
+  border: none;
+  width: 200px;
+  text-align: center;
+  font-family: 'afronaut', serif;
+}
+
+/* --- MAL: CPU Reflow (Layout) --- */
 .bad-box {
   transition: all 0.4s ease;
 }
@@ -28,19 +39,17 @@ const cssCode = `/* --- MAL: CPU Reflow (Layout) --- */
   /* TERRIBLE RENDIMIENTO */
   width: 250px;
   margin-left: 20px;
-  background: #ef4444;
 }
 
 /* --- BIEN: GPU Compositing --- */
 .good-box {
-  will-change: transform, background-color;
-  transition: transform 0.4s ease, background-color 0.4s ease;
+  will-change: transform;
+  transition: transform 0.4s ease;
 }
 
 .good-box:hover {
   /* PERFECTO RENDIMIENTO */
   transform: translateX(20px) scaleX(1.25);
-  background: #10b981;
 }`;
 
 const practiceSteps = [
