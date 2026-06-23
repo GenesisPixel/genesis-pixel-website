@@ -42,7 +42,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <TabbedCodeBlock
       group="gradients"
       tabs={[
-        { id: 'fragment', label: 'Fragment Shader', code: "varying vec2 vUv;
+        { id: 'fragment', label: 'Fragment Shader', code: `varying vec2 vUv;
 
 void main() {
   // Mueve el origen UV al centro (-0.5 a 0.5)
@@ -63,7 +63,7 @@ void main() {
   vec3 colorFinal = mix(colorCirculo, colorFondo, mask);
 
   gl_FragColor = vec4(colorFinal, 1.0);
-}" }
+}` }
       ]}
     />
     <ResultPreview description="Dibujando formas geométricas puras calculando distancias matemáticas.">

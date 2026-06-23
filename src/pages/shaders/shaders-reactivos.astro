@@ -46,7 +46,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <TabbedCodeBlock
       group="mouse-reactive"
       tabs={[
-        { id: 'js', label: 'JavaScript', code: "let targetMouse = new THREE.Vector2();
+        { id: 'js', label: 'JavaScript', code: `let targetMouse = new THREE.Vector2();
 let currentMouse = new THREE.Vector2();
 
 window.addEventListener('mousemove', (e) => {
@@ -59,8 +59,8 @@ function animate() {
   // Lerp para suavidad premium (Inercia)
   currentMouse.lerp(targetMouse, 0.05);
   material.uniforms.u_mouse.value = currentMouse;
-}" },
-        { id: 'glsl', label: 'Fragment Shader', code: "uniform vec2 u_mouse;
+}` },
+        { id: 'glsl', label: 'Fragment Shader', code: `uniform vec2 u_mouse;
 varying vec2 vUv;
 
 void main() {
@@ -74,7 +74,7 @@ void main() {
   vec3 colorLuz = vec3(0.34, 0.69, 0.98); // Azul brillante
 
   gl_FragColor = vec4(mix(colorFondo, colorLuz, luz), 1.0);
-}" }
+}` }
       ]}
     />
     <ResultPreview description="Pasa el ratón por el área. El Fragment Shader reacciona en tiempo real, calculando la distancia a tu cursor suavizado.">

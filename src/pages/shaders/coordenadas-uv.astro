@@ -47,20 +47,20 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <TabbedCodeBlock
       group="uvs"
       tabs={[
-        { id: 'vertex', label: 'Vertex', code: "varying vec2 vUv;
+        { id: 'vertex', label: 'Vertex', code: `varying vec2 vUv;
 
 void main() {
   // uv es un atributo provisto por Three.js mágicamente
   vUv = uv;
 
   gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
-}" },
-        { id: 'fragment', label: 'Fragment', code: "varying vec2 vUv;
+}` },
+        { id: 'fragment', label: 'Fragment', code: `varying vec2 vUv;
 
 void main() {
   // x = Rojo, y = Verde, z(azul) = 0.0
   gl_FragColor = vec4(vUv.x, vUv.y, 0.0, 1.0);
-}" }
+}` }
       ]}
     />
     <ResultPreview description="La representación visual pura de las coordenadas UV.">

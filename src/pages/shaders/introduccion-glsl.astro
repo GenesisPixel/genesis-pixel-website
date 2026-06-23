@@ -57,7 +57,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <TabbedCodeBlock
       group="glsl-syntax"
       tabs={[
-        { id: 'glsl', label: 'GLSL', code: "// Comentarios igual que en JS
+        { id: 'glsl', label: 'GLSL', code: `// Comentarios igual que en JS
 
 void main() {
   // Casting estricto
@@ -73,7 +73,7 @@ void main() {
 
   // Variable global de salida obligatoria en Fragment Shaders
   gl_FragColor = colorFinal;
-}" }
+}` }
       ]}
     />
     <ResultPreview description="El resultado de este Fragment Shader simple es un bloque de color sólido.">

@@ -51,7 +51,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <TabbedCodeBlock
       group="uniforms"
       tabs={[
-        { id: 'js', label: 'JavaScript', code: "import * as THREE from 'three';
+        { id: 'js', label: 'JavaScript', code: `import * as THREE from 'three';
 
 // 1. Declarar Uniforms en el Material
 const material = new THREE.ShaderMaterial({
@@ -72,8 +72,8 @@ function animate() {
   material.uniforms.u_time.value = clock.getElapsedTime();
   
   renderer.render(scene, camera);
-}" },
-        { id: 'glsl', label: 'Fragment Shader', code: "// 3. Recibir las variables en GLSL usando 'uniform'
+}` },
+        { id: 'glsl', label: 'Fragment Shader', code: `// 3. Recibir las variables en GLSL usando 'uniform'
 uniform float u_time;
 uniform vec3 u_color;
 
@@ -83,7 +83,7 @@ void main() {
   
   vec3 colorFinal = u_color * palpito;
   gl_FragColor = vec4(colorFinal, 1.0);
-}" }
+}` }
       ]}
     />
     <ResultPreview description="El color late porque el JS le está enviando un valor constante de u_time que aumenta cada frame.">

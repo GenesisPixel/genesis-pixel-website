@@ -48,7 +48,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <TabbedCodeBlock
       group="fragment-shader"
       tabs={[
-        { id: 'glsl', label: 'Fragment Shader', code: "void main() {
+        { id: 'glsl', label: 'Fragment Shader', code: `void main() {
   // gl_FragCoord.xy nos da las coordenadas del píxel en la pantalla
   // Aquí creamos una lógica inventada: 
   // Si la X es pequeña, será menos rojo.
@@ -64,7 +64,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
   vec3 colorFinal = mix(colorA, colorB, mixValue);
 
   gl_FragColor = vec4(colorFinal, 1.0);
-}" }
+}` }
       ]}
     />
     <ResultPreview description="Mezclando dos colores según en qué píxel X de la pantalla esté trabajando el shader.">

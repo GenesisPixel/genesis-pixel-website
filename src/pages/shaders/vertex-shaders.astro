@@ -54,7 +54,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <TabbedCodeBlock
       group="vertex-shader"
       tabs={[
-        { id: 'glsl', label: 'Vertex Shader', code: "uniform float u_time;
+        { id: 'glsl', label: 'Vertex Shader', code: `uniform float u_time;
 
 void main() {
   // 1. Copiamos la posición original en una variable que podamos modificar
@@ -70,7 +70,7 @@ void main() {
 
   // 4. Salida
   gl_Position = projectedPosition;
-}" }
+}` }
       ]}
     />
     <ResultPreview description="Una esfera deformada usando puras matemáticas en el Vertex Shader.">
