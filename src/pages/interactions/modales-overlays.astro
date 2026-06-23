@@ -8,21 +8,23 @@ import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../components/PracticeCards.astro';
 
 const htmlCode = `<button class="open-modal-btn"
-  style="border-radius:0; font-family:'afronaut',serif; background:#a855f7; color:hsla(158,23%,18%,1);">
+  style="border-radius:0; font-family:'afronaut',serif; background:#9FA6FF; color:hsla(158,23%,18%,1);">
   Abrir Modal
 </button>
 
 <div class="overlay" id="demoOverlay">
   <div class="modal-box">
-    <h3>Configuración</h3>
-    <p>¿Seguro que deseas guardar estos cambios?</p>
-    <div class="modal-actions">
+    <h5 style="margin-top:0; margin-bottom:4px; font-weight:700; text-align:center;">Configuración</h5>
+    <span style="font-weight:300; font-family:'afronaut',serif; text-align:center; display:block;">
+      ¿Seguro que deseas guardar estos cambios?
+    </span>
+    <div class="modal-actions" style="display:flex; flex-direction:row; justify-content:flex-end; gap:12px; margin-top:24px;">
       <button class="btn-cancel" id="closeBtn"
-        style="border-radius:0; border:1px dashed #444; font-family:'afronaut',serif;">
+        style="border-radius:0; background:transparent; border:1px dashed #444; color:#444; font-family:'afronaut',serif;">
         Cancelar
       </button>
       <button class="btn-confirm"
-        style="border-radius:0; background:#a855f7; color:hsla(158,23%,18%,1); font-family:'afronaut',serif;">
+        style="border-radius:0; background:hsla(158,23%,18%,1); color:hsla(160,52%,71%,1); font-family:'afronaut',serif;">
         Guardar
       </button>
     </div>
@@ -43,12 +45,17 @@ const cssCode = `/* OVERLAY (Fondo oscuro) */
 
 /* CAJA DEL MODAL */
 .modal-box {
-  background: #FDD88E; padding: 32px; border-radius: 0; width: 90%; max-width: 400px;
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
+  background: hsla(160,52%,71%,1);
+  padding: 32px; border-radius: 0;
+  width: 300px; height: 300px;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
   color: hsla(158,23%,18%,1);
+  backdrop-filter: blur(10px);
+  display: flex; flex-direction: column; justify-content: space-between;
   
-  /* Estado oculto (escalado y bajado) */
-  transform: scale(0.9) translateY(20px);
+  /* Estado oculto (escalado, bajado y rotado) */
+  transform: rotate(-5deg) scale(0.9) translateY(20px);
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -59,9 +66,8 @@ const cssCode = `/* OVERLAY (Fondo oscuro) */
 }
 
 .overlay.active .modal-box {
-  transform: scale(1) translateY(0);
+  transform: rotate(-5deg) scale(1) translateY(0);
   opacity: 1;
-  /* Delay para que entre después del overlay */
   transition-delay: 0.05s;
 }`;
 
@@ -200,6 +206,7 @@ const practiceSteps = [
 .modal-box-p {
   background: hsla(160,52%,71%,1); padding: 32px; border-radius: 0; width: 300px; height: 300px;
   box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: hsla(158,23%,18%,1);
+  backdrop-filter: blur(10px);
   display: flex; flex-direction: column; justify-content: space-between;
   
   /* Estado oculto (escalado, bajado y rotado) */

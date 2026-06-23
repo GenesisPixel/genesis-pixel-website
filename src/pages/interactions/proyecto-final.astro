@@ -68,50 +68,60 @@ const modalHtml = `<button class="abrir-modal" id="abrirModal">Ver Detalles</but
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-caja">
-    <h3>Detalles del Componente</h3>
-    <p>Este modal se anima de forma independiente al overlay para dar una sensación física real.</p>
-    <button class="cerrar-modal" id="cerrarModal">Entendido</button>
+    <h5 style="margin-top:0; margin-bottom:4px; font-weight:700; text-align:center;">Detalles del Componente</h5>
+    <span style="font-weight:300; font-family:'afronaut',serif; text-align:center; display:block;">
+      Este modal se anima de forma independiente al overlay para dar una sensación física real.
+    </span>
+    <div class="modal-actions" style="display:flex; flex-direction:row; justify-content:flex-end; gap:12px; margin-top:24px;">
+      <button class="cerrar-modal" id="cerrarModal"
+        style="padding:10px 20px; border-radius:0; background:transparent; border:1px dashed #444; color:#444; font-family:'afronaut',serif;">
+        Cancelar
+      </button>
+      <button class="aceptar-modal"
+        style="padding:10px 20px; border-radius:0; background:hsla(158,23%,18%,1); color:hsla(160,52%,71%,1); font-family:'afronaut',serif;">
+        Aceptar
+      </button>
+    </div>
   </div>
-</div>
+</div>`;
 
-<script>
-  const abrir = document.getElementById('abrirModal');
-  const cerrar = document.getElementById('cerrarModal');
-  const overlay = document.getElementById('modalOverlay');
-
-  abrir.addEventListener('click', () => overlay.classList.add('visible'));
-  cerrar.addEventListener('click', () => overlay.classList.remove('visible'));
-  overlay.addEventListener('click', (e) => {
-    if(e.target === overlay) overlay.classList.remove('visible');
-  });
-<\/script>`;
-
-const modalCss = `.abrir-modal, .cerrar-modal {
-  padding: 10px 20px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer;
-  background: #a855f7; color: white; transition: transform 0.2s;
+const modalCss = `.abrir-modal {
+  padding: 10px 20px; border-radius: 0; border: none;
+  background: #9FA6FF; color: hsla(158,23%,18%,1);
+  cursor: pointer; font-family: 'afronaut', serif;
 }
-.abrir-modal:hover, .cerrar-modal:hover { transform: scale(1.05); }
 
 /* Overlay */
 .modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-  display: flex; justify-content: center; align-items: center; z-index: 100;
-  opacity: 0; visibility: hidden; transition: all 0.4s ease;
+  position: fixed; inset: 0;
+  background: hsla(158,23%,18%,0.9);
+  backdrop-filter: blur(8px);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+  opacity: 0; visibility: hidden;
+  transition: all 0.4s ease;
 }
 
 /* Caja Modal */
 .modal-caja {
-  background: #1e293b; padding: 32px; border-radius: 16px; width: 300px;
-  text-align: center; color: white; border: 1px solid rgba(255,255,255,0.1);
+  background: hsla(160,52%,71%,1);
+  padding: 32px; border-radius: 0;
+  width: 300px; height: 300px;
+  text-align: center; color: hsla(158,23%,18%,1);
+  border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-  transform: scale(0.9) translateY(20px); opacity: 0;
+  backdrop-filter: blur(10px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  transform: rotate(-5deg) scale(0.9) translateY(20px);
+  opacity: 0;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* Animación de entrada secuencial */
 .modal-overlay.visible { opacity: 1; visibility: visible; }
 .modal-overlay.visible .modal-caja {
-  transform: scale(1) translateY(0); opacity: 1; transition-delay: 0.1s;
+  transform: rotate(-5deg) scale(1) translateY(0);
+  opacity: 1; transition-delay: 0.1s;
 }`;
 
 const practiceSteps = [
@@ -211,9 +221,12 @@ const practiceSteps = [
         <button class="abrir-modal-p" id="abrirModalP">Ver Detalles</button>
         <div class="modal-overlay-p" id="modalOverlayP">
           <div class="modal-caja-p">
-            <h3 style="margin-top:0">Detalles del Componente</h3>
-            <p>Este modal se anima de forma independiente al overlay para dar una sensación física real.</p>
-            <button class="cerrar-modal-p" id="cerrarModalP">Entendido</button>
+            <h5 style="margin-top:0; margin-bottom:4px; font-weight:700; text-align:center;">Detalles del Componente</h5>
+            <span style="font-weight:300; font-family:'afronaut',serif; text-align:center; display:block;">Este modal se anima de forma independiente al overlay para dar una sensación física real.</span>
+            <div class="modal-actions-p" style="display:flex; flex-direction:row; justify-content:flex-end; gap:12px; margin-top:24px;">
+              <button class="cerrar-modal-p" id="cerrarModalP" style="padding:10px 20px; border-radius:0; cursor:pointer; background:transparent; border:1px dashed #444; color:#444; font-family:'afronaut',serif;">Cancelar</button>
+              <button class="aceptar-modal-p" style="padding:10px 20px; border-radius:0; border:none; cursor:pointer; background:hsla(158,23%,18%,1); color:hsla(160,52%,71%,1); font-family:'afronaut',serif;">Aceptar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -293,29 +306,32 @@ const practiceSteps = [
   @keyframes girar { to { transform: rotate(360deg); } }
 
   /* MODAL PREVIEW */
-  .abrir-modal-p, .cerrar-modal-p {
-    padding: 10px 20px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer;
-    background: #a855f7; color: white; transition: transform 0.2s;
+  .abrir-modal-p {
+    padding: 10px 20px; border-radius: 0; border: none; font-weight: bold; cursor: pointer;
+    background: #9FA6FF; color: hsla(158,23%,18%,1); transition: transform 0.2s;
+    font-family: 'afronaut', serif;
   }
-  .abrir-modal-p:hover, .cerrar-modal-p:hover { transform: scale(1.05); }
+  .abrir-modal-p:hover { transform: scale(1.05); }
   
   .modal-overlay-p {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    position: fixed; inset: 0; background: hsla(158,23%,18%,0.9); backdrop-filter: blur(8px);
     display: flex; justify-content: center; align-items: center; z-index: 1000;
     opacity: 0; visibility: hidden; transition: all 0.4s ease;
   }
   
   .modal-caja-p {
-    background: #1e293b; padding: 32px; border-radius: 16px; width: 300px;
-    text-align: center; color: white; border: 1px solid rgba(255,255,255,0.1);
+    background: hsla(160,52%,71%,1); padding: 32px; border-radius: 0; width: 300px; height: 300px;
+    text-align: center; color: hsla(158,23%,18%,1); border: 1px solid rgba(255,255,255,0.1);
     box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-    transform: scale(0.9) translateY(20px); opacity: 0;
+    backdrop-filter: blur(10px);
+    display: flex; flex-direction: column; justify-content: space-between;
+    transform: rotate(-5deg) scale(0.9) translateY(20px); opacity: 0;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   
   .modal-overlay-p.visible { opacity: 1; visibility: visible; }
   .modal-overlay-p.visible .modal-caja-p {
-    transform: scale(1) translateY(0); opacity: 1; transition-delay: 0.1s;
+    transform: rotate(-5deg) scale(1) translateY(0); opacity: 1; transition-delay: 0.1s;
   }
 </style>
 
