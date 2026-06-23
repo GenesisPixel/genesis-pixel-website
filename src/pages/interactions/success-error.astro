@@ -7,8 +7,14 @@ import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
 import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../components/PracticeCards.astro';
 
-const htmlCode = `<button class="action-btn success-trigger">Éxito</button>
-<button class="action-btn error-trigger">Error</button>
+const htmlCode = `<button class="action-btn success-trigger"
+  style="border-radius:0; border:1px dashed #444; font-family:'afronaut',serif;">
+  Éxito
+</button>
+<button class="action-btn error-trigger"
+  style="border-radius:0; border:1px dashed #444; font-family:'afronaut',serif;">
+  Error
+</button>
 
 <div class="toast" id="toastBox">
   <span class="message" id="toastMsg">Mensaje</span>
@@ -17,16 +23,25 @@ const htmlCode = `<button class="action-btn success-trigger">Éxito</button>
 const cssCode = `.toast {
   position: absolute;
   padding: 16px 24px;
-  border-radius: 12px;
-  background: #1e293b;
+  border-radius: 0;
+  background: #222;
   color: white;
   box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  font-weight: 500;
+  font-weight: 300;
+  font-size: 13px;
+  font-family: 'afronaut', serif;
   
   opacity: 0;
   transform: translateY(20px) scale(0.95);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   pointer-events: none;
+}
+
+.toast .message {
+  font-family: 'afronaut', serif;
+  font-weight: 300;
+  font-size: 11px;
+  opacity: 0.7;
 }
 
 .toast.show {
@@ -180,7 +195,8 @@ const practiceSteps = [
 .toast-p .message {
   font-family: 'afronaut', serif !important;
   font-weight: 300;
-  font-size: 13px;
+  font-size: 11px;
+  opacity: 0.7;
 }
 
 .toast-p.show {
