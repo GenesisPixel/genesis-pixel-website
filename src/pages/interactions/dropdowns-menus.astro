@@ -28,21 +28,56 @@ const cssCode = `.dropdown-wrapper {
   display: inline-block;
 }
 
+.dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px dashed #475569;
+  border-radius: 0;
+  cursor: pointer;
+  font-family: 'afronaut', serif;
+}
+
 .dropdown-btn svg { transition: transform 0.2s; }
 
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
+  min-width: 200px;
+  background: rgba(255,255,255,0.1);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: 0;
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
   
   /* ESTADO OCULTO */
   opacity: 0;
   visibility: hidden;
-  /* Origen en la esquina superior izquierda */
   transform-origin: top left;
   transform: scale(0.95) translateY(-10px);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-family: 'afronaut', serif;
+}
+
+.dropdown-menu .divider {
+  border-top: 1px dashed rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+.dropdown-menu .text-danger { color: #f87171; }
 
 /* HOVER: Muestra el menú */
 .dropdown-wrapper:hover .dropdown-menu {
@@ -138,17 +173,17 @@ const practiceSteps = [
     <ResultPreview description="Pasa el cursor sobre el botón para ver cómo el menú se despliega desde la esquina.">
       <div class="flex items-center justify-center h-full w-full">
         <div class="dropdown-wrapper-p" style="position:relative; display:inline-block; margin-bottom: 120px;">
-  <button class="dropdown-btn-p" style="display:flex; align-items:center; gap:8px; padding:10px 20px; background:#334155; color:white; border:1px solid #475569; border-radius:8px; cursor:pointer;">
+  <button class="dropdown-btn-p" style="display:flex; align-items:center; gap:8px; padding:10px 20px; background:rgba(255,255,255,0.1); color:white; border:1px dashed #475569; border-radius:0; cursor:pointer; font-family:'afronaut',serif;">
     Opciones 
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
   </button>
-  <ul class="dropdown-menu-p" style="position:absolute; top:calc(100% + 8px); left:0; min-width:200px; background:#1e293b; border:1px solid rgba(255,255,255,0.1); border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5); list-style:none; padding:8px 0; margin:0;">
-    <li><a href="#" style="display:block; padding:10px 20px; color:#cbd5e1; text-decoration:none; font-size:0.95rem;">Perfil de usuario</a></li>
-    <li><a href="#" style="display:block; padding:10px 20px; color:#cbd5e1; text-decoration:none; font-size:0.95rem;">Configuración</a></li>
-    <li style="height:1px; background:rgba(255,255,255,0.1); margin:8px 0;"></li>
-    <li><a href="#" style="display:block; padding:10px 20px; color:#f87171; text-decoration:none; font-size:0.95rem;">Cerrar sesión</a></li>
+  <ul class="dropdown-menu-p" style="position:absolute; top:calc(100% + 8px); left:0; min-width:200px; background:rgba(255,255,255,0.1); border:1px dashed rgba(255,255,255,0.1); border-radius:0; box-shadow:0 10px 25px rgba(0,0,0,0.5); list-style:none; padding:8px 0; margin:0;">
+    <li><a href="#" style="display:block; padding:10px 20px; color:#cbd5e1; text-decoration:none; font-size:0.95rem; font-family:'afronaut',serif;">Perfil de usuario</a></li>
+    <li><a href="#" style="display:block; padding:10px 20px; color:#cbd5e1; text-decoration:none; font-size:0.95rem; font-family:'afronaut',serif;">Configuración</a></li>
+    <li style="border-top:1px dashed rgba(255,255,255,0.1); margin:8px 0;"></li>
+    <li><a href="#" style="display:block; padding:10px 20px; color:#f87171; text-decoration:none; font-size:0.95rem; font-family:'afronaut',serif;">Cerrar sesión</a></li>
   </ul>
 </div>
       </div>
