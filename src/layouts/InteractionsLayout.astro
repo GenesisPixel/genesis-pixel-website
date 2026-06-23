@@ -389,6 +389,41 @@ const chapters = [
 <script>
   import gsap from 'gsap';
 
+  function initSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebarClose = document.getElementById('sidebar-close');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    if (sidebar && sidebarToggle && sidebarClose && sidebarOverlay) {
+      const openSidebar = () => {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.remove('hidden');
+        setTimeout(() => sidebarOverlay.classList.remove('opacity-0'), 10);
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeSidebar = () => {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.add('opacity-0');
+        setTimeout(() => sidebarOverlay.classList.add('hidden'), 300);
+        document.body.style.overflow = '';
+      };
+
+      sidebarToggle.removeEventListener('click', openSidebar);
+      sidebarClose.removeEventListener('click', closeSidebar);
+      sidebarOverlay.removeEventListener('click', closeSidebar);
+
+      sidebarToggle.addEventListener('click', openSidebar);
+      sidebarClose.addEventListener('click', closeSidebar);
+      sidebarOverlay.addEventListener('click', closeSidebar);
+
+      sidebar.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeSidebar);
+      });
+    }
+  }
+
   document.addEventListener('astro:page-load', () => {
     const h1 = document.querySelector('.main-content h1');
     
@@ -458,13 +493,9 @@ const chapters = [
       });
     }
 
-    // Lógica para el sidebar responsive
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    const sidebarClose = document.getElementById('sidebar-close');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    initSidebar();
 
-    // Actualizar enlaces activos en el sidebar persistido
+    const sidebar = document.getElementById('sidebar');
     if (sidebar) {
       const currentPath = window.location.pathname;
       const sidebarLinks = sidebar.querySelectorAll('.lesson-link');
@@ -487,7 +518,6 @@ const chapters = [
         }
       });
 
-      // Posicionar el indicador en el link activo
       const indicator = document.getElementById('sidebar-indicator');
       const activeLink = sidebar.querySelector('.lesson-link.active');
       if (indicator && activeLink) {
@@ -497,53 +527,27 @@ const chapters = [
         indicator.style.top = `${linkRect.top - listRect.top}px`;
         indicator.style.height = `${linkRect.height}px`;
       }
-    }
 
-    if (sidebar && sidebarToggle && sidebarClose && sidebarOverlay) {
-      const openSidebar = () => {
-        sidebar.classList.add('open');
-        sidebarOverlay.classList.remove('hidden');
-        setTimeout(() => sidebarOverlay.classList.remove('opacity-0'), 10);
-        document.body.style.overflow = 'hidden';
-      };
-
-      const closeSidebar = () => {
-        sidebar.classList.remove('open');
-        sidebarOverlay.classList.add('opacity-0');
-        setTimeout(() => sidebarOverlay.classList.add('hidden'), 300);
-        document.body.style.overflow = '';
-      };
-
-      sidebarToggle.addEventListener('click', openSidebar);
-      sidebarClose.addEventListener('click', closeSidebar);
-      sidebarOverlay.addEventListener('click', closeSidebar);
-
-      // Cerrar sidebar al hacer click en un enlace
-      sidebar.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', closeSidebar);
-      });
-
-      // Mover indicador en hover
-      const indicator = document.getElementById('sidebar-indicator');
+      const indicatorHover = document.getElementById('sidebar-indicator');
       const lessonLinks = sidebar.querySelectorAll('.lesson-link');
 
       function moveIndicatorToLink(link) {
-        if (!indicator) return;
+        if (!indicatorHover) return;
         const list = link.closest('.lesson-list');
         if (!list) return;
         const listRect = list.getBoundingClientRect();
         const linkRect = link.getBoundingClientRect();
-        indicator.style.top = `${linkRect.top - listRect.top}px`;
-        indicator.style.height = `${linkRect.height}px`;
+        indicatorHover.style.top = `${linkRect.top - listRect.top}px`;
+        indicatorHover.style.height = `${linkRect.height}px`;
       }
 
       function resetIndicatorToActive() {
         const activeLink = sidebar.querySelector('.lesson-link.active');
         if (activeLink) {
           moveIndicatorToLink(activeLink);
-        } else if (indicator) {
-          indicator.style.top = '0px';
-          indicator.style.height = '0px';
+        } else if (indicatorHover) {
+          indicatorHover.style.top = '0px';
+          indicatorHover.style.height = '0px';
         }
       }
 
@@ -552,5 +556,13 @@ const chapters = [
         link.addEventListener('mouseleave', () => resetIndicatorToActive());
       });
     }
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    initSidebar();
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initSidebar();
   });
 </script>

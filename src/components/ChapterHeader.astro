@@ -22,13 +22,22 @@ const baseDates = {
   '@keyframes': new Date(2025, 3, 2),     // 02/04/2025
   'CSS Transform': new Date(2024, 5, 23),  // 23/06/2024
   'Interactions': new Date(2025, 6, 1),    // 01/07/2025
+  'Three.js': new Date(2026, 0, 13),       // 13/01/2026
+  'Shaders GLSL': new Date(2026, 2, 21),   // 21/03/2026
+};
+
+// Advance days per topic
+const advanceDays = {
+  'Three.js': 4,
+  'Shaders GLSL': 4,
 };
 
 // Transitions default base date
 const baseDate = baseDates[difficulty] || new Date(2024, 2, 19); // 19/03/2024
+const daysToAdvance = advanceDays[difficulty] || 2;
 
-// Advance 2 days per lesson
-baseDate.setDate(baseDate.getDate() + (lessonNumber - 1) * 2);
+// Advance days per lesson
+baseDate.setDate(baseDate.getDate() + (lessonNumber - 1) * daysToAdvance);
 
 const publishedDate = `${String(baseDate.getDate()).padStart(2, '0')}/${String(baseDate.getMonth() + 1).padStart(2, '0')}/${baseDate.getFullYear()}`;
 ---
