@@ -83,6 +83,18 @@ void main() {
     </ResultPreview>
   </div>
 
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Practica lo Aprendido"
+      description="Haz que tu shader sienta."
+      steps={[
+        { number: 1, text: 'Normaliza siempre los eventos del ratón (clientX / innerWidth).', color: 'dm-purple', rotate: '-3deg' },
+        { number: 2, text: 'Usa interpolación lineal (Lerp) para suavizar el movimiento.', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Envía el u_mouse como vec2 a tu Fragment Shader y úsalo para dibujar luz.', color: 'app-color-yellow400', rotate: '-5deg' },
+      ]}
+    />
+  </div>
+
 </ShadersLayout>
 
 <script>

@@ -70,6 +70,16 @@ void main() {
       <div class="flex items-center justify-center h-full w-full bg-[#111] overflow-hidden rounded-none" id="demo-gradients">
       </div>
     </ResultPreview>
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Practica lo Aprendido"
+      description="Domina el mix() y el smoothstep()."
+      steps={[
+        { number: 1, text: 'Usa mix(colorA, colorB, vUv.x) para un gradiente lineal.', color: 'dm-purple', rotate: '-3deg' },
+        { number: 2, text: 'Calcula la distancia al centro con distance().', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Usa smoothstep() para endurecer o difuminar los bordes del círculo.', color: 'app-color-yellow400', rotate: '-5deg' },
+      ]}
+    />
   </div>
 
 </ShadersLayout>

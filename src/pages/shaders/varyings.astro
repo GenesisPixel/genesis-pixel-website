@@ -82,6 +82,16 @@ void main() {
     <ErroresComunesV3 errors={[
       { label: 'Tipos desajustados', description: 'Declaraste varying vec2 vUv en el Vertex, pero varying vec3 vUv en el Fragment. Fallará instantáneamente.' },
     ]} />
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Practica lo Aprendido"
+      description="Pasa datos del Vertex al Fragment."
+      steps={[
+        { number: 1, text: 'Declara la varying en el Vertex Shader (varying float vAltitude;).', color: 'dm-purple', rotate: '-3deg' },
+        { number: 2, text: 'Asígnale el valor en base a los vértices (vAltitude = position.y;).', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Declárala de nuevo en el Fragment Shader y úsala para mezclar colores.', color: 'app-color-yellow400', rotate: '-5deg' },
+      ]}
+    />
   </div>
 
 </ShadersLayout>

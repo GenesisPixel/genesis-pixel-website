@@ -67,6 +67,16 @@ void main() {
       <div class="flex items-center justify-center h-full w-full bg-[#111] overflow-hidden rounded-none" id="demo-uvs" style="cursor: grab;">
       </div>
     </ResultPreview>
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Practica lo Aprendido"
+      description="Domina el mapa 2D."
+      steps={[
+        { number: 1, text: 'Asegúrate de pasar la variable uv desde el Vertex Shader al Fragment Shader.', color: 'dm-purple', rotate: '-3deg' },
+        { number: 2, text: 'Prueba multiplicar las coordenadas para repetir una textura (vUv * 5.0).', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Resta a las UVs para centrar el eje de coordenadas (vUv - 0.5).', color: 'app-color-yellow400', rotate: '-5deg' },
+      ]}
+    />
   </div>
 
 </ShadersLayout>
