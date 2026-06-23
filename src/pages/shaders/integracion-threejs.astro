@@ -45,10 +45,162 @@ import PracticeCards from '../../components/PracticeCards.astro';
     ]} />
   </div>
 
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    El poder de onBeforeCompile
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="integration"
+      tabs={[
+        { id: 'js', label: 'JavaScript', code: `const material = new THREE.MeshStandardMaterial({
+  color: 0x57B0FB,
+  roughness: 0.4
+});
+
+// Inyectamos nuestro propio código antes de que Three.js lo compile
+material.onBeforeCompile = (shader) => {
+  shader.uniforms.u_time = { value: 0 };
+  // Guardamos referencia para animarlo después
+  material.userData.shader = shader;
+
+  // Inyectamos variables en el Vertex Shader
+  shader.vertexShader = shader.vertexShader.replace(
+    '#include <common>',
+    \`
+    #include <common>
+    uniform float u_time;
+    \`
+  );
+
+  // Deformamos la geometría preservando luces!
+  shader.vertexShader = shader.vertexShader.replace(
+    '#include <begin_vertex>',
+    \`
+    vec3 transformed = vec3(position);
+    transformed.y += sin(transformed.x * 5.0 + u_time) * 0.2;
+    \`
+  );
+};` }
+      ]}
+    />
+    <ResultPreview description="Una esfera con MeshStandardMaterial y luces direccionales. Conservamos el realismo de Three.js pero inyectamos una onda sinusoidal en sus vértices.">
+      <div class="flex items-center justify-center h-full w-full bg-[#111] overflow-hidden rounded-none" id="demo-integration">
+      </div>
+    </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Practica lo Aprendido"
+      description="Hackea los materiales por defecto."
+      steps={[
+        { number: 1, text: 'Crea un MeshStandardMaterial y añade luces a la escena.', color: 'dm-purple', rotate: '-3deg' },
+        { number: 2, text: 'Usa material.onBeforeCompile para interceptar el shader.', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Reemplaza #include <begin_vertex> para añadir desplazamientos matemáticos.', color: 'app-color-yellow400', rotate: '-5deg' },
+      ]}
+    />
+  </div>
+
 </ShadersLayout>
 
 <script>
 
-  // Conceptos teóricos avanzados, demo omitida.
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+  document.addEventListener('astro:page-load', () => {
+    const container = document.getElementById('demo-integration');
+    if (!container) return;
+    
+    while(container.firstChild) container.removeChild(container.firstChild);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.set(0, 0, 3);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+
+    // Luz para demostrar que conservamos la iluminación
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    directionalLight.position.set(2, 2, 2);
+    scene.add(directionalLight);
+
+    const geometry = new THREE.IcosahedronGeometry(0.8, 64);
+    
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x57B0FB,
+      roughness: 0.3,
+      metalness: 0.4,
+      wireframe: true
+    });
+
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms.u_time = { value: 0 };
+      material.userData.shader = shader;
+
+      shader.vertexShader = shader.vertexShader.replace(
+        '#include <common>',
+        `
+        #include <common>
+        uniform float u_time;
+        `
+      );
+
+      shader.vertexShader = shader.vertexShader.replace(
+        '#include <begin_vertex>',
+        `
+        vec3 transformed = vec3(position);
+        // Distorsión estilo gelatina basada en X y el tiempo
+        transformed.x += sin(transformed.y * 10.0 + u_time * 2.0) * 0.1;
+        transformed.z += cos(transformed.y * 10.0 + u_time * 2.0) * 0.1;
+        `
+      );
+    };
+
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    let animationId;
+    const clock = new THREE.Clock();
+
+    const animate = () => {
+      animationId = requestAnimationFrame(animate);
+      controls.update();
+      
+      if (material.userData.shader) {
+        material.userData.shader.uniforms.u_time.value = clock.getElapsedTime();
+      }
+      
+      mesh.rotation.y += 0.005;
+      mesh.rotation.x += 0.002;
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const handleResize = () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    };
+    window.addEventListener('resize', handleResize);
+
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
+      controls.dispose();
+      renderer.dispose();
+      material.dispose();
+      geometry.dispose();
+    }, { once: true });
+  });
 
 </script>

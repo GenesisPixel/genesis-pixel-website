@@ -96,6 +96,16 @@ void main() {
     <ErroresComunesV3 errors={[
       { label: 'El Shader no compila', description: 'Olvidaste usar la palabra reservada "uniform" antes de declarar la variable dentro del código GLSL, o los tipos de datos no coinciden (mandaste un new THREE.Color() desde JS pero lo recibiste como float en GLSL).' },
     ]} />
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Practica lo Aprendido"
+      description="Inyecta datos dinámicos."
+      steps={[
+        { number: 1, text: 'Declara la variable en el objeto uniforms de JS.', color: 'dm-purple', rotate: '-3deg' },
+        { number: 2, text: 'Recibe la variable en GLSL usando la palabra clave uniform.', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Actualiza el .value de tu uniform en el loop de requestAnimationFrame.', color: 'app-color-yellow400', rotate: '-5deg' },
+      ]}
+    />
   </div>
 
 </ShadersLayout>

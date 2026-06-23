@@ -44,10 +44,48 @@ import PracticeCards from '../../components/PracticeCards.astro';
   </h3>
 
   <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="advanced-fx"
+      tabs={[
+        { id: 'glsl', label: 'Fragment Shader', code: `uniform float u_time;
+varying vec2 vUv;
+varying vec3 vPosition;
+
+void main() {
+  // Efecto Scanline basado en la posición en Y y el tiempo
+  float scanline = sin(vPosition.y * 50.0 - u_time * 10.0);
+  // Hacemos que sea una línea delgada y filosa
+  scanline = smoothstep(0.8, 1.0, scanline);
+
+  // Color base azul neón
+  vec3 colorBase = vec3(0.34, 0.69, 0.98); // 57B0FB
+  
+  // Sumamos el blanco del scanline
+  vec3 finalColor = colorBase + vec3(scanline * 0.5);
+
+  // Efecto holograma: hacemos los bordes más brillantes y el centro transparente
+  float rim = smoothstep(0.0, 0.5, abs(vUv.x - 0.5) * 2.0);
+
+  gl_FragColor = vec4(finalColor, rim * 0.8 + 0.2);
+}` }
+      ]}
+    />
     <ResultPreview description="Mezclamos líneas de escaneo animadas, ruido y separación RGB para crear un material futurista.">
       <div class="flex items-center justify-center h-full w-full bg-[#111] overflow-hidden rounded-none" id="demo-fx" style="cursor: grab;">
       </div>
     </ResultPreview>
+  </div>
+
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Practica lo Aprendido"
+      description="Crea tu propio holograma."
+      steps={[
+        { number: 1, text: 'Usa sin(vPosition.y * 50.0) para crear múltiples franjas horizontales.', color: 'dm-purple', rotate: '-3deg' },
+        { number: 2, text: 'Resta u_time dentro del seno para que las franjas suban animadas.', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Usa abs(vUv.x - 0.5) para detectar los bordes y asignar transparencia (Alpha).', color: 'app-color-yellow400', rotate: '-5deg' },
+      ]}
+    />
   </div>
 
 </ShadersLayout>

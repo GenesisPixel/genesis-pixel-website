@@ -35,6 +35,42 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <p>Si mezclas <code>u_time</code> con las coordenadas espaciales (<code>vUv.y + u_time</code>), creas un efecto de desplazamiento continuo. Es la base de las cascadas, los túneles infinitos y el fuego.</p>
   </article>
 
+  <h3 class="mb-8 mt-12 text-center font-medium text-[var(--color-text)]">
+    El Patrón en Movimiento
+  </h3>
+
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="animated-shaders"
+      tabs={[
+        { id: 'glsl', label: 'Fragment Shader', code: `uniform float u_time;
+varying vec2 vUv;
+
+void main() {
+  // Movemos las coordenadas X restando el tiempo
+  vec2 animatedUv = vUv;
+  animatedUv.x -= u_time * 0.5;
+
+  // fract() repite el valor entre 0.0 y 1.0 (crea las barras)
+  float pattern = fract(animatedUv.x * 5.0);
+
+  // Colores Genesis Pixel
+  vec3 colorA = vec3(0.04, 0.06, 0.1);
+  vec3 colorB = vec3(0.988, 0.364, 0.490);
+
+  // Usamos step para hacer cortes secos
+  vec3 finalColor = mix(colorA, colorB, step(0.5, pattern));
+
+  gl_FragColor = vec4(finalColor, 1.0);
+}` }
+      ]}
+    />
+    <ResultPreview description="Barras infinitas creadas sumando u_time a las coordenadas UV antes de usar fract().">
+      <div class="flex items-center justify-center h-full w-full bg-[#111] overflow-hidden rounded-none" id="demo-animado">
+      </div>
+    </ResultPreview>
+  </div>
+
   <div class="my-8 flex flex-col gap-6">
     <ErroresComunesV3 errors={[
       { label: 'Multiplicar el tiempo a lo loco', description: 'u_time crece constante. Si haces sin(u_time * 100.0), el shader parpadeará epilépticamente. Usa multiplicadores pequeños: sin(u_time * 0.5) para una respiración calmada.' },
@@ -55,7 +91,86 @@ import PracticeCards from '../../components/PracticeCards.astro';
 
 <script>
 
-  // Demo intencionalmente en blanco o simbólica ya que es un concepto matemático explicado
-  // document.addEventListener('astro:page-load', () => { ... });
+  import * as THREE from 'three';
+
+  document.addEventListener('astro:page-load', () => {
+    const container = document.getElementById('demo-animado');
+    if (!container) return;
+    
+    while(container.firstChild) container.removeChild(container.firstChild);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+    camera.position.z = 1;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: false });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    const geometry = new THREE.PlaneGeometry(2, 2);
+    
+    const fragmentShader = `
+      uniform float u_time;
+      varying vec2 vUv;
+
+      void main() {
+        // Movemos las coordenadas X restando el tiempo
+        vec2 animatedUv = vUv;
+        animatedUv.x -= u_time * 0.5;
+
+        // fract() repite el valor entre 0.0 y 1.0
+        float pattern = fract(animatedUv.x * 5.0);
+
+        // Colores Genesis Pixel
+        vec3 colorA = vec3(0.04, 0.06, 0.1);
+        vec3 colorB = vec3(0.988, 0.364, 0.490);
+
+        // Usamos step para hacer cortes secos
+        vec3 finalColor = mix(colorA, colorB, step(0.5, pattern));
+
+        gl_FragColor = vec4(finalColor, 1.0);
+      }
+    `;
+
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = vec4(position, 1.0);
+      }
+    `;
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: { u_time: { value: 0 } }
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    let animationId;
+    const clock = new THREE.Clock();
+
+    const animate = () => {
+      animationId = requestAnimationFrame(animate);
+      material.uniforms.u_time.value = clock.getElapsedTime();
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const handleResize = () => {
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    };
+    window.addEventListener('resize', handleResize);
+
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
+      renderer.dispose();
+      material.dispose();
+      geometry.dispose();
+    }, { once: true });
+  });
 
 </script>

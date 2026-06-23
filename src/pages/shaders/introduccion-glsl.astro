@@ -89,6 +89,18 @@ void main() {
     ]} />
   </div>
 
+  <div class="my-8 flex flex-col gap-6">
+    <PracticeCards
+      title="Practica lo Aprendido"
+      description="Habla el idioma de la GPU."
+      steps={[
+        { number: 1, text: 'Asegúrate de poner .0 a todos tus números (1.0).', color: 'dm-purple', rotate: '-3deg' },
+        { number: 2, text: 'Usa vec3 o vec4 para definir colores RGB/RGBA.', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Envía tu resultado siempre a la variable gl_FragColor.', color: 'app-color-yellow400', rotate: '-5deg' },
+      ]}
+    />
+  </div>
+
 </ShadersLayout>
 
 <script>
