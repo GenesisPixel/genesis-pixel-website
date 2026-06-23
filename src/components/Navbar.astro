@@ -425,12 +425,16 @@ const navItems = [
 </div>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
+  function initNavbar() {
     const island = document.getElementById('nav-island');
     const navLinks = document.getElementById('nav-links');
     const indicator = document.getElementById('nav-indicator');
     const menuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
+    const mobileOverlay = document.getElementById('mobile-overlay');
+    const mobileClose = document.getElementById('mobile-close');
+
+    let mobileOpen = false;
 
     // Mark island as loaded so the CSS entry animation never replays
     if (island && !island.classList.contains('nav-island--loaded')) {
@@ -503,9 +507,6 @@ const navItems = [
     navLinks?.addEventListener('mouseover', handleHover);
     navLinks?.addEventListener('mouseout', handleHoverEnd);
 
-    const mobileOverlay = document.getElementById('mobile-overlay');
-    const mobileClose = document.getElementById('mobile-close');
-
     function openMobile() {
       mobileOpen = true;
       mobileMenu?.classList.add('open');
@@ -533,11 +534,14 @@ const navItems = [
     mobileClose?.addEventListener('click', closeMobile);
     mobileOverlay?.addEventListener('click', closeMobile);
 
-    // Cerrar al hacer clic en un enlace
     mobileMenu?.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', closeMobile);
     });
 
     setTimeout(updateIndicator, 50);
-  });
+  }
+
+  document.addEventListener('astro:page-load', initNavbar);
+  document.addEventListener('astro:after-swap', initNavbar);
+  document.addEventListener('DOMContentLoaded', initNavbar);
 </script>
