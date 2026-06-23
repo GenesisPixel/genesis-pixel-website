@@ -57,8 +57,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
     <TabbedCodeBlock
       group="threejs-intro"
       tabs={[
-        { id: 'js', label: 'JavaScript', code: "import * as THREE from 'three';
-  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';\n\n// El estudio de cine: Escena, Cámara y Render\nconst scene = new THREE.Scene();\nconst camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);\nconst renderer = new THREE.WebGLRenderer();\n\n// ¡Así de simple inicias el viaje 3D!" }
+        { id: 'js', label: 'JavaScript', code: "import * as THREE from 'three';\n\n// El estudio de cine: Escena, Cámara y Render\nconst scene = new THREE.Scene();\nconst camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);\nconst renderer = new THREE.WebGLRenderer();\n\n// ¡Así de simple inicias el viaje 3D!" }
       ]}
     />
     <ResultPreview description="Una vista previa simbólica: El poder del 3D.">
@@ -91,6 +90,7 @@ import PracticeCards from '../../components/PracticeCards.astro';
 <script>
 
   import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
   document.addEventListener('astro:page-load', () => {
     const container = document.getElementById('demo-intro');
