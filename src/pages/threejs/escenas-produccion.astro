@@ -53,9 +53,15 @@ import PracticeCards from '../../components/PracticeCards.astro';
         { id: 'js', label: 'JavaScript', code: "let animationId;\n\nfunction animate() {\n  animationId = requestAnimationFrame(animate);\n  renderer.render(scene, camera);\n}\n\n// Cuando el usuario sale de la página...\nfunction cleanUp() {\n  // 1. Detener el bucle, la CPU descansa\n  cancelAnimationFrame(animationId);\n  \n  // 2. Liberar eventos del navegador\n  window.removeEventListener('resize', handleResize);\n  \n  // 3. Recorrer y destruir geometrías y materiales de la VRAM\n  scene.traverse((child) => {\n    if (child.isMesh) {\n      child.geometry.dispose();\n      \n      // Los materiales pueden ser un array\n      if (Array.isArray(child.material)) {\n        child.material.forEach(mat => mat.dispose());\n      } else {\n        child.material.dispose();\n      }\n    }\n  });\n  \n  // 4. Destruir el proyector\n  renderer.dispose();\n}" }
       ]}
     />
-    <ResultPreview description="Una escena optimizada. Observa el código y memoriza el proceso de limpieza, salvará tu proyecto real.">
-      <div class="flex items-center justify-center h-full w-full bg-[#111] overflow-hidden rounded-none" id="demo-prod">
-        <p class="text-[var(--dm-green-500)] font-afronaut text-sm">Escena segura y lista para producción</p>
+    <ResultPreview description="Una escena optimizada con cleanup completo. Observa la consola para ver el dispose en acción.">
+      <div class="flex flex-col h-full w-full bg-[#111] overflow-hidden rounded-none">
+        <div class="flex-1 relative" id="demo-prod">
+        </div>
+        <div class="bg-[#1a1a2e] p-3 border-t border-[#333]">
+          <div id="prod-log" class="font-mono text-xs space-y-1 max-h-24 overflow-y-auto">
+            <p class="text-[var(--dm-green-500)]">✓ Escena inicializada</p>
+          </div>
+        </div>
       </div>
     </ResultPreview>
   </div>
@@ -80,10 +86,114 @@ import PracticeCards from '../../components/PracticeCards.astro';
 </ThreejsLayout>
 
 <script>
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-  // Esta demo es deliberadamente estática para representar la estabilidad requerida.
   document.addEventListener('astro:page-load', () => {
-    // Simulando el concepto de production-ready
-  });
+    const container = document.getElementById('demo-prod');
+    const logContainer = document.getElementById('prod-log');
+    if (!container) return;
 
+    while(container.firstChild) container.removeChild(container.firstChild);
+
+    const log = (msg, type = 'info') => {
+      const p = document.createElement('p');
+      p.className = type === 'error' ? 'text-red-400' : type === 'warn' ? 'text-yellow-400' : 'text-[var(--dm-green-500)]';
+      p.textContent = `${type === 'error' ? '✗' : type === 'warn' ? '⚠' : '✓'} ${msg}`;
+      logContainer?.appendChild(p);
+      logContainer?.scrollTo(0, logContainer.scrollHeight);
+    };
+
+    log('Escena creada');
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+    log('Renderer inicializado');
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+
+    const geometries: THREE.BoxGeometry[] = [];
+    const materials: THREE.MeshBasicMaterial[] = [];
+
+    for (let i = 0; i < 5; i++) {
+      const geo = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+      const mat = new THREE.MeshBasicMaterial({ 
+        color: new THREE.Color().setHSL(i * 0.2, 0.7, 0.5),
+        wireframe: Math.random() > 0.5
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.x = (i - 2) * 1.8;
+      mesh.position.y = Math.sin(i) * 0.5;
+      scene.add(mesh);
+      geometries.push(geo);
+      materials.push(mat);
+    }
+    log(`5 objetos creados (geometrías + materiales)`);
+
+    let animationId: number;
+    let frameCount = 0;
+
+    const animate = () => {
+      animationId = requestAnimationFrame(animate);
+      frameCount++;
+
+      scene.children.forEach((child, i) => {
+        if (child instanceof THREE.Mesh) {
+          child.rotation.x += 0.01 * (i + 1);
+          child.rotation.y += 0.015 * (i + 1);
+        }
+      });
+
+      controls.update();
+      renderer.render(scene, camera);
+    };
+    animate();
+    log(`Bucle de animación activo (ID: ${animationId})`);
+
+    const cleanUp = () => {
+      cancelAnimationFrame(animationId);
+      log(`cancelAnimationFrame(${animationId}) ejecutado`, 'warn');
+
+      controls.dispose();
+      log('Controles disposed', 'warn');
+
+      scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.geometry.dispose();
+          if (Array.isArray(child.material)) {
+            child.material.forEach(m => m.dispose());
+          } else {
+            child.material.dispose();
+          }
+        }
+      });
+      log(`scene.traverse: ${geometries.length} geometrías + ${materials.length} materiales disposed`, 'warn');
+
+      renderer.dispose();
+      log('Renderer disposed', 'warn');
+
+      log('Memory liberada de VRAM ✓', 'info');
+    };
+
+    document.addEventListener('astro:before-swap', () => {
+      cleanUp();
+    }, { once: true });
+
+    container.addEventListener('mouseenter', () => {
+      if (logContainer && !logContainer.querySelector('[data-hover]')) {
+        const p = document.createElement('p');
+        p.dataset.hover = 'true';
+        p.className = 'text-cyan-400 text-[10px]';
+        p.textContent = '💡 Pasa el mouse para ver OrbitControls en acción';
+        logContainer.appendChild(p);
+      }
+    });
+  });
 </script>
