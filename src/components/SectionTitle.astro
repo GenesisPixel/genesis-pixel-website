@@ -5,10 +5,13 @@ interface Props {
 
 const { title } = Astro.props;
 
-const icons = ['star.svg', 'pencil.svg', 'mobile-phone.svg', 'frame.svg'];
+const icons = ['svg-1.png', 'svg-2.png', 'svg-3.png', 'svg-4.png', 'svg-5.png', 'svg-6.png', 'svg-7.png', 'svg-8.png', 'svg-9.png', 'svg-10.png', 'svg-11.png'];
 const shuffled = icons.sort(() => 0.5 - Math.random());
 const icon1 = shuffled[0];
 const icon2 = shuffled[1];
+
+const rot1 = Math.floor(Math.random() * 21) - 10;
+const rot2 = Math.floor(Math.random() * 21) - 10;
 
 const renderChars = (text: string) => text.split(' ').map((word) =>
   `<span class="inline-block whitespace-nowrap">` +
@@ -21,8 +24,8 @@ const titleChars = renderChars(title);
 
 <div class="text-center" style="transform-style: preserve-3d;">
   <div class="relative inline-block">
-    <img src={`/svg/${icon1}`} alt="" class="absolute opacity-60 svg-icon-animate" style="right: 0; top: -10px;" aria-hidden="true" />
-    <img src={`/svg/${icon2}`} alt="" class="absolute bottom-2 opacity-60 svg-icon-animate-delay" style="left: -10px;" aria-hidden="true" />
+    <img src={`/svg/${icon1}`} alt="" class="absolute opacity-60 svg-icon-animate" style="right: 0; top: -10px;" data-rotate={rot1} aria-hidden="true" />
+    <img src={`/svg/${icon2}`} alt="" class="absolute bottom-2 opacity-60 svg-icon-animate-delay" style="left: -10px;" data-rotate={rot2} aria-hidden="true" />
     <h1 class="font-afronaut font-light text-[var(--color-text)]" style="line-height: 0.85; letter-spacing: -0.05em;">
       <Fragment set:html={titleChars} />
     </h1>
@@ -87,11 +90,13 @@ const titleChars = renderChars(title);
     }
 
     icons.forEach(el => {
-      gsap.set(el, { opacity: 0, y: 40, filter: 'blur(10px)' });
+      const r = parseFloat(el.dataset.rotate) || 0;
+      gsap.set(el, { opacity: 0, y: 40, filter: 'blur(10px)', rotate: r });
       gsap.to(el, {
         opacity: 0.6,
         y: 0,
         filter: 'blur(0px)',
+        rotate: r,
         duration: 0.9,
         ease: 'power3.out',
         delay: 1.5
@@ -99,11 +104,13 @@ const titleChars = renderChars(title);
     });
 
     iconsDelay.forEach(el => {
-      gsap.set(el, { opacity: 0, y: 40, filter: 'blur(10px)' });
+      const r = parseFloat(el.dataset.rotate) || 0;
+      gsap.set(el, { opacity: 0, y: 40, filter: 'blur(10px)', rotate: r });
       gsap.to(el, {
         opacity: 0.6,
         y: 0,
         filter: 'blur(0px)',
+        rotate: r,
         duration: 0.9,
         ease: 'power3.out',
         delay: 1.7
