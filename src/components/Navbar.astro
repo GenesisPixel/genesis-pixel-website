@@ -135,9 +135,24 @@ const navItems = [
     opacity: 1;
   }
 
+  @keyframes cycle-icons {
+    0%, 9.09% { content: url("/svg/svg-1.png"); }
+    9.09%, 18.18% { content: url("/svg/svg-2.png"); }
+    18.18%, 27.27% { content: url("/svg/svg-3.png"); }
+    27.27%, 36.36% { content: url("/svg/svg-4.png"); }
+    36.36%, 45.45% { content: url("/svg/svg-5.png"); }
+    45.45%, 54.54% { content: url("/svg/svg-6.png"); }
+    54.54%, 63.63% { content: url("/svg/svg-7.png"); }
+    63.63%, 72.72% { content: url("/svg/svg-8.png"); }
+    72.72%, 81.81% { content: url("/svg/svg-9.png"); }
+    81.81%, 90.90% { content: url("/svg/svg-10.png"); }
+    90.90%, 100% { content: url("/svg/svg-11.png"); }
+  }
+
   .nav-indicator-icon {
     width: 14px;
     height: 14px;
+    animation: cycle-icons 5.5s linear infinite;
   }
 
   .nav-actions {
@@ -417,16 +432,14 @@ const navItems = [
   <nav class="nav-inner">
     <a href="/" class="nav-brand">
       <span style="color: white; font-weight: 200; font-family: var(--font-afronaut);">GenesisPixel</span>
-      <img src="/svg/svg-4.png" alt="" class="nav-brand-stars" aria-hidden="true" />
+      <img src="/svg/stars.svg" alt="" class="nav-brand-stars" aria-hidden="true" />
     </a>
 
     <div class="nav-divider"></div>
 
     <div class="nav-links" id="nav-links">
       <div class="nav-indicator" id="nav-indicator">
-        <svg class="nav-indicator-icon" fill="none" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
-          <path d="m30.5729 109.394c3.0469 3.046 9.1992 3.808 13.9453-.469 1.582-1.406 4.8633-4.922 11.1328-11.1916 29.9414-30.3516 49.688-50.2735 53.906-46.4649 3.399 2.9883-6.972 17.6367-16.8162 31.2305-18.457 25.723-33.164 43.535-22.2656 54.434 8.7305 8.73 22.3242-.059 43.2418-18.399 11.778-10.371 20.625-18.7498 23.204-16.113 1.933 1.875-1.055 6.855-5.45 14.473-5.683 9.726-12.773 20.156-5.976 26.953 4.687 4.629 13.769 2.636 24.961-8.321 1.992-1.992 2.461-4.218.879-5.8-1.524-1.465-3.633-1.231-5.215.234-8.145 7.969-13.477 10.488-14.824 9.082-1.582-1.523 1.289-6.738 7.265-17.227 7.559-13.242 11.602-21.562 5.215-27.773-8.555-8.3203-18.691.5859-37.441 17.051-17.6371 15.527-22.7934 18.047-25.0199 15.879-2.9883-3.047 1.582-8.438 21.3279-36.0355 18.457-25.8398 29.18-41.9531 19.16-51.6211-13.652-13.3008-31.2301-2.8125-79.3942 44.8242-6.3867 6.3281-9.9023 9.668-11.3086 11.1914-4.5117 4.98-3.5742 11.016-.5273 14.063z" fill="white"/>
-        </svg>
+        <img src="/svg/svg-1.png" alt="" class="nav-indicator-icon" aria-hidden="true" />
       </div>
       {navItems.map((item) => (
         <a
@@ -470,7 +483,7 @@ const navItems = [
 
 <div class="mobile-menu" id="mobile-menu" transition:persist transition:animate="none">
   <button class="mobile-close-btn" id="mobile-close">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    <svg xmlns="/img/svg-2.png" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
   </button>
   <div class="mobile-header">
     <a href="/">GenesisPixel</a>
