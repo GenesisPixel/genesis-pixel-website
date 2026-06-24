@@ -124,7 +124,7 @@ const isEqual = variant === 'equal';
     </div>
 
     <!-- Card 3: Muy Pronto -->
-    <div class:list={['col-span-1 relative group transition-transform duration-300 hover:-translate-y-[6px]', isEqual ? 'md:col-span-6' : 'md:col-span-8']}>
+    <div class:list={['col-span-1 relative group transition-transform duration-300 hover:-translate-y-[6px] opacity-70', isEqual ? 'md:col-span-6' : 'md:col-span-8']}>
       <span style="position: absolute; top: 3px; right: 3px; background: #FC5D7D; color: white; font-size: 17px; padding: 2px 8px; border-radius: 0; font-weight: 100; transform: rotate(10deg); font-family: var(--font-afronaut, system-ui, sans-serif); z-index: 30;">Muy Pronto</span>
       <div class="absolute inset-0 z-20 pointer-events-none">
         <img src="/svg/frame.svg" alt="Icon" class="absolute -top-[46px] left-8 w-[112px] h-[112px] opacity-0 translate-y-[28px] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:opacity-100 group-hover:translate-y-0" />
@@ -138,12 +138,12 @@ const isEqual = variant === 'equal';
         textColor="text-white"
         imageSrc="/img/card-3.jpg"
         imageAlt="WebGL Mockup"
-        cursor="none"
+        cursor="not-allowed"
       />
     </div>
 
     <!-- Card 4: Muy Pronto -->
-    <div class:list={['col-span-1 relative group transition-transform duration-300 hover:-translate-y-[6px]', isEqual ? 'md:col-span-6' : 'md:col-span-4']}>
+    <div class:list={['col-span-1 relative group transition-transform duration-300 hover:-translate-y-[6px] opacity-70', isEqual ? 'md:col-span-6' : 'md:col-span-4']}>
       <span style="position: absolute; top: 3px; right: 3px; background: #FDD88E; color: var(--color-bg); font-size: 17px; padding: 2px 8px; border-radius: 0; font-weight: 100; transform: rotate(10deg); font-family: var(--font-afronaut, system-ui, sans-serif); z-index: 30;">Muy Pronto</span>
       <div class="absolute inset-0 z-20 pointer-events-none">
         <img src="/svg/mobile-phone.svg" alt="Icon" class="absolute -top-[46px] left-4 w-[112px] h-[112px] opacity-0 translate-y-[28px] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:opacity-100 group-hover:translate-y-0" />
@@ -156,37 +156,10 @@ const isEqual = variant === 'equal';
         textColor="text-[#1a1a1a]"
         imageSrc="/img/card-4.jpg"
         imageAlt="Canvas Mockup"
-        cursor="none"
+        cursor="not-allowed"
       />
     </div>
 
   </div>
 </section>
-
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const cursor = document.createElement('div');
-    cursor.className = 'custom-cursor';
-    cursor.innerHTML = '<div class="w-3 h-3 rounded-full bg-[#FC5D7D]"></div>';
-    cursor.style.cssText = 'position: fixed; pointer-events: none; z-index: 9999; display: none; transform: translate(-50%, -50%);';
-    document.body.appendChild(cursor);
-
-    const cards = document.querySelectorAll('[data-custom-cursor]');
-    
-    cards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        cursor.style.display = 'block';
-      });
-      
-      card.addEventListener('mouseleave', () => {
-        cursor.style.display = 'none';
-      });
-      
-      card.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-      });
-    });
-  });
-</script>
 
