@@ -158,16 +158,16 @@ const navItems = [...mainNavItems, ...moreNavItems];
 
   .more-chapters-wrapper {
     position: relative;
+    margin-left: 24px;
   }
 
   .more-chapters-btn {
     position: relative;
     padding: 6px 14px;
-    font-size: 0.8125rem;
-    font-weight: 500;
+   
     color: var(--dm-light-300);
     text-decoration: none;
-    border-radius: 9999px;
+   
     transition: color 0.3s ease;
     white-space: nowrap;
     z-index: 1;
@@ -177,7 +177,8 @@ const navItems = [...mainNavItems, ...moreNavItems];
     cursor: pointer;
     background: none;
     border: none;
-    font-family: inherit;
+    font-family: var(--font-google-sans);
+    letter-spacing: -1px;
   }
 
   .more-chapters-btn:hover {
@@ -663,8 +664,8 @@ const navItems = [...mainNavItems, ...moreNavItems];
     }
 
     function handleHover(e: Event) {
-      const target = e.target as HTMLElement;
-      if (target.tagName !== 'A' || !indicator || !navLinks) return;
+      const target = (e.target as HTMLElement).closest('a[data-nav-item], .more-chapters-btn') as HTMLElement;
+      if (!target || !indicator || !navLinks) return;
 
       const linksRect = navLinks.getBoundingClientRect();
       const targetRect = target.getBoundingClientRect();
