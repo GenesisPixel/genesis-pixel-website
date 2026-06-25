@@ -4,13 +4,13 @@ const mainNavItems = [
   { href: '/aprender', label: 'Aprender' },
   { href: '/keyframes/que-son', label: 'Keyframes', badge: 'Principiante', badgeColor: '#9FA6FF', badgeTextColor: 'var(--color-bg)' },
   { href: '/interactions/que-son', label: 'Interactions', badge: 'UI/UX', badgeColor: '#f59e0b', badgeTextColor: 'var(--color-bg)' },
-  { href: '/threejs/que-es-threejs', label: 'Three.js', badge: 'Nuevo', badgeColor: '#FC5D7D', badgeTextColor: 'white' },
+  { href: '/threejs/que-es-threejs', label: 'Three.js', badge: 'Nuevo', badgeColor: '#FC5D7D', badgeTextColor: 'var(--color-bg)' },
 ];
 
 const moreNavItems = [
   { href: '/transitions/que-son', label: 'Transitions', badge: 'Intermedio', badgeColor: '#a855f7', badgeTextColor: 'white' },
   { href: '/transform/que-es', label: 'Transform', badge: 'Avanzado', badgeColor: '#57B0FB', badgeTextColor: 'var(--color-bg)' },
-  { href: '/shaders/que-son-los-shaders', label: 'Shaders', badge: 'Pro', badgeColor: '#56C288', badgeTextColor: 'var(--color-bg)' },
+  { href: '/shaders/que-son-los-shaders', label: 'Shaders', badge: 'Nuevo', badgeColor: '#FC5D7D', badgeTextColor: 'var(--color-bg)' },
 ];
 
 const navItems = [...mainNavItems, ...moreNavItems];
@@ -574,6 +574,7 @@ const navItems = [...mainNavItems, ...moreNavItems];
       <div class="more-chapters-wrapper" id="more-chapters-wrapper">
         <button class="more-chapters-btn" id="more-chapters-btn">
           Más capítulos
+          <span class="badge-llamar-atencion" style="position: absolute; top: -5px; right: -8px; background: #FC5D7D; color: var(--color-bg); font-size: 10px; padding: 1px 4px; border-radius: 0; font-weight: 100; margin-left: 4px; transform: rotate(10deg); font-family: var(--font-afronaut, system-ui, sans-serif);">Nuevo</span>
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
@@ -596,7 +597,7 @@ const navItems = [...mainNavItems, ...moreNavItems];
     <a href={item.href} data-nav-item>
       {item.label}
       {item.badge && (
-        <span class="dropdown-badge" style={`background: ${item.badgeColor}; color: ${item.badgeTextColor};`}>{item.badge}</span>
+        <span class={`dropdown-badge ${item.badge === 'Nuevo' ? 'badge-llamar-atencion' : ''}`} style={`background: ${item.badgeColor}; color: ${item.badgeTextColor};`}>{item.badge}</span>
       )}
     </a>
   ))}
