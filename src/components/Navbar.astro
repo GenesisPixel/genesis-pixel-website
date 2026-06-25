@@ -32,7 +32,7 @@ const navItems = [...mainNavItems, ...moreNavItems];
       0 8px 32px rgba(0, 0, 0, 0.3),
       0 2px 8px rgba(0, 0, 0, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    padding: 4px 12px;
+    padding: 4px 0px 4px 12px;
   }
 
   .nav-inner {
@@ -202,13 +202,12 @@ const navItems = [...mainNavItems, ...moreNavItems];
     pointer-events: none;
     transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 101;
-    min-width: 200px;
     background: rgba(28, 28, 30, 0.72);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 30px;
-    padding: 6px 10px;
+    padding: 5px 5px;
     box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.3),
       0 2px 8px rgba(0, 0, 0, 0.2),
@@ -233,7 +232,12 @@ const navItems = [...mainNavItems, ...moreNavItems];
     color: var(--dm-light-300);
     text-decoration: none;
     border-radius: 10px;
+    transition: color 0.3s ease;
     white-space: nowrap;
+  }
+
+  .more-chapters-dropdown a:hover {
+    color: white;
   }
 
   .more-chapters-dropdown a.active {
@@ -724,6 +728,7 @@ const navItems = [...mainNavItems, ...moreNavItems];
       const rect = moreChaptersBtn.getBoundingClientRect();
       moreChaptersDropdown.style.left = `${rect.left + rect.width / 2}px`;
       moreChaptersDropdown.style.top = `${rect.bottom + 7}px`;
+      moreChaptersDropdown.style.width = `${rect.width}px`;
     }
 
     function openDropdown() {
@@ -744,7 +749,10 @@ const navItems = [...mainNavItems, ...moreNavItems];
     moreChaptersDropdown?.addEventListener('mouseenter', () => {
       clearTimeout(dropdownTimeout);
     });
-    moreChaptersDropdown?.addEventListener('mouseleave', closeDropdown);
+    moreChaptersDropdown?.addEventListener('mouseleave', () => {
+      closeDropdown();
+      updateIndicator();
+    });
     moreChaptersDropdown?.addEventListener('mouseover', (e: Event) => {
       const target = (e.target as HTMLElement).closest('a[data-nav-item]') as HTMLElement;
       if (target) moveIndicatorTo(target);
