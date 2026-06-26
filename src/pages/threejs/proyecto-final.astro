@@ -11,6 +11,7 @@ const threejsHtml = `<div id="demo-final" class="threejs-container"></div>`;
 
 const threejsJs = `import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // 1. Scene & Camera
 const scene = new THREE.Scene();
@@ -24,6 +25,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.shadowMap.enabled = true;
 document.getElementById('demo-final').appendChild(renderer.domElement);
 
 // 3. Controls
@@ -37,28 +39,24 @@ controls.enableZoom = false;
 const group = new THREE.Group();
 scene.add(group);
 
-// 5. Core Crystal
-const geometry = new THREE.IcosahedronGeometry(1.2, 0);
-const material = new THREE.MeshStandardMaterial({
-  color: 0x9FA6FF,
-  metalness: 0.8,
-  roughness: 0.2,
-  wireframe: true,
-  emissive: 0x57B0FB,
-  emissiveIntensity: 0.2
+// 5. Load Model
+let airplane;
+const loader = new GLTFLoader();
+loader.load('/models-three.js/small-airplane.glb', (gltf) => {
+  airplane = gltf.scene;
+  airplane.scale.set(0.6, 0.6, 0.6);
+  airplane.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true;
+      child.receiveShadow = true;
+      if (child.material) {
+        child.material.metalness = 0.5;
+        child.material.roughness = 0.3;
+      }
+    }
+  });
+  group.add(airplane);
 });
-const core = new THREE.Mesh(geometry, material);
-group.add(core);
-
-// Inner Core
-const innerGeo = new THREE.IcosahedronGeometry(0.8, 0);
-const innerMat = new THREE.MeshStandardMaterial({
-  color: 0xFC5D7D,
-  metalness: 1,
-  roughness: 0.1
-});
-const innerCore = new THREE.Mesh(innerGeo, innerMat);
-group.add(innerCore);
 
 // 6. Rings of Particles
 const particlesCount = 2000;
@@ -100,6 +98,7 @@ group.add(particlesMesh);
 // 7. Dramatic Lighting
 const mainLight = new THREE.DirectionalLight(0xffffff, 2);
 mainLight.position.set(5, 5, 2);
+mainLight.castShadow = true;
 scene.add(mainLight);
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -122,10 +121,9 @@ function animate() {
 
   // Floating & Rotation
   group.position.y = Math.sin(time * 1.5) * 0.2;
-  core.rotation.x = time * 0.3;
-  core.rotation.y = time * 0.4;
-  innerCore.rotation.x = -time * 0.5;
-  innerCore.rotation.y = -time * 0.2;
+  if (airplane) {
+    airplane.rotation.z = Math.sin(time * 1) * 0.1;
+  }
   particlesMesh.rotation.y = time * 0.1;
 
   // Mouse interactivity
@@ -244,6 +242,7 @@ animate();`;
 
   import * as THREE from 'three';
   import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   import { initAllCodeInteractions } from '../../scripts/code-interactions.js';
 
   document.addEventListener('astro:page-load', () => {
@@ -267,6 +266,7 @@ animate();`;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
 
     // 4. Controles (restringidos)
@@ -282,27 +282,24 @@ animate();`;
     const group = new THREE.Group();
     scene.add(group);
 
-    // 6. Core Crystal
-    const geometry = new THREE.IcosahedronGeometry(1.2, 0);
-    const material = new THREE.MeshStandardMaterial({
-      color: 0x9FA6FF,
-      metalness: 0.8,
-      roughness: 0.2,
-      wireframe: true,
-      emissive: 0x57B0FB,
-      emissiveIntensity: 0.2
+    // 6. Load Model
+    let airplane;
+    const loader = new GLTFLoader();
+    loader.load('/models-three.js/small-airplane.glb', (gltf) => {
+      airplane = gltf.scene;
+      airplane.scale.set(0.6, 0.6, 0.6);
+      airplane.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          if (child.material) {
+            child.material.metalness = 0.5;
+            child.material.roughness = 0.3;
+          }
+        }
+      });
+      group.add(airplane);
     });
-    const core = new THREE.Mesh(geometry, material);
-    group.add(core);
-
-    const innerGeo = new THREE.IcosahedronGeometry(0.8, 0);
-    const innerMat = new THREE.MeshStandardMaterial({
-      color: 0xFC5D7D,
-      metalness: 1,
-      roughness: 0.1
-    });
-    const innerCore = new THREE.Mesh(innerGeo, innerMat);
-    group.add(innerCore);
 
     // 7. Rings of Particles
     const particlesCount = 2000;
@@ -344,6 +341,7 @@ animate();`;
     // 8. Luces
     const mainLight = new THREE.DirectionalLight(0xffffff, 2);
     mainLight.position.set(5, 5, 2);
+    mainLight.castShadow = true;
     scene.add(mainLight);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -368,10 +366,9 @@ animate();`;
       controls.update();
 
       group.position.y = Math.sin(time * 1.5) * 0.2;
-      core.rotation.x = time * 0.3;
-      core.rotation.y = time * 0.4;
-      innerCore.rotation.x = -time * 0.5;
-      innerCore.rotation.y = -time * 0.2;
+      if (airplane) {
+        airplane.rotation.z = Math.sin(time * 1) * 0.1;
+      }
       particlesMesh.rotation.y = time * 0.1;
 
       group.rotation.x = THREE.MathUtils.lerp(group.rotation.x, mouseY * 0.3, 0.05);
