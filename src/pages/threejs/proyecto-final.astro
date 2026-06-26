@@ -6,6 +6,85 @@ import ResultPreview from '../../components/ResultPreview.astro';
 import ConsejoProfesional from '../../components/ConsejoProfesional.astro';
 import ErroresComunesV3 from '../../components/ErroresComunesV3.astro';
 import PracticeCards from '../../components/PracticeCards.astro';
+
+const threejsHtml = `<div id="demo-final" class="threejs-container"></div>`;
+
+const threejsJs = `import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// 1. Scene & Camera
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2('#0a0a14', 0.05);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(3, 2, 6);
+
+// 2. Premium Renderer
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+document.getElementById('demo-final').appendChild(renderer.domElement);
+
+// 3. Controls
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enablePan = false;
+controls.enableZoom = false;
+
+// 4. Dramatic Lighting
+const mainLight = new THREE.DirectionalLight(0x57B0FB, 3);
+mainLight.position.set(5, 5, 2);
+mainLight.castShadow = true;
+scene.add(mainLight);
+
+const backLight = new THREE.PointLight(0xFC5D7D, 3, 10);
+backLight.position.set(-3, 1, -3);
+scene.add(backLight);
+
+// 5. Environment & Particles
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(20, 20),
+  new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.1, metalness: 0.8 })
+);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -1;
+floor.receiveShadow = true;
+scene.add(floor);
+
+// 6. Load Model
+let airplane;
+new GLTFLoader().load('/models-three.js/small-airplane.glb', (gltf) => {
+  airplane = gltf.scene;
+  airplane.scale.set(0.6, 0.6, 0.6);
+  airplane.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true;
+      child.receiveShadow = true;
+    }
+  });
+  scene.add(airplane);
+});
+
+// 7. Animation Loop
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+  controls.update();
+
+  if (airplane) {
+    airplane.position.y = Math.sin(time * 1.5) * 0.2;
+    airplane.rotation.z = Math.sin(time * 1) * 0.1;
+  }
+
+  renderer.render(scene, camera);
+}
+animate();`;
 ---
 
 <ThreejsLayout
@@ -47,7 +126,14 @@ import PracticeCards from '../../components/PracticeCards.astro';
     El Resultado Esperado
   </h3>
 
-  <div class="mb-6 flex flex-col gap-6">
+  <div class="mb-6 flex flex-col gap-6 lg:flex-row">
+    <TabbedCodeBlock
+      group="proyecto-threejs"
+      tabs={[
+        { id: 'html', label: 'HTML', code: threejsHtml },
+        { id: 'js', label: 'JavaScript', code: threejsJs },
+      ]}
+    />
     <ResultPreview description="Una experiencia de producción.">
       <div class="flex items-center justify-center h-full w-full bg-[#0a0a14] overflow-hidden rounded-none" id="demo-final" style="height: 500px;">
       </div>

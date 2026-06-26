@@ -51,11 +51,16 @@ const { title } = Astro.props;
   let currentScroll = 0;
   let targetScroll = 0;
   let isScrolling = false;
+  let wheelHandler: ((e: WheelEvent) => void) | null = null;
 
   function initSmoothScroll() {
     const smoothness = 0.08;
 
-    window.addEventListener('wheel', (e) => {
+    if (wheelHandler) {
+      window.removeEventListener('wheel', wheelHandler);
+    }
+
+    wheelHandler = (e: WheelEvent) => {
       const target = e.target as HTMLElement;
       const scrollableParent = target.closest('[style*="overflow"], .sidebar, .code-block, pre, code, canvas, [data-scrollable]');
       
@@ -72,7 +77,9 @@ const { title } = Astro.props;
         isScrolling = true;
         requestAnimationFrame(smoothScroll);
       }
-    }, { passive: false });
+    };
+
+    window.addEventListener('wheel', wheelHandler, { passive: false });
 
     function smoothScroll() {
       currentScroll += (targetScroll - currentScroll) * smoothness;
