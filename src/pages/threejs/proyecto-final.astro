@@ -10,22 +10,19 @@ import PracticeCards from '../../components/PracticeCards.astro';
 const threejsHtml = `<div id="demo-final" class="threejs-container"></div>`;
 
 const threejsJs = `import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // 1. Scene & Camera
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2('#0a0a14', 0.05);
+scene.fog = new THREE.FogExp2('#0a0a14', 0.08);
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.set(3, 2, 6);
+camera.position.set(0, 2, 8);
 
 // 2. Premium Renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 document.getElementById('demo-final').appendChild(renderer.domElement);
 
@@ -36,51 +33,104 @@ controls.dampingFactor = 0.05;
 controls.enablePan = false;
 controls.enableZoom = false;
 
-// 4. Dramatic Lighting
-const mainLight = new THREE.DirectionalLight(0x57B0FB, 3);
+// 4. Group for animation
+const group = new THREE.Group();
+scene.add(group);
+
+// 5. Core Crystal
+const geometry = new THREE.IcosahedronGeometry(1.2, 0);
+const material = new THREE.MeshStandardMaterial({
+  color: 0x9FA6FF,
+  metalness: 0.8,
+  roughness: 0.2,
+  wireframe: true,
+  emissive: 0x57B0FB,
+  emissiveIntensity: 0.2
+});
+const core = new THREE.Mesh(geometry, material);
+group.add(core);
+
+// Inner Core
+const innerGeo = new THREE.IcosahedronGeometry(0.8, 0);
+const innerMat = new THREE.MeshStandardMaterial({
+  color: 0xFC5D7D,
+  metalness: 1,
+  roughness: 0.1
+});
+const innerCore = new THREE.Mesh(innerGeo, innerMat);
+group.add(innerCore);
+
+// 6. Rings of Particles
+const particlesCount = 2000;
+const posArray = new Float32Array(particlesCount * 3);
+const colorsArray = new Float32Array(particlesCount * 3);
+
+const color1 = new THREE.Color(0x9FA6FF);
+const color2 = new THREE.Color(0xFC5D7D);
+
+for (let i = 0; i < particlesCount; i++) {
+  const r = 3 + Math.random() * 3;
+  const theta = Math.random() * Math.PI * 2;
+  const phi = (Math.random() - 0.5) * 0.5;
+
+  posArray[i * 3] = r * Math.cos(theta);
+  posArray[i * 3 + 1] = r * Math.sin(phi);
+  posArray[i * 3 + 2] = r * Math.sin(theta);
+
+  const mixedColor = color1.clone().lerp(color2, Math.random());
+  colorsArray[i * 3] = mixedColor.r;
+  colorsArray[i * 3 + 1] = mixedColor.g;
+  colorsArray[i * 3 + 2] = mixedColor.b;
+}
+
+const particlesGeo = new THREE.BufferGeometry();
+particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+particlesGeo.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+
+const particlesMat = new THREE.PointsMaterial({
+  size: 0.02,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.8,
+  blending: THREE.AdditiveBlending
+});
+const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+group.add(particlesMesh);
+
+// 7. Dramatic Lighting
+const mainLight = new THREE.DirectionalLight(0xffffff, 2);
 mainLight.position.set(5, 5, 2);
-mainLight.castShadow = true;
 scene.add(mainLight);
 
-const backLight = new THREE.PointLight(0xFC5D7D, 3, 10);
-backLight.position.set(-3, 1, -3);
-scene.add(backLight);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
 
-// 5. Environment & Particles
-const floor = new THREE.Mesh(
-  new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.1, metalness: 0.8 })
-);
-floor.rotation.x = -Math.PI / 2;
-floor.position.y = -1;
-floor.receiveShadow = true;
-scene.add(floor);
+// 8. Animation Loop
+const clock = new THREE.Clock();
+let mouseX = 0;
+let mouseY = 0;
 
-// 6. Load Model
-let airplane;
-new GLTFLoader().load('/models-three.js/small-airplane.glb', (gltf) => {
-  airplane = gltf.scene;
-  airplane.scale.set(0.6, 0.6, 0.6);
-  airplane.traverse((child) => {
-    if (child.isMesh) {
-      child.castShadow = true;
-      child.receiveShadow = true;
-    }
-  });
-  scene.add(airplane);
+window.addEventListener('mousemove', (event) => {
+  mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+  mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 });
 
-// 7. Animation Loop
-const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
   const time = clock.getElapsedTime();
   controls.update();
 
-  if (airplane) {
-    airplane.position.y = Math.sin(time * 1.5) * 0.2;
-    airplane.rotation.z = Math.sin(time * 1) * 0.1;
-  }
+  // Floating & Rotation
+  group.position.y = Math.sin(time * 1.5) * 0.2;
+  core.rotation.x = time * 0.3;
+  core.rotation.y = time * 0.4;
+  innerCore.rotation.x = -time * 0.5;
+  innerCore.rotation.y = -time * 0.2;
+  particlesMesh.rotation.y = time * 0.1;
+
+  // Mouse interactivity
+  group.rotation.x = THREE.MathUtils.lerp(group.rotation.x, mouseY * 0.3, 0.05);
+  group.rotation.y = THREE.MathUtils.lerp(group.rotation.y, mouseX * 0.3, 0.05);
 
   renderer.render(scene, camera);
 }
@@ -146,11 +196,46 @@ animate();`;
       description="Construye tu propio ecosistema 3D en la plataforma."
       steps={[
         { number: 1, text: 'Instancia toda la base: Scene, PerspectiveCamera, y WebGLRenderer.', color: 'dm-purple', rotate: '-3deg' },
-        { number: 2, text: 'Añade iluminación dramática y activa el soporte de sombras en el Renderer.', color: 'dm-green', rotate: '2deg' },
-        { number: 3, text: 'Carga el modelo GLTF y sitúalo en el centro. Usa OrbitControls con enableDamping.', color: 'app-color-yellow400', rotate: '-5deg' },
-        { number: 4, text: 'Implementa requestAnimationFrame usando Clock() para una rotación suave e infinita.', color: 'dm-blue', rotate: '3deg' },
+        { number: 2, text: 'Usa geometrías procedimentales y materiales con wireframe para un look premium.', color: 'dm-green', rotate: '2deg' },
+        { number: 3, text: 'Crea un sistema de partículas circulares usando math.sin y math.cos.', color: 'app-color-yellow400', rotate: '-5deg' },
+        { number: 4, text: 'Implementa requestAnimationFrame usando Clock() para una rotación suave e interactiva al ratón.', color: 'dm-blue', rotate: '3deg' },
       ]}
     />
+  </div>
+
+  <!-- Resumen del capítulo -->
+  <div class="py-6">
+    <h3 class="mb-8 text-center font-medium text-[var(--color-text)]">
+      Lo que aprendiste en este capítulo
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+      {[
+        { prop: 'Scene & Camera', desc: 'El lienzo fundamental y los ojos del espectador' },
+        { prop: 'WebGLRenderer', desc: 'El motor que dibuja los píxeles con soporte para antialiasing' },
+        { prop: 'Geometrías y Materiales', desc: 'Esqueletos matemáticos y sus texturas reactivas a la luz' },
+        { prop: 'Luces', desc: 'Iluminación ambiental, direccional y puntual para dar volumen' },
+        { prop: 'Sombras', desc: 'Configuración de castShadow y receiveShadow para realismo' },
+        { prop: 'Modelos 3D', desc: 'Carga de assets externos optimizados (GLTF/GLB)' },
+        { prop: 'OrbitControls', desc: 'Interacción de cámara con soporte para inercia (damping)' },
+        { prop: 'Animation Loop', desc: 'requestAnimationFrame y uso del Clock de Three.js' },
+        { prop: 'Resize Handler', desc: 'Adaptar el aspect ratio y el tamaño del renderer dinámicamente' },
+        { prop: 'Limpieza (Dispose)', desc: 'Liberar memoria de la GPU destruyendo mallas y materiales' },
+      ].map((item, index) => (
+        <div class="flex gap-4">
+          <span class="mt-0.5 shrink-0 font-afronaut text-[13px] text-[var(--color-text)]" style="opacity: 0.4 !important;">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <div class="flex flex-col gap-1">
+            <span class="text-[14px] text-white" style="color: white; opacity: 1 !important; font-family: var(--font-afronaut, system-ui, sans-serif); font-weight: 300;">
+              {item.prop}
+            </span>
+            <span class="text-[13px] leading-relaxed text-[var(--dm-light-200)]">
+              {item.desc}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
 
 </ThreejsLayout>
@@ -158,10 +243,12 @@ animate();`;
 <script>
 
   import * as THREE from 'three';
-  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  import { initAllCodeInteractions } from '../../scripts/code-interactions.js';
 
   document.addEventListener('astro:page-load', () => {
+    initAllCodeInteractions();
+
     const container = document.getElementById('demo-final');
     if (!container) return;
     
@@ -169,19 +256,17 @@ animate();`;
 
     // 1. Scene
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2('#0a0a14', 0.05);
+    scene.fog = new THREE.FogExp2('#0a0a14', 0.08);
 
     // 2. Camera
     const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-    camera.position.set(3, 2, 6);
+    camera.position.set(0, 2, 8);
 
     // 3. Renderer (Premium Setup)
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping; // Colores más realistas
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
     container.appendChild(renderer.domElement);
 
     // 4. Controles (restringidos)
@@ -189,75 +274,80 @@ animate();`;
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.enablePan = false;
-    controls.enableZoom = false; // Bloqueamos zoom para no interferir con scroll web
+    controls.enableZoom = false;
     controls.minPolarAngle = Math.PI / 4;
     controls.maxPolarAngle = Math.PI / 2 + 0.1;
 
-    // 5. Luces dramáticas
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
+    // 5. Group for animation
+    const group = new THREE.Group();
+    scene.add(group);
 
-    const mainLight = new THREE.DirectionalLight(0x57B0FB, 3);
-    mainLight.position.set(5, 5, 2);
-    mainLight.castShadow = true;
-    mainLight.shadow.mapSize.width = 1024;
-    mainLight.shadow.mapSize.height = 1024;
-    scene.add(mainLight);
-
-    const backLight = new THREE.PointLight(0xFC5D7D, 3, 10);
-    backLight.position.set(-3, 1, -3);
-    scene.add(backLight);
-
-    // 6. Entorno (Suelo)
-    const floorGeo = new THREE.PlaneGeometry(20, 20);
-    const floorMat = new THREE.MeshStandardMaterial({ 
-      color: 0x111111, 
-      roughness: 0.1, 
-      metalness: 0.8 
-    });
-    const floor = new THREE.Mesh(floorGeo, floorMat);
-    floor.rotation.x = -Math.PI / 2;
-    floor.position.y = -1;
-    floor.receiveShadow = true;
-    scene.add(floor);
-
-    // 7. Partículas (Estrellas / Polvo)
-    const particlesGeo = new THREE.BufferGeometry();
-    const particlesCount = 200;
-    const posArray = new Float32Array(particlesCount * 3);
-    
-    for(let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 15;
-    }
-    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-    const particlesMat = new THREE.PointsMaterial({
-      size: 0.05,
+    // 6. Core Crystal
+    const geometry = new THREE.IcosahedronGeometry(1.2, 0);
+    const material = new THREE.MeshStandardMaterial({
       color: 0x9FA6FF,
+      metalness: 0.8,
+      roughness: 0.2,
+      wireframe: true,
+      emissive: 0x57B0FB,
+      emissiveIntensity: 0.2
+    });
+    const core = new THREE.Mesh(geometry, material);
+    group.add(core);
+
+    const innerGeo = new THREE.IcosahedronGeometry(0.8, 0);
+    const innerMat = new THREE.MeshStandardMaterial({
+      color: 0xFC5D7D,
+      metalness: 1,
+      roughness: 0.1
+    });
+    const innerCore = new THREE.Mesh(innerGeo, innerMat);
+    group.add(innerCore);
+
+    // 7. Rings of Particles
+    const particlesCount = 2000;
+    const posArray = new Float32Array(particlesCount * 3);
+    const colorsArray = new Float32Array(particlesCount * 3);
+
+    const color1 = new THREE.Color(0x9FA6FF);
+    const color2 = new THREE.Color(0xFC5D7D);
+
+    for (let i = 0; i < particlesCount; i++) {
+      const r = 3 + Math.random() * 3;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = (Math.random() - 0.5) * 0.5;
+
+      posArray[i * 3] = r * Math.cos(theta);
+      posArray[i * 3 + 1] = r * Math.sin(phi);
+      posArray[i * 3 + 2] = r * Math.sin(theta);
+
+      const mixedColor = color1.clone().lerp(color2, Math.random());
+      colorsArray[i * 3] = mixedColor.r;
+      colorsArray[i * 3 + 1] = mixedColor.g;
+      colorsArray[i * 3 + 2] = mixedColor.b;
+    }
+
+    const particlesGeo = new THREE.BufferGeometry();
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    particlesGeo.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+
+    const particlesMat = new THREE.PointsMaterial({
+      size: 0.02,
+      vertexColors: true,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending
     });
     const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
-    scene.add(particlesMesh);
+    group.add(particlesMesh);
 
-    // 8. Cargar el Modelo
-    let airplane;
-    const loader = new GLTFLoader();
-    
-    loader.load('/models-three.js/small-airplane.glb', (gltf) => {
-      airplane = gltf.scene;
-      airplane.scale.set(0.6, 0.6, 0.6);
-      
-      // Aseguramos que los meshes del modelo proyecten sombras
-      airplane.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-        }
-      });
-      
-      scene.add(airplane);
-    });
+    // 8. Luces
+    const mainLight = new THREE.DirectionalLight(0xffffff, 2);
+    mainLight.position.set(5, 5, 2);
+    scene.add(mainLight);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
 
     // 9. Bucle de Animación y Reloj
     const clock = new THREE.Clock();
@@ -265,7 +355,6 @@ animate();`;
     let mouseX = 0;
     let mouseY = 0;
 
-    // Efecto Parallax con el ratón
     const onMouseMove = (event) => {
       mouseX = (event.clientX / window.innerWidth) * 2 - 1;
       mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -278,20 +367,15 @@ animate();`;
 
       controls.update();
 
-      // Animamos el avión suavemente
-      if (airplane) {
-        // Levitación
-        airplane.position.y = Math.sin(time * 1.5) * 0.2;
-        // Inclinación
-        airplane.rotation.z = Math.sin(time * 1) * 0.1;
-        
-        // Reacción al ratón sutil
-        airplane.rotation.x = THREE.MathUtils.lerp(airplane.rotation.x, mouseY * 0.2, 0.05);
-        airplane.rotation.y = THREE.MathUtils.lerp(airplane.rotation.y, mouseX * 0.3, 0.05);
-      }
+      group.position.y = Math.sin(time * 1.5) * 0.2;
+      core.rotation.x = time * 0.3;
+      core.rotation.y = time * 0.4;
+      innerCore.rotation.x = -time * 0.5;
+      innerCore.rotation.y = -time * 0.2;
+      particlesMesh.rotation.y = time * 0.1;
 
-      // Animamos las partículas
-      particlesMesh.rotation.y = time * 0.05;
+      group.rotation.x = THREE.MathUtils.lerp(group.rotation.x, mouseY * 0.3, 0.05);
+      group.rotation.y = THREE.MathUtils.lerp(group.rotation.y, mouseX * 0.3, 0.05);
 
       renderer.render(scene, camera);
     };
@@ -311,7 +395,6 @@ animate();`;
       window.removeEventListener('resize', handleResize);
       container.removeEventListener('mousemove', onMouseMove);
       
-      // Cleanup de geometría y materiales
       scene.traverse((child) => {
         if (child.isMesh || child.isPoints) {
           child.geometry.dispose();
