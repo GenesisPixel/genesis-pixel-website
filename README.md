@@ -19,14 +19,14 @@ GenesisPixel is designed to help developers go from zero to mastery in CSS anima
 
 ## Learning Chapters
 
-| Chapter | Level | Lessons | Topics |
-|---------|-------|---------|--------|
-| **CSS Transitions** | Beginner | 15 | transition-property, duration, timing-function, delay, shorthand, hover, focus, performance, microinteractions |
-| **CSS Transform** | Intermediate | 15 | translate, scale, rotate, skew, transform-origin, 3D transforms, perspective |
-| **CSS Keyframes** | Advanced | 15 | @keyframes syntax, timeline, animation properties, fill-mode, play-state, shorthand |
-| **Interactions** | Advanced | 15 | Microinteractions, loading states, modals, dropdowns, tooltips, form feedback |
-| **Three.js** | Advanced | 15 | Scenes, cameras, renderers, geometries, materials, lights, textures, animations, 3D models |
-| **Shaders** | Advanced | 15 | GLSL, vertex/fragment shaders, uniforms, varyings, UV coordinates, noise, procedural effects |
+| Preview | Chapter | Level | Lessons | Topics |
+|---------|---------|-------|---------|--------|
+| <img src="public/img/transitions.jpg" width="150" /> | **CSS Transitions** | Beginner | 15 | transition-property, duration, timing-function, delay, shorthand, hover, focus, performance, microinteractions |
+| <img src="public/img/transform.jpg" width="150" /> | **CSS Transform** | Intermediate | 15 | translate, scale, rotate, skew, transform-origin, 3D transforms, perspective |
+| <img src="public/img/keyframes.jpg" width="150" /> | **CSS Keyframes** | Advanced | 15 | @keyframes syntax, timeline, animation properties, fill-mode, play-state, shorthand |
+| <img src="public/img/interacitions.jpg" width="150" /> | **Interactions** | Advanced | 15 | Microinteractions, loading states, modals, dropdowns, tooltips, form feedback |
+| <img src="public/img/three-js.jpg" width="150" /> | **Three.js** | Advanced | 15 | Scenes, cameras, renderers, geometries, materials, lights, textures, animations, 3D models |
+| <img src="public/img/shaders.jpg" width="150" /> | **Shaders** | Advanced | 15 | GLSL, vertex/fragment shaders, uniforms, varyings, UV coordinates, noise, procedural effects |
 
 ## Key Features
 
