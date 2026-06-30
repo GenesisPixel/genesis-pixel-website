@@ -11,7 +11,7 @@
 </div>
 
 A comprehensive Spanish-language educational platform for mastering modern web animation and creative coding techniques.
-##
+
 
 ## Overview
 
